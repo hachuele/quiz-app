@@ -1,0 +1,264 @@
+
+
+/*GENERAL STYLING FOR HEADER AND FOOTER*/
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.centering_div{
+    display:table;
+}
+
+.centered_div{
+    height:100%;
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+}
+
+.center{
+    padding: 5px 0;
+}
+
+/*Used for SUBMIT/RESULT GLYPHICONS button, i.e*/
+.hidden{
+    display: none;
+}
+
+/**************HEADER STYLES (IN ORDER OF APPEARANCE)**************/
+
+.header_main{
+    /* header with color from main HPC web */
+    background:#990000;
+    height: 150px;
+    text-align: center;
+    width: 100%;
+}
+
+#header_row_div{
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+#page_title_icon_img{
+    max-height: 65px;
+
+}
+
+#page_title_txt_left_div{
+    text-align: left;
+}
+
+#page_title_txt{
+    font-size: 20px;
+    color: white;
+}
+
+#page_logo_right_div{
+    text-align: right;
+}
+
+#page_header_logo{
+    max-height: 65px;
+}
+
+
+/**************FOOTER STYLES (IN ORDER OF APPEARANCE)**************/
+.footer {
+    height: 75px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+}
+
+#footer_row{
+    margin-top: 20px;
+}
+
+
+.footer_adjust_rel{
+    position: relative;
+
+}
+
+.footer_adjust_abs{
+    position: absolute;
+}
+
+
+
+#user_id_button{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#help_button{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+#completed_course{
+    max-width: inherit;
+}
+
+
+/**************CONTENT (QUIZZ SELECTION SITE)**************/
+#assessment_selection_div{
+    max-width: 600px;
+
+}
+
+
+#assessment_select_contents_title{
+    text-align: center;
+
+}
+
+
+
+
+
+/**************CONTENT (QUIZZ SITE)**************/
+
+
+
+.question_card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    margin-top: 20px;
+    max-height: 100%;
+}
+
+
+#quizz_question_div{
+    max-width: 700px;
+
+}
+
+#quizz_question_title{
+
+
+}
+
+
+.question_item_div{
+    margin-top: 2px;
+    min-height: 40px;
+    border-radius: 10px;
+
+
+}
+
+.question_item{
+
+
+}
+
+.question_label{
+    font-size: 15px;
+    vertical-align: middle;
+    margin-left: 10px;
+
+}
+
+
+.solution_glyphicon_correct{
+    color: #84f272;
+}
+
+.solution_glyphicon_incorrect{
+    color: #ff1f1f;
+}
+
+
+#view_answers_btn_div{
+    text-align: left;
+}
+
+
+#answer_explanations_div{
+    margin-top: 20px;
+
+}
+
+
+#bottom_button_set{
+    width: 100%;
+    text-align: center;
+
+}
+
+#previous_question_btn_div{
+    text-align: left;
+
+}
+
+#submit_answers_btn_div{
+    text-align: center;
+
+}
+
+#next_question_btn_div{
+    text-align:right;
+}
+
+
+
+
+
+/**************CONTENT (ADMIN SITE)**************/
+
+
+
+
+
+/**************BOOTSTRAP MEDIA QUERIES**************/
+/*Extra small devices (portrait phones, less than 576px)*/
+/*// No media query since this is the default in Bootstrap*/
+/*// Small devices (landscape phones, 576px and up)*/
+@media screen and (max-width: 767px) {
+
+    #page_header_logo{
+        max-height: 45px;
+    }
+
+    #page_title_icon_img{
+        max-height: 45px;
+    }
+
+    #page_title_txt{
+    font-size: 15px;
+    }
+
+    #page_title_txt_left_div{
+        text-align: inherit;
+    }
+
+    #page_logo_right_div{
+        text-align: inherit;
+    }
+}
+
+/*// Medium devices (tablets, 768px and up)*/
+@media screen and (max-width: 768px) {
+
+
+}
+
+/*// Large devices (desktops, 992px and up)*/
+@media screen and (max-width: 992px) {
+
+
+}
+
+/*// Extra large devices (large desktops, 1200px and up)*/
+/*@media (min-width: 1200px) { ... }*/
+
+
+
