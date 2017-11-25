@@ -39,10 +39,10 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?php echo $help_modal_title ?></h4>
+                <h4 class="modal-title"><?php echo h($help_modal_title); ?></h4>
               </div>
               <div class="modal-body">
-                <p><?php echo $help_modal_txt ?></p>
+                <p><?php echo h($help_modal_txt); ?></p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -57,10 +57,10 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?php echo $userInfo_modal_title ?></h4>
+                <h4 class="modal-title"><?php echo h($userInfo_modal_title); ?></h4>
               </div>
               <div class="modal-body">
-                <p><?php echo $completed_coursework_tbl ?></p>
+                <p><?php echo h($completed_coursework_tbl); ?></p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -72,7 +72,7 @@
         <div id="footer_row" class="row footer container-fluid">
             <div class="col-xs-6">
                 <button id="user_id_button" type="button" class="btn btn-info btn-sm" style="float: left;" data-toggle="modal" data-target="#UserInfoModal">
-                    <span class="glyphicon glyphicon-user"></span> <?php echo $user_id ?>
+                    <span class="glyphicon glyphicon-user"></span> <?php echo h($user_id); ?>
                 </button>
             </div>
             <div class="col-xs-6">

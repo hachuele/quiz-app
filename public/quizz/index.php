@@ -66,7 +66,7 @@
 
                 <hr>
 
-                <div id="answer_explanations_div" class="well hidden">
+                <div id="answer_explanations_div" class="well">
                     <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
                     <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
                     <div class='alert alert-danger'><strong>Answer 3: </strong>This answer is wrong due to bla bla bla bla</div>
@@ -103,8 +103,8 @@
 <!-- *********************************** CONTENT END *********************************** -->
 
 <!--load personal scripts-->
-<script src="<?php echo url_for('js/main-script.js')?>"></script>
-<script src="<?php echo url_for('js/quizz-script.js')?>"></script>
+<script src="<?php echo url_for('js/main-script.js');?>"></script>
+<script src="<?php echo url_for('js/quizz-script.js');?>"></script>
 
 <!-- *********************************** PAGE FOOTER *********************************** -->
 <?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>

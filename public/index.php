@@ -37,7 +37,7 @@
     </div>
     <?php foreach($available_courses as $course) { ?>
         <!--THESE BUTTONS WILL NEED TO BE GENERATED BASED ON DATABASE CONTENT (FOR LOOP)-->
-        <button type="button" class="btn btn-primary btn-block" onclick="location.href='<?php echo url_for('quizz/index.php?id=' . h($course['id'])); ?>'"><?php echo h($course['course_name']); ?></button>
+        <button type="button" class="btn btn-primary btn-block" onclick="location.href='<?php echo url_for('quizz/index.php?id=' . h(u($course['id']))); ?>'"><?php echo h($course['course_name']); ?></button>
     <?php } ?>
 
     <br>
@@ -46,8 +46,8 @@
 <!-- *********************************** CONTENT END *********************************** -->
 
 <!--load personal scripts-->
-<script src="<?php echo url_for('js/main-script.js')?>"></script>
-<script src="<?php echo url_for('js/quizz-select-script.js')?>"></script>
+<script src="<?php echo url_for('js/main-script.js');?>"></script>
+<script src="<?php echo url_for('js/quizz-select-script.js');?>"></script>
 
 <!-- *********************************** PAGE FOOTER *********************************** -->
 <?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>
