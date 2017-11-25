@@ -47,13 +47,14 @@ function enableNext(){
 * FORM TO ITS ORIGINAL FORMAT.
 *******************************************************/
 function resetQuizzPage(){
+    $("#answer_explanations_div").hide();
     //RESET THE FORM
     $('#question_form')[0].reset();
     //DISABLE VIEW ANSWERS AND SUBMIT
     $("#view_answers_btn").attr('disabled', true);
     $("#submit_answers_btn").attr('disabled', true);
     $("#next_question_btn").attr('disabled', true);
-    $("#answer_explanations_div").hide();
+
 }
 
 

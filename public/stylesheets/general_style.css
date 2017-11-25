@@ -53,8 +53,9 @@ body, html {
 }
 
 #page_title_txt{
-    font-size: 20px;
+    font-size: 25px;
     color: white;
+    font-family: 'Trebuchet MS';
 }
 
 #page_logo_right_div{
