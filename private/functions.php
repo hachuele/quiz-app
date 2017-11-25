@@ -16,4 +16,8 @@
 
     }
 
+    function u($string=""){
+        return urlencode($string);
+    }
+
 ?>
