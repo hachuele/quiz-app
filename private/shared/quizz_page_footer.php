@@ -6,7 +6,6 @@
     #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
     $user_id = 'hachuelb';
 
-    $userInfo_modal_title = 'COMPLETED QUIZZES FOR: <strong>'.$user_id."</strong>";
     $help_modal_title = 'HPC QUIZZ HELP';
     $help_modal_txt = 'Please complete the selected Quizz...';
 
@@ -57,10 +56,15 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?php echo h($userInfo_modal_title); ?></h4>
+                  <h4 class="modal-title">COMPLETED QUIZZES FOR: <strong><?php echo h($user_id); ?></strong></h4>
               </div>
               <div class="modal-body">
-                <p><?php echo h($completed_coursework_tbl); ?></p>
+                  <?php foreach($completed_coursework as $course => $compl_date) { ?>
+                  <div class="alert alert-success completed_course">
+                      <strong><?php echo h($course); ?></strong>
+                      <span style='float:right;'><i>(Completed on: <?php echo h($compl_date); ?>)</i></span>
+                  </div>
+                  <?php } ?>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
