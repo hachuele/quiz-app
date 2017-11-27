@@ -29,7 +29,7 @@
             <h4><strong>QUESTION 1:</strong> WHAT IS THE FIRST STEP A USER MUST TAKE WHEN LOGGING INTO HPC?</h4>
         </div>
         <div class="questions_list_div">
-            <form id="question_form">
+            <form id="question_form" action="" method="post">
                 <!--INNER FORM ELEMENTS GENERATED DYNAMICALLY WITH DATABASE (ALSO CHANGE CHECKBOX NUMVER DYNAMICALLY-->
                 <div class="question_item_div center">
                     <div class="checkbox question_item">

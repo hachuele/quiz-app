@@ -58,8 +58,6 @@ function resetQuizzPage(){
 }
 
 
-
-
 /******************code runs once DOM ready******************/
 $(document).ready(function(){
 

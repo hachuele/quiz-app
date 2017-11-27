@@ -32,7 +32,7 @@ function footerUpdate(){
 
 /*code runs once DOM ready*/
 $(document).ready(function(){
-
+    footerUpdate();
 
     $(window).resize(function() {
         console.log("resize!");

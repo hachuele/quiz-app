@@ -9,6 +9,5 @@
 /*code runs once DOM ready*/
 $(document).ready(function(){
     //Resize Footer as Required
-    footerUpdate();
 
 });
