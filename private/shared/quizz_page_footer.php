@@ -24,6 +24,7 @@
         }
     }
     else{
+        //WILL ACTUALLY LOOK IN DATABASE, IF NO RECORDS, RETURN THIS.
         $completed_coursework_tbl .= "<div class='alert alert-danger'> No courses completed.</div>";
     }
 

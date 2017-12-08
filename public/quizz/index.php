@@ -15,7 +15,6 @@
     $question_title = "";
     $questions_array = "";
     #DB INFORMATION
-    $id = isset($_GET['id']) ? $_GET['id'] : '1';
 ?>
 
 
@@ -33,22 +32,22 @@
                 <!--INNER FORM ELEMENTS GENERATED DYNAMICALLY WITH DATABASE (ALSO CHANGE CHECKBOX NUMVER DYNAMICALLY-->
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" value="">Option 1</label>
+                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 1</label>
                     </div>
                 </div>
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" value="">Option 2</label>
+                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 2</label>
                     </div>
                 </div>
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" value="">Option 3</label>
+                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 3</label>
                     </div>
                 </div>
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" value="">Option 4</label>
+                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 4</label>
                     </div>
                 </div>
 
@@ -56,11 +55,8 @@
 
                 <div class="row center">
                     <div id="view_answers_btn_div" class="col-sm-12">
-                        <!--formaction="xxxx.php" to retrieve answers (dont want them in the div prior to click)-->
-<!--                        <button id="view_answers_btn" class="btn btn-info" type="submit" formaction="">View Answers</button>-->
                         <!--BUTTONS HAVE DEFAULT TYPE SUBMIT, CHANGE TO ONCLICK FUNCTION TO RETRIEVE ANSWERS FROM DB-->
                         <button id="view_answers_btn" class="btn btn-info" type="button">View Answers</button>
-
                     </div>
                 </div>
 
