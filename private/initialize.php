@@ -19,7 +19,12 @@
     define("WWW_ROOT", $doc_root);
 
 
-    require_once('functions.php'); #load functions.php file
+    require_once('functions.php'); # load functions.php file
+    require_once('database.php');  # make database functions available
+
+    // Initiate a database connection when initialize.php gets loaded
+    // This ensures every page will immediately log into the server
+    $db = db_connect();
 
 
 ?>

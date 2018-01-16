@@ -90,3 +90,11 @@
 
     </body>
 </html>
+
+<!--DISCONNECT FROM THE DATABASE-->
+
+<?php
+
+    db_disconnect($db);
+
+?>
