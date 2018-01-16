@@ -11,6 +11,9 @@
 <!--DATA FROM SQL DATABASE-->
 <?php
 
+    # GET COURSE SET FROM TABLE USING QUERY FUNCTION
+    $course_set = find_all_visible_courses();
+
     #PLACEHOLDER ARRAY FOR AVAILABLE QUIZZES (STAND IN FOR DATABASE)
     $available_courses = [
         ['id' => '1', 'course_name' => 'HPC New User'],
