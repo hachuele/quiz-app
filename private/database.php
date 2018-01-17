@@ -2,16 +2,9 @@
 
     require_once('db_credentials.php');
 
-
-    define("DB_USERNAME", "root");
-    define("DB_PASSWORD", "root");
-    define("DB_HOST", "localhost");
-    define("DB_DATABASE", "hpc_quizzing_db");
-
     //Function to create a connection to the database
     function db_connect(){
-//        $connection = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-        $connection = mysqli_connect('localhost', 'root', 'root', 'hpc_quizzing_db');
+        $connection = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
         confirm_db_connect();
         return $connection;
     }

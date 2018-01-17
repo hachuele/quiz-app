@@ -25,8 +25,7 @@
         <h2>Available Quizzes</h2>
     </div>
     <?php while($available_course = mysqli_fetch_assoc($course_set)) { ?>
-        <!--THESE BUTTONS WILL NEED TO BE GENERATED BASED ON DATABASE CONTENT (FOR LOOP)-->
-        <button type="button" class="btn btn-primary btn-block" onclick="location.href='<?php echo url_for('quizz/index.php?id=' . h(u($available_course['assessment_id']))); ?>'"><?php echo h($available_course['assessment_name']); ?></button>
+        <button type="button" class="btn btn-primary btn-block" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'"><?php echo h($available_course['assessment_name']); ?></button>
     <?php } ?>
 
     <br>

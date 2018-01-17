@@ -10,6 +10,18 @@
 
 <!--DATA FROM SQL DATABASE-->
 <?php
+
+    $assessment_id = $_GET['assessment_id'] ?? '1';
+
+    $sql_questions = "SELECT * FROM questions ";
+    $sql_questions .= "WHERE assessment_id='" . $assessment_id . "'";
+    $result = mysqli_query($db, $sql_questions);
+    confirm_result_set($result);
+    return $result;
+
+    $question = mysqli_fetch_assoc($result);
+//    mysqli_free_result($result);
+
     //TESTING
     $question_number = "";
     $question_title = "";
