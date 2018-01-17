@@ -6,10 +6,11 @@ function find_all_visible_courses(){
     global $db;
     # GET AVAILABLE COURSES FROM THE DATABASE 'hpc_quizzing_db'
     $sql_assessments = "SELECT * FROM assessments "; //whitespace after assessments required
-    $sql_assessments .= "WHERE assessment_visible=1";
+//    $sql_assessments .= "WHERE assessment_visible=1";
     # GET COURSE SET FROM TABLE
     $result_course_set = mysqli_query($db, $sql_assessments);
-    return result_course_set;
+    confirm_result_set($result_course_set);
+    return $result_course_set;
 
 }
 
