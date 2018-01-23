@@ -12,9 +12,16 @@
 <?php
 
     $assessment_id = $_GET['assessment_id'] ?? '1';
+    $assessment_name = get_assessment_name($assessment_id);
+
 
     $question_set = find_questions_by_assessment_id($assessment_id);
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
+
+//    $choice_set_1 = find_choices_by_question_id(1);
+//    $num_choices = mysqli_num_rows($choice_set_1);
+//    echo $num_choices;
+
 
 ?>
 
@@ -23,13 +30,23 @@
 <?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
 
 <!-- *********************************** CONTENT START *********************************** -->
+<div class="container-fluid assessment_title_main centering_div">
+    <div id ="assessment_title_row_div" class="row centered_div">
+        <div class="col-sm-12">
+            <div class="row">
+                <h3><?php echo h($assessment_name) ?></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container main_content">
     <div id="quizz_question_div" class="container question_card">
         <div id="quizz_question_title" class="page-header">
             <h4 id="question_header"><strong>QUESTION 1:</strong> WHAT IS THE FIRST STEP A USER MUST TAKE WHEN LOGGING INTO HPC?</h4>
         </div>
         <div class="questions_list_div">
-            <form id="question_form" action="" method="post">
+            <form id="question_form" action="process_answers.php" method="POST">
                 <!--INNER FORM ELEMENTS GENERATED DYNAMICALLY WITH DATABASE (ALSO CHANGE CHECKBOX NUMVER DYNAMICALLY-->
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
@@ -56,7 +73,6 @@
 
                 <div class="row center">
                     <div id="view_answers_btn_div" class="col-sm-12">
-                        <!--BUTTONS HAVE DEFAULT TYPE SUBMIT, CHANGE TO ONCLICK FUNCTION TO RETRIEVE ANSWERS FROM DB-->
                         <button id="view_answers_btn" class="btn btn-info" type="button">View Answers</button>
                     </div>
                 </div>

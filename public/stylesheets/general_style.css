@@ -37,6 +37,15 @@ body, html {
     width: 100%;
 }
 
+.assessment_title_main{
+    background:#007BFF;
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-family: 'Trebuchet MS';
+}
+
 #header_row_div{
     width: 100%;
     margin: 0 auto;
@@ -126,7 +135,6 @@ body, html {
 
 
 /**************CONTENT (QUIZZ SITE)**************/
-
 
 
 .question_card{
