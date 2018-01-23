@@ -71,11 +71,13 @@
 
                 <br>
 
+<!--
                 <div class="row center">
                     <div id="view_answers_btn_div" class="col-sm-12">
                         <button id="view_answers_btn" class="btn btn-info" type="button">View Answers</button>
                     </div>
                 </div>
+-->
 
                 <hr>
 
@@ -92,9 +94,8 @@
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
                     </div>
-                    <div id="submit_answers_btn_div" class="col-xs-6">
-                        <!--formaction="xxxx.php" to submit answers (dont want them in the div prior to click)-->
-                        <button id="submit_answers_btn" class="btn btn-default btn-block" type="submit" name="camper" formaction="">SUBMIT</button>
+                    <div id="view_answers_btn_div" class="col-xs-6">
+                        <button id="view_answers_btn" class="btn btn-info btn-block" type="button">SUBMIT</button>
                     </div>
                     <div id="next_question_btn_div" class="col-xs-3">
                         <button id="next_question_btn" type="button" class="btn btn-info">
