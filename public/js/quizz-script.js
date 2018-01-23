@@ -9,6 +9,9 @@
 *******************************************************/
 function toggleAnswersDiv(){
     //check if the button is enabled (i.e: an answer has been selected)
+
+    //AJAX CALL HERE
+
     if($("#view_answers_btn").is(":enabled")){
         //WILL NEED TO RETRIEVE ANSWERS FIRST
         $("#answer_explanations_div").show(1000, function(){

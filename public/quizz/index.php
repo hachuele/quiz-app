@@ -16,12 +16,6 @@
     $question_set = find_questions_by_assessment_id($assessment_id);
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
 
-
-    //TESTING
-    $question_number = "";
-    $question_title = "";
-    $questions_array = "";
-    #DB INFORMATION
 ?>
 
 
@@ -32,29 +26,29 @@
 <div class="container main_content">
     <div id="quizz_question_div" class="container question_card">
         <div id="quizz_question_title" class="page-header">
-            <h4><strong>QUESTION 1:</strong> WHAT IS THE FIRST STEP A USER MUST TAKE WHEN LOGGING INTO HPC?</h4>
+            <h4 id="question_header"><strong>QUESTION 1:</strong> WHAT IS THE FIRST STEP A USER MUST TAKE WHEN LOGGING INTO HPC?</h4>
         </div>
         <div class="questions_list_div">
             <form id="question_form" action="" method="post">
                 <!--INNER FORM ELEMENTS GENERATED DYNAMICALLY WITH DATABASE (ALSO CHANGE CHECKBOX NUMVER DYNAMICALLY-->
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 1</label>
+                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="check_1" value="">Option 1</label>
                     </div>
                 </div>
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 2</label>
+                        <span class=" glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="check_2" value="">Option 2</label>
                     </div>
                 </div>
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 3</label>
+                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="check_3" value="">Option 3</label>
                     </div>
                 </div>
                 <div class="question_item_div center">
                     <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="" value="">Option 4</label>
+                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="check_4" value="">Option 4</label>
                     </div>
                 </div>
 
