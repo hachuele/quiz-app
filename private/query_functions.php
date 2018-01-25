@@ -33,6 +33,12 @@
         return $result_question_set;
     }
 
+    function find_question_by_question_num($assessment_id, $question_num){
+        global $db;
+        $sql_question = "SELECT question_text FROM questions ";
+        $sql_question .= "WHERE question_id ='" . $question_num . "'";
+    }
+
 
     function find_choices_by_question_id($question_id){
         global $db;
