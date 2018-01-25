@@ -3,25 +3,7 @@
 * *********SPECIFIC TO THE QUIZZ PAGE********** *
 *************************************************/
 
-/******************************************************
-* THE TOGGLE ANSWER DIC FUNCTION SHOWS THE ANSWER BOX
-* IF THE BUTTON IS ENABLED (WHEN ANSWER SELECTED)
-*******************************************************/
-function toggleAnswersDiv(){
-    //check if the button is enabled (i.e: an answer has been selected)
 
-    //AJAX CALL HERE
-
-    if($("#view_answers_btn").is(":enabled")){
-        //WILL NEED TO RETRIEVE ANSWERS FIRST
-        $("#answer_explanations_div").show(1000, function(){
-            footerUpdate();
-            console.log("Worked!");
-        });
-        disableFormInput();
-        enableNext();
-    }
-}
 
 /******************************************************
 * THE DISABLE FORM INPUT FUNCTION DISABLES ALL INPUTS
@@ -42,6 +24,38 @@ function disableFormInput(){
 function enableNext(){
     //Enable the next question (if any) //THIS WILL NEED TO BE BASED ON NUM QUESTIONS
     $("#next_question_btn").prop('disabled', false);
+}
+
+/******************************************************
+* LOAD NEXT PERFORMS AN AJAX CALL TO RETRIEVE THE NEXT
+* QUESTION DATA (IF AVAILABLE)
+*******************************************************/
+function loadNext(){
+    if($("#next_question_btn").is(":enabled")){
+
+        //THE DATA SHOULD BE THE QUESTION NUMBER
+        //AJAX CALL TO LOAD QUESTIONS
+
+    }
+
+
+}
+
+
+
+/******************************************************
+* LOAD PREVIOUS PERFORMS AN AJAX CALL TO RETRIEVE THE
+* PREVIOUS' QUESTION DATA (IF AVAILABLE)
+*******************************************************/
+function loadPrevious(){
+    if($("#previous_question_btn").is(":enabled")){
+
+        //THE DATA SHOULD BE THE QUESTION NUMBER
+        //AJAX CALL TO LOAD QUESTIONS
+
+    }
+
+
 }
 
 
@@ -74,15 +88,28 @@ $(document).ready(function(){
     *******************************************************/
     $("#view_answers_btn").click(function(){
         toggleAnswersDiv();
-
-
-        var quizzSelectDiv = $(".main_content").outerHeight();
-        var windowHeight = $(window).height();
-
-        console.log("QUIZZ DIV HEIGHT toggle: " + quizzSelectDiv);
-        console.log("WINDOW HEIGHT toggle: " + windowHeight);
-
     });
+
+
+    /******************************************************
+    * THE TOGGLE ANSWER DIC FUNCTION SHOWS THE ANSWER BOX
+    * IF THE BUTTON IS ENABLED (WHEN ANSWER SELECTED)
+    *******************************************************/
+    function toggleAnswersDiv(){
+        //check if the button is enabled (i.e: an answer has been selected)
+        if($("#view_answers_btn").is(":enabled")){
+            //AJAX CALL TO PROCESS ANSWERS
+
+
+
+            $("#answer_explanations_div").show(1000, function(){
+                footerUpdate();
+                console.log("Worked!");
+            });
+            disableFormInput();
+            enableNext();
+        }
+    }
 
     /******************************************************
     * ENABLE ANSWER BUTTON ON INPUT CLICK
