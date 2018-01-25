@@ -11,15 +11,58 @@
 <!--DATA FROM SQL DATABASE-->
 <?php
 
-    $assessment_id = $_GET['assessment_id'] ?? '1';
-    $assessment_name = get_assessment_name($assessment_id);
+    //INITIALIZE VARIABLES
+    $questions_array = array();
+
+    //ALSO NEED TO PASS USER ID TO DETERMINE NUM QUESTIONS ALREADY COMPLETED ETC ETC - LOAD EXISTING DATA
+
+
+    $assessment_id = $_GET['assessment_id'] ?? '1'; // get the assessment id from url
+    $assessment_name = get_assessment_name($assessment_id); // get the name of this assessment for display
+
+
+    $current_q_num = 1; //Set current question number to 1
+
+
     $question_set = find_questions_by_assessment_id($assessment_id); //get questions for selected assessment
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
+    //add question set to array for future manipulation
+    while($question = mysqli_fetch_array($question_set, MYSQLI_BOTH)){
+        array_push($questions_array, $question);
+    }
+
+
+    //When the user clicks next
+    if(isset($_POST['submit'])){
 
 
 
+
+    }
+
+
+
+
+
+
+
+//    for($i = 0; $i < $num_questions; $i++){
+//        $hello = "this:" . $questions_array[$i]['question_text'] . '<br>';
+//        echo $hello;
+//    }
+
+
+
+
+    //NEED IF FUNCTION WITH FECTCHED DATA FROM user_answers TO FILL OUT FOR IF ALREADY SUBMITTED BEFORE. SINCE
+    //ONLY DATA THERE IF SUBMITTED.
+
+    //TODO: NEED TO REMEBER DATA IN CASE OF A REFRESH WITH A SESSION!! (SAVE CURRENT QUESTION NUMBER FOR EXAMPLE)
 
     //TODO: WILL NEED TO FETCH USER'S DETAILS TO FILL OUT PERCENT COMPLETE AND QUESTION BY QUESTION
+
+    //only show previous button, for example, if not on first question
+    //<?php if ($questionumber == 1) { ...
 
 //    $choice_set_1 = find_choices_by_question_id(1);
 //    $num_choices = mysqli_num_rows($choice_set_1);
@@ -44,6 +87,7 @@
 </div>
 
 <div class="container main_content">
+
     <div id="quizz_question_div" class="container question_card">
         <div id="quizz_question_title" class="page-header">
             <h4 id="question_header"><strong>QUESTION 1:</strong> WHAT IS THE FIRST STEP A USER MUST TAKE WHEN LOGGING INTO HPC?</h4>
@@ -90,7 +134,7 @@
                         <button id="view_answers_btn" class="btn btn-info btn-block" type="button">SUBMIT</button>
                     </div>
                     <div id="next_question_btn_div" class="col-xs-3">
-                        <button id="next_question_btn" type="button" class="btn btn-info">
+                        <button id="next_question_btn" type="submit" class="btn btn-info">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
@@ -100,6 +144,7 @@
         <br>
     </div>
     <hr>
+
     <div id="quizz_progress_bar_div">
         <div class="progress">
           <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">40%</div>
