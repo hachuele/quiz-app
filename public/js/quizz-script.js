@@ -6,6 +6,14 @@
 
 
 /******************************************************
+* THE HIDE QUESTION CARD FUNCTION HIDES QUESTIONS
+*******************************************************/
+function hideQuestionCard(){
+
+}
+
+
+/******************************************************
 * THE DISABLE FORM INPUT FUNCTION DISABLES ALL INPUTS
 *******************************************************/
 function disableFormInput(){
@@ -41,6 +49,20 @@ function loadNext(){
 
 }
 
+//WILL  USE THE QUESTION NUMBER !!!!!!
+//var active = 1;
+//
+//function loadNext(){
+//    if($("#next_question_btn_" + active).is(":enabled")){
+//
+//        //THE DATA SHOULD BE THE QUESTION NUMBER
+//        //AJAX CALL TO LOAD QUESTIONS
+//
+//    }
+//
+//
+//}
+
 
 
 /******************************************************
@@ -58,7 +80,7 @@ function loadPrevious(){
 
 }
 
-
+//PROBABLY WILL NOT NEED TO RESET PAGE!!!
 /******************************************************
 * THE RESET QUIZZ PAGE FUNCTION UPDATES/RESTORES THE
 * FORM TO ITS ORIGINAL FORMAT.
@@ -77,6 +99,9 @@ function resetQuizzPage(){
 
 /******************code runs once DOM ready******************/
 $(document).ready(function(){
+
+    //Current question
+    var currentQuestion = 0;
 
     //Reset the quizz page then update the footer
     resetQuizzPage();
@@ -111,6 +136,7 @@ $(document).ready(function(){
         }
     }
 
+    //NEED TO ADD CHOICE ID (AND EVERYTHING ELSE ON THE FUNCTIONS PAGE)
     /******************************************************
     * ENABLE ANSWER BUTTON ON INPUT CLICK
     *******************************************************/
