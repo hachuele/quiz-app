@@ -13,7 +13,12 @@
 
 function footerUpdate(){
    //FUNCTION TO DETECT SIZE OF SCREEN AND ADJUST FOOTER CLASS
-    var header_height = $(".header_main").height();
+    if($(".assessment_title_main").length == 0){
+        var header_height = $(".header_main").height();
+    }
+    else{
+        var header_height = $(".header_main").height() + $(".assessment_title_main").height();
+    }
     var footer_height = $("#footer_row").height();
     var scrollTopHeigh = $(window).scrollTop();
     var mainContentDiv = $(".main_content").innerHeight();
