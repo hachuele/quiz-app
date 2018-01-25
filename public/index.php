@@ -2,6 +2,10 @@
 
 <?php
     $course_set = find_all_visible_courses();
+
+
+    //TODO: USE USER ID TO DIFFERENTIATE BETWEEN COMPLETED ASSIGNMENTS ETC.
+
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
         #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
     //    $user_id = 'hachuelb';
