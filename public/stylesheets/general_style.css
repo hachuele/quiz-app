@@ -148,13 +148,8 @@ body, html {
 }
 
 
-#quizz_question_div{
+.quizz_question_div{
     max-width: 700px;
-
-}
-
-#quizz_question_title{
-
 
 }
 
@@ -167,10 +162,6 @@ body, html {
 
 }
 
-.question_item{
-
-
-}
 
 .question_label{
     font-size: 15px;
@@ -189,7 +180,7 @@ body, html {
 }
 
 
-#view_answers_btn_div{
+.view_answers_btn_div{
     text-align: center;
 }
 
@@ -200,19 +191,19 @@ body, html {
 }
 
 
-#bottom_button_set{
+.bottom_button_set{
     width: 100%;
     text-align: center;
 
 }
 
-#previous_question_btn_div{
+.previous_question_btn_div{
     text-align: left;
 
 }
 
 
-#next_question_btn_div{
+.next_question_btn_div{
     text-align:right;
 }
 
