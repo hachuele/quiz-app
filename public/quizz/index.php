@@ -13,10 +13,13 @@
 
     $assessment_id = $_GET['assessment_id'] ?? '1';
     $assessment_name = get_assessment_name($assessment_id);
-
-
-    $question_set = find_questions_by_assessment_id($assessment_id);
+    $question_set = find_questions_by_assessment_id($assessment_id); //get questions for selected assessment
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
+
+
+
+
+    //TODO: WILL NEED TO FETCH USER'S DETAILS TO FILL OUT PERCENT COMPLETE AND QUESTION BY QUESTION
 
 //    $choice_set_1 = find_choices_by_question_id(1);
 //    $num_choices = mysqli_num_rows($choice_set_1);
@@ -34,7 +37,7 @@
     <div id ="assessment_title_row_div" class="row centered_div">
         <div class="col-sm-12">
             <div class="row">
-                <h3><?php echo h($assessment_name) ?></h3>
+                <h3 id="assessment_title_txt"><?php echo h($assessment_name) ?></h3>
             </div>
         </div>
     </div>
@@ -68,19 +71,8 @@
                         <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="check_4" value="">Option 4</label>
                     </div>
                 </div>
-
                 <br>
-
-<!--
-                <div class="row center">
-                    <div id="view_answers_btn_div" class="col-sm-12">
-                        <button id="view_answers_btn" class="btn btn-info" type="button">View Answers</button>
-                    </div>
-                </div>
--->
-
                 <hr>
-
                 <div id="answer_explanations_div" class="well">
                     <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
                     <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
