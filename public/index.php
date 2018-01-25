@@ -1,3 +1,7 @@
+<?php
+    //start the session
+    session_start();
+?>
 <?php require_once('../private/initialize.php'); ?>
 
 <?php
