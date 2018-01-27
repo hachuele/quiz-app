@@ -27,6 +27,11 @@ body, html {
     display: none;
 }
 
+/* Use to activate a question card */
+.active{
+    display:block!important;
+}
+
 /**************HEADER STYLES (IN ORDER OF APPEARANCE)**************/
 
 .header_main{
