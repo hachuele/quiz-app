@@ -5,7 +5,8 @@
         # bring in $db from outside scope (since not passed in as argument)
         global $db;
         $sql_assessments = "SELECT * FROM assessments "; //whitespace after assessments required
-        $sql_assessments .= "WHERE assessment_visible=1";
+        $sql_assessments .= "WHERE assessment_visible=1 ";
+        $sql_assessments .= "ORDER BY assessment_id ASC";
         # GET COURSE SET FROM TABLE
         $result_course_set = mysqli_query($db, $sql_assessments);
         confirm_result_set($result_course_set);
@@ -27,16 +28,11 @@
         global $db;
         $sql_questions = "SELECT * FROM questions ";
         $sql_questions .= "WHERE assessment_id='" . $assessment_id . "'";
+        $sql_questions .=  "ORDER BY question_id ASC";
         # GET QUESTION SET FROM TABLE
         $result_question_set = mysqli_query($db, $sql_questions);
         confirm_result_set($result_question_set);
         return $result_question_set;
-    }
-
-    function find_question_by_question_num($assessment_id, $question_num){
-        global $db;
-        $sql_question = "SELECT question_text FROM questions ";
-        $sql_question .= "WHERE question_id ='" . $question_num . "'";
     }
 
 
@@ -44,6 +40,7 @@
         global $db;
         $sql_choices = "SELECT * FROM question_choices ";
         $sql_choices .= "WHERE question_id='" . $question_id . "'";
+        $sql_choices .=  "ORDER BY question_choice_id ASC";
         # GET CHOICE SET FROM TABLE
         $result_choice_set = mysqli_query($db, $sql_choices);
         confirm_result_set($result_choice_set);
