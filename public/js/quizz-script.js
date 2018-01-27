@@ -4,28 +4,14 @@
 *************************************************/
 
 
-
-
 //WILL  USE THE QUESTION NUMBER !!!!!!
 //var active = 1;
-//
 //function loadNext(){
 //    if($("#next_question_btn_" + active).is(":enabled")){
-//
-//        //THE DATA SHOULD BE THE QUESTION NUMBER
-//        //AJAX CALL TO LOAD QUESTIONS
-//
 //    }
-//
-//
 //}
-
-
-//USE JQUERY REGEX TO FIND ACTIVE QUESTION NUMBER
-
 //PROBABLY WILL NOT NEED TO RESET PAGE!!!
 
-//NOTE QUESTION FORM WILL CHANGE TO question_form_1...etc so won't reset.
 
 /******************************************************
 * THE RESET QUIZZ PAGE FUNCTION UPDATES/RESTORES THE
@@ -48,18 +34,10 @@ $(document).ready(function(){
     //Reset the quizz page then update the footer
     resetQuizzPage();
     footerUpdate();
-
-    // get current active question number (class ACTIVE) REGEX
-    var currentQuestion = 1;
+    var numQuestions = countNumQuestions();
 
 
-    /******************************************************
-    * TOGGLE THE ANSWERS BOX (IF ENABLED)
-    *******************************************************/
-    $("#view_answers_btn").click(function(){
-        toggleAnswersDiv();
-    });
-
+    /* ------------------ FUNCTION DEFINITIONS ------------------ */
 
     /******************************************************
     * THE TOGGLE ANSWER DIC FUNCTION SHOWS THE ANSWER BOX
@@ -81,27 +59,12 @@ $(document).ready(function(){
         }
     }
 
-    //NEED TO ADD QUESTION ID (AND EVERYTHING ELSE ON THE FUNCTIONS PAGE)
-    /******************************************************
-    * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
-    *******************************************************/
-    $('.checkbox_item').click(function () {
-        $('#view_answers_btn').attr('disabled', !$('.checkbox_item:checked').length);
-    });
-
-
-    /******************************************************
-    * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
-    *******************************************************/
-    $('.radio_item').click(function () {
-        $('#view_answers_btn').attr('disabled', false);
-    });
 
 
 
     /******************************************************
     * ENABLE NEXT CHECKS ENABLES MOVING TO THE NEXT QUESTION
-    * OR SUBMITTING THE QUIZZ IF ALL QUESTIONS ANSWERED
+    * OR ENDING THE QUIZZ IF ALL QUESTIONS ANSWERED
     *******************************************************/
     //TODO: MUST USE DATABASE INFORMATION TO KNOW IF LAST QUESTION
     function enableNext(){
@@ -115,13 +78,28 @@ $(document).ready(function(){
     *******************************************************/
     function loadNext(){
         if($("#next_question_btn").is(":enabled")){
+            //hide current question (remove active class)
+            //activate next question (if any)
+            //change next button if at last question (to details page)
+            currQuestionNum = currentQuestionNum();
+            if(currentQuestionNum != countNumQuestions){
+                hideActiveQuestionCard(currQuestionNum);
+                activateQuestionCard(currQuestionNum++);
 
-            //THE DATA SHOULD BE THE QUESTION NUMBER
-            //AJAX CALL TO LOAD QUESTIONS
-
+            } else{
+                alert('END OF QUIZZ');
+            }
         }
+    }
 
 
+    /******************************************************
+    * ENABLE PREVIOUS CHECKS ENABLES MOVING TO THE PREVIOUS
+    * QUESTION
+    *******************************************************/
+    function enablePrevious(){
+        //Enable the next question (if any) //THIS WILL NEED TO BE BASED ON NUM QUESTIONS
+        $("#previous_question_btn").prop('disabled', false);
     }
 
 
@@ -140,14 +118,19 @@ $(document).ready(function(){
 
     }
 
-
     /******************************************************
     * THE HIDE QUESTION CARD FUNCTION HIDES QUESTIONS
     *******************************************************/
-    function hideQuestionCard(){
-
+    function hideActiveQuestionCard(questionNumber){
+        $('#question_card_' + questionNumber).removeClass('active');
     }
 
+    /********************************************************
+    * THE ACTIVATE QUESTION CARD FUNCTION ACTIVATES QUESTIONS
+    *********************************************************/
+    function activateQuestionCard(questionNumber){
+        $('#question_card_' + questionNumber).addClass('active');
+    }
 
 
     /******************************************************
@@ -160,6 +143,54 @@ $(document).ready(function(){
         $("#question_form :input").prop("disabled", true);
     }
 
+
+    /*********************************************************
+    * COUNTS THE NUMBER OF QUESTIONS IN THE CURRENT ASSESSMENT
+    **********************************************************/
+    function countNumQuestions(){
+        numQuestions = $(".question_card").length;
+        return numQuestions;
+    }
+
+    /*********************************************************
+    * GETS THE NUMBER OF THE CURRENT QUESTION
+    **********************************************************/
+    function currentQuestionNum(){
+        //finds item with active class, gets question num using regex
+        questionCardID = $('div .active').attr('id');
+        questionNum = questionCardID.match(/\d/g);
+        return questionNum;
+    }
+
+
+
+    /* ------------------ CLICK EVENTS ------------------ */
+
+
+
+    /******************************************************
+    * TOGGLE THE ANSWERS BOX (IF ENABLED)
+    *******************************************************/
+    $("#view_answers_btn").click(function(){
+        toggleAnswersDiv();
+    });
+
+
+    //NEED TO ADD QUESTION ID (AND EVERYTHING ELSE ON THE FUNCTIONS PAGE)
+    /******************************************************
+    * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
+    *******************************************************/
+    $('.checkbox_item').click(function () {
+        $('#view_answers_btn').attr('disabled', !$('.checkbox_item:checked').length);
+    });
+
+
+    /******************************************************
+    * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
+    *******************************************************/
+    $('.radio_item').click(function () {
+        $('#view_answers_btn').attr('disabled', false);
+    });
 
 
 

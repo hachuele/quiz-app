@@ -18,7 +18,19 @@
 <?php
 
     //INITIALIZE VARIABLES
-    $questions_array = array();
+    $user_id = 'hachuelb';
+    //USER ID LATEST QUESTION IS MAX(QUESTION_ID) FROM USER ANSWERS TABLE
+
+
+
+//    unset($_SESSION['currentQuestion']);
+    $_SESSION["currentQuestion"] = 1;
+//    if(!isset($_SESSION["currentQuestion"])){
+//        $_SESSION["currentQuestion"] = 1; //should be the latest completed question from database
+//    } else{
+//        $_SESSION["currentQuestion"]++;
+//    }
+//       echo $_SESSION["currentQuestion"];
 
     //ALSO NEED TO PASS USER ID TO DETERMINE NUM QUESTIONS ALREADY COMPLETED ETC ETC - LOAD EXISTING DATA
 
@@ -30,9 +42,12 @@
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
 
 
-//    //add question set to array for future manipulation
-//    while($question = mysqli_fetch_array($question_set, MYSQLI_BOTH)){
-//        array_push($questions_array, $question);
+
+
+    $questions_array = array();
+    //add question set to array for future manipulation
+//    while($questionx = mysqli_fetch_array($question_set, MYSQLI_BOTH)){
+//        array_push($questions_array, $questionx);
 //    }
 
 //    $choice_set = find_choices_by_question_id(1);
@@ -43,17 +58,12 @@
 //    }
 
     //use choice id for in the choice while loop (give an id to the check or radio name)
-
-
-
 //    for($i = 0; $i < $num_questions; $i++){
 //        $hello = "this:" . $questions_array[$i]['question_text'] . '<br>';
 //        echo $hello;
 //    }
 
-
-
-
+//SELECT MAX( `column` ) FROM `table` ;
     //NEED IF FUNCTION WITH FECTCHED DATA FROM user_answers TO FILL OUT FOR IF ALREADY SUBMITTED BEFORE. SINCE
     //ONLY DATA THERE IF SUBMITTED.
 
@@ -85,19 +95,27 @@
         </div>
     </div>
 </div>
-
+<!--CAN USE QUESTION NUMBER TO HIDE/ACTIVATE QUESTIONS - WHEN HAVE COMPLETED SOME QUESTIONS, GO TO THAT ONE-->
+<!--ADD ACTIVE CLASS TO MAKE IT VISIBLE, NO NEED TO REMOVE HIDDEN CLASS-->
 <div class="container main_content">
     <?php $question_num = 1; ?>
     <!--START MAIN PHP LOOP FOR GENERATING QUESTIONS-->
     <?php while($question = mysqli_fetch_assoc($question_set)) { ?>
-    <div class="quizz_question_div container question_card">
+
+    <?php $question_active_class = ''; ?>
+    <?php
+        if($question_num == $_SESSION["currentQuestion"]){
+            $question_active_class = 'active';
+        } else{
+            $question_active_class = '';
+        }
+    ?>
+    <div id="question_card_<?php echo h($question['question_id']) ?>" class="hidden <?php echo $question_active_class ?> quizz_question_div container question_card">
         <div class="page-header">
             <h4><strong>QUESTION <?php echo $question_num ?>:</strong> <?php echo h($question['question_text']) ?></h4>
         </div>
         <div class="questions_list_div">
             <form id="question_form_<?php echo h($question['question_id']) ?>" action="process_answers.php" method="POST">
-                <!--INNER FORM ELEMENTS GENERATED DYNAMICALLY WITH DATABASE (ALSO CHANGE CHECKBOX NUMVER DYNAMICALLY-->
-
                 <!--LOAD QUESTION CHOICES-->
                 <?php
                     if ($question['question_multivalued'] == 1){
@@ -131,7 +149,7 @@
 
                 <br>
                 <hr>
-                <!--MAY WANT TO ADD THIS DIV DYNAMICALLY WITH AJAX-->
+                <!--ECHO/ADD THIS DIV DYNAMICALLY WITH AJAX-->
                 <div id="answer_explanations_div" class="well">
                     <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
                     <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
@@ -159,7 +177,7 @@
         <br>
     </div>
     <hr>
-
+    <!--increment question number for display-->
     <?php $question_num++; ?>
     <!--end of question while loop-->
     <?php } ?>
