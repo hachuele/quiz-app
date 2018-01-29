@@ -35,6 +35,17 @@
         return $result_question_set;
     }
 
+    function get_question_ids_by_assessment_id($assessment_id){
+        global $db;
+        $sql_question_ids = "SELECT question_id FROM questions ";
+        $sql_question_ids .= "WHERE assessment_id='" . $assessment_id . "'";
+        $sql_question_ids .=  "ORDER BY question_id ASC";
+        # GET QUESTION SET FROM TABLE
+        $result_question_id_set = mysqli_query($db, $sql_question_ids);
+        confirm_result_set($result_question_id_set);
+        return $result_question_id_set;
+    }
+
 
     function find_choices_by_question_id($question_id){
         global $db;
