@@ -24,13 +24,15 @@
 
 
 //    unset($_SESSION['currentQuestion']);
+
+    //would set to latest completed question first, then change to whatever user is viewing
     $_SESSION["currentQuestion"] = 1;
+
+
 //    if(!isset($_SESSION["currentQuestion"])){
 //        $_SESSION["currentQuestion"] = 1; //should be the latest completed question from database
-//    } else{
-//        $_SESSION["currentQuestion"]++;
 //    }
-//       echo $_SESSION["currentQuestion"];
+
 
     //ALSO NEED TO PASS USER ID TO DETERMINE NUM QUESTIONS ALREADY COMPLETED ETC ETC - LOAD EXISTING DATA
 
@@ -44,10 +46,13 @@
 
 
 
-    $questions_array = array();
+
+    $question_id_num = array();
+
+//    $questions_array = array();
     //add question set to array for future manipulation
-//    while($questionx = mysqli_fetch_array($question_set, MYSQLI_BOTH)){
-//        array_push($questions_array, $questionx);
+//    while($row = mysqli_fetch_array($question_set, MYSQLI_BOTH)){
+//        array_push($questions_array, $row);
 //    }
 
 //    $choice_set = find_choices_by_question_id(1);
@@ -74,9 +79,7 @@
     //only show previous button, for example, if not on first question
     //<?php if ($questionumber == 1) { ...
 
-//    $choice_set_1 = find_choices_by_question_id(1);
-//    $num_choices = mysqli_num_rows($choice_set_1);
-//    echo $num_choices;
+
 
 
 ?>
@@ -101,7 +104,6 @@
     <?php $question_num = 1; ?>
     <!--START MAIN PHP LOOP FOR GENERATING QUESTIONS-->
     <?php while($question = mysqli_fetch_assoc($question_set)) { ?>
-
     <?php $question_active_class = ''; ?>
     <?php
         if($question_num == $_SESSION["currentQuestion"]){
@@ -110,7 +112,8 @@
             $question_active_class = '';
         }
     ?>
-    <div id="question_card_<?php echo h($question['question_id']) ?>" class="hidden <?php echo $question_active_class ?> quizz_question_div container question_card">
+    <!--question card's ID is composed of the db 'question_id' field and the question_num variable for future extraction-->
+    <div id="question_card_<?php echo h($question['question_id']) ?>-<?php echo $question_num ?>" class="hidden <?php echo $question_active_class ?> quizz_question_div container question_card">
         <div class="page-header">
             <h4><strong>QUESTION <?php echo $question_num ?>:</strong> <?php echo h($question['question_text']) ?></h4>
         </div>
@@ -159,7 +162,7 @@
 
                 <div class="row bottom_button_set">
                     <div class="previous_question_btn_div col-xs-3">
-                        <button id="previous_question_btn" type="button" class="btn btn-info">
+                        <button id="previous_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
                     </div>
@@ -167,7 +170,7 @@
                         <button id="view_answers_btn" class="btn btn-info btn-block" type="button">SUBMIT</button>
                     </div>
                     <div class="next_question_btn_div col-xs-3">
-                        <button id="next_question_btn" type="button" class="btn btn-info">
+                        <button id="next_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
@@ -181,8 +184,6 @@
     <?php $question_num++; ?>
     <!--end of question while loop-->
     <?php } ?>
-
-
 
 
     <div id="quizz_progress_bar_div">
