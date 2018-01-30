@@ -113,7 +113,7 @@
         }
     ?>
     <!--question card's ID is composed of the db 'question_id' field and the question_num variable for future extraction-->
-    <div id="question_card_<?php echo h($question['question_id']) ?>-<?php echo $question_num ?>" class="hidden <?php echo $question_active_class ?> quizz_question_div container question_card">
+    <div id="question_card_<?php echo $question_num ?>" class="hidden <?php echo $question_active_class ?> quizz_question_div container question_card">
         <div class="page-header">
             <h4><strong>QUESTION <?php echo $question_num ?>:</strong> <?php echo h($question['question_text']) ?></h4>
         </div>

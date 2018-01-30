@@ -39,10 +39,10 @@ $(document).ready(function(){
     /* ------------------ FUNCTION DEFINITIONS ------------------ */
 
     /************************************************************
-    * THE TOGGLE ANSWER FUNCTION SHOWS THE ANSWER BOX.
+    * THE SUBMIT ANSWER FUNCTION SHOWS THE ANSWER BOX.
     * PERFORMS AJAX CALL TO SUBMIT USER DATA AND RETRIEVE ANSWERS
     *************************************************************/
-    function toggleAnswersDiv(questionNumber){
+    function submitAnswers(questionNumber){
         //check if the button is enabled (i.e: an answer has been selected)
         if($("#view_answers_btn_" + questionNumber).is(":enabled")){
 
@@ -54,9 +54,12 @@ $(document).ready(function(){
                 footerUpdate();
             });
 
-            disableFormInput();
-
+            $('html, body').animate({
+                   scrollTop: $("#answer_explanations_div_" + questionNumber).offset().top}, 2000);
+            disableFormInput(questionNumber);
+            /* Enable Quizz Navigation Buttons */
             enableNext(questionNumber);
+            enablePrevious(questionNumber);
         }
     }
 
@@ -81,15 +84,12 @@ $(document).ready(function(){
         var questionID = currentQuestionID();
         console.log(questionNumber);
         if($("#next_question_btn_" + questionNumber).is(":enabled")){
-            //change next button if at last question (to details page)
             if(questionNumber != numQuestions){
-                hideActiveQuestionCard(questionID, questionNumber);
-
-                //THIS DOES NOT WORK, CANNOT INCREMENT QUESTION ID.
-                activateQuestionCard(++questionID, ++questionNumber);
+                hideActiveQuestionCard(questionNumber);
+                activateQuestionCard(++questionNumber);
                 footerUpdate();
-
             } else{
+                /* Redirect to end of quizz page (details) */
                 alert('END OF QUIZZ');
             }
         }
@@ -107,44 +107,41 @@ $(document).ready(function(){
         }
     }
 
-
     /******************************************************
     * LOAD PREVIOUS PERFORMS AN AJAX CALL TO RETRIEVE THE
     * PREVIOUS' QUESTION DATA (IF AVAILABLE)
     *******************************************************/
     function loadPrevious(questionNumber){
         if($("#previous_question_btn_" + questionNumber).is(":enabled")){
-
-            alert("IM ENABLED!");
-
-            //THE DATA SHOULD BE THE QUESTION NUMBER
-            //AJAX CALL TO LOAD QUESTIONS
+            hideActiveQuestionCard(questionNumber);
+            activateQuestionCard(--questionNumber);
+            footerUpdate();
         }
     }
 
     /******************************************************
     * THE HIDE QUESTION CARD FUNCTION HIDES QUESTIONS
     *******************************************************/
-    function hideActiveQuestionCard(questionID, questionNumber){
-        $('#question_card_' + questionID + '-' + questionNumber).removeClass('active');
+    function hideActiveQuestionCard(questionNumber){
+        $('#question_card_' + questionNumber).removeClass('active');
     }
 
     /********************************************************
     * THE ACTIVATE QUESTION CARD FUNCTION ACTIVATES QUESTIONS
     *********************************************************/
-    function activateQuestionCard(questionID, questionNumber){
-        $('#question_card_' + questionID + '-' + questionNumber).addClass('active');
+    function activateQuestionCard(questionNumber){
+        $('#question_card_' + questionNumber).addClass('active');
     }
 
     //TODO: WILL FOR LOOP ON ENTRY OVER COMPLETED QUESTIONS TO DISABLE
     /******************************************************
     * THE DISABLE FORM INPUT FUNCTION DISABLES ALL INPUTS
     *******************************************************/
-    function disableFormInput(){
+    function disableFormInput(questionNumber){
         //Disable buttons and elements on click
-        $("#view_answers_btn").prop('disabled', true);
+        $("#view_answers_btn_" + questionNumber).prop('disabled', true);
         //Disable all checkbox/radio elements
-        $("#question_form :input").prop("disabled", true);
+        $("#question_form_" + questionNumber + " :input").prop("disabled", true);
     }
 
 
@@ -174,7 +171,7 @@ $(document).ready(function(){
     function currentQuestionNum(){
         //finds item with active class, gets question num using regex
         questionCardNum = $('div .active').attr('id');
-        questionNumStr = questionCardNum.match(/[-]\d/g);
+        questionNumStr = questionCardNum.match(/[_]\d/g);
         questionNum = questionNumStr[0].match(/\d/g);
         return parseInt(questionNum);
     }
@@ -190,7 +187,7 @@ $(document).ready(function(){
     *******************************************************/
     $("[id^=view_answers_btn_]").click(function(){
         var questionNumber = currentQuestionNum();
-        toggleAnswersDiv(questionNumber);
+        submitAnswers(questionNumber);
     });
 
 
