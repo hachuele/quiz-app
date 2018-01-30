@@ -44,16 +44,16 @@
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
 
 
-
-
-
+    /*TESTING*/
     $question_id_num = array();
+    $question_id_set = get_question_ids_by_assessment_id($assessment_id);
 
-//    $questions_array = array();
     //add question set to array for future manipulation
-//    while($row = mysqli_fetch_array($question_set, MYSQLI_BOTH)){
-//        array_push($questions_array, $row);
-//    }
+    while($row = mysqli_fetch_array($question_id_set, MYSQLI_BOTH)){
+        array_push($question_id_num, $row['question_id']);
+    }
+    /* TESTING*/
+
 
 //    $choice_set = find_choices_by_question_id(1);
 //    $choices_array = array();
@@ -118,8 +118,9 @@
             <h4><strong>QUESTION <?php echo $question_num ?>:</strong> <?php echo h($question['question_text']) ?></h4>
         </div>
         <div class="questions_list_div">
-            <form id="question_form_<?php echo h($question['question_id']) ?>" action="process_answers.php" method="POST">
+            <form id="question_form_<?php echo $question_num ?>" action="process_answers.php" method="POST">
                 <!--LOAD QUESTION CHOICES-->
+                <!--NOTE: HAVE TO PASS QUESTION ID IN HIDDEN FORM FIELD-->
                 <?php
                     if ($question['question_multivalued'] == 1){
                         $question_type_class = 'checkbox';
@@ -135,7 +136,7 @@
                 <div class="question_item_div center">
                     <div class="<?php echo $question_type_class ?> question_item">
                         <!--USE CHOICE ID FOR THE NAME, REMOVE HIDDEN CLASS and add other classes WITH AJAX-->
-                        <span class="hidden glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="<?php echo $question_type_class ?>_item" type="<?php echo $question_type_class ?>" name="<?php echo $choice_name ?>_<?php echo h($question['question_id']) ?>" value=""><?php echo h($choice['question_choice_text']) ?></label>
+                        <span class="hidden glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="<?php echo $question_type_class ?>_item" type="<?php echo $question_type_class ?>" name="<?php echo $choice_name ?>_<?php echo $question_num ?>" value=""><?php echo h($choice['question_choice_text']) ?></label>
                     </div>
                 </div>
 
@@ -153,7 +154,7 @@
                 <br>
                 <hr>
                 <!--ECHO/ADD THIS DIV DYNAMICALLY WITH AJAX-->
-                <div id="answer_explanations_div" class="well">
+                <div id="answer_explanations_div_<?php echo $question_num ?>" class="well">
                     <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
                     <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
                     <div class='alert alert-danger'><strong>Answer 3: </strong>This answer is wrong due to bla bla bla bla</div>
@@ -161,16 +162,23 @@
                 </div>
 
                 <div class="row bottom_button_set">
-                    <div class="previous_question_btn_div col-xs-3">
-                        <button id="previous_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info">
+                    <?php
+                        if ($question_num == 1){
+                            $previous_display = 'no_display';
+                        } else{
+                            $previous_display = '';
+                        }
+                    ?>
+                    <div class="<?php echo $previous_display ?> previous_question_btn_div col-xs-3">
+                        <button id="previous_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info previous_button">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
                     </div>
                     <div class="view_answers_btn_div col-xs-6">
-                        <button id="view_answers_btn" class="btn btn-info btn-block" type="button">SUBMIT</button>
+                        <button id="view_answers_btn_<?php echo $question_num ?>" class="btn btn-info btn-block answers_button" type="button">SUBMIT</button>
                     </div>
                     <div class="next_question_btn_div col-xs-3">
-                        <button id="next_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info">
+                        <button id="next_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info next_button">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
@@ -179,12 +187,13 @@
         </div>
         <br>
     </div>
-    <hr>
+
     <!--increment question number for display-->
     <?php $question_num++; ?>
     <!--end of question while loop-->
     <?php } ?>
 
+    <hr>
 
     <div id="quizz_progress_bar_div">
         <div class="progress">

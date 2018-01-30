@@ -4,27 +4,22 @@
 *************************************************/
 
 
-//WILL  USE THE QUESTION NUMBER !!!!!!
-//var active = 1;
-//function loadNext(){
-//    if($("#next_question_btn_" + active).is(":enabled")){
-//    }
-//}
-//PROBABLY WILL NOT NEED TO RESET PAGE!!!
-
-
 /******************************************************
 * THE RESET QUIZZ PAGE FUNCTION UPDATES/RESTORES THE
 * FORM TO ITS ORIGINAL FORMAT.
 *******************************************************/
 function resetQuizzPage(){
-    $("#answer_explanations_div").hide();
+//    $("#answer_explanations_div").hide();
     //RESET THE FORM
 //    $('#question_form')[0].reset();
     //DISABLE VIEW ANSWERS AND SUBMIT
-    $("#view_answers_btn").attr('disabled', true);
-    $("#submit_answers_btn").attr('disabled', true);
-    $("#next_question_btn").attr('disabled', true);
+//    $("#view_answers_btn").attr('disabled', true);
+//    $("#next_question_btn").attr('disabled', true);
+
+    $("[id^=answer_explanations_div]").hide();
+    $("[id^=view_answers_btn]").attr('disabled', true);
+    $("[id^=next_question_btn]").attr('disabled', true);
+
 
 }
 
@@ -38,34 +33,30 @@ $(document).ready(function(){
     /* Instantiate global variables */
     var numQuestions = countNumQuestions();
     var currQ = currentQuestionNum();
-//    var currID = currentQuestionID();
+    var currID = currentQuestionID();
 
 
     /* ------------------ FUNCTION DEFINITIONS ------------------ */
 
-    /******************************************************
-    * THE TOGGLE ANSWER DIC FUNCTION SHOWS THE ANSWER BOX
-    * IF THE BUTTON IS ENABLED (WHEN ANSWER SELECTED)
-    *******************************************************/
-    function toggleAnswersDiv(){
+    /************************************************************
+    * THE TOGGLE ANSWER FUNCTION SHOWS THE ANSWER BOX.
+    * PERFORMS AJAX CALL TO SUBMIT USER DATA AND RETRIEVE ANSWERS
+    *************************************************************/
+    function toggleAnswersDiv(questionNumber){
         //check if the button is enabled (i.e: an answer has been selected)
-        if($("#view_answers_btn").is(":enabled")){
-            //AJAX CALL TO PROCESS ANSWERS
+        if($("#view_answers_btn_" + questionNumber).is(":enabled")){
+
+            /* AJAX CALL TO PROCESS ANSWERS */
 
 
 
-            $("#answer_explanations_div").show(1000, function(){
+            $("#answer_explanations_div_" + questionNumber).show(1000, function(){
                 footerUpdate();
-                console.log("Worked!");
             });
 
             disableFormInput();
 
-            //Get the current question to enable next
-            var currQuestionNum = currentQuestionNum();
-
-
-            enableNext(currQuestionNum);
+            enableNext(questionNumber);
         }
     }
 
@@ -83,22 +74,19 @@ $(document).ready(function(){
     }
 
     /******************************************************
-    * LOAD NEXT PERFORMS AN AJAX CALL TO RETRIEVE THE NEXT
-    * QUESTION DATA (IF AVAILABLE)
+    * LOAD NEXT SHOWS THE NEXT QUESTION CARD.
+    * (IF ANY AVAILABLE)
     *******************************************************/
-    function loadNext(){
-        var questionNumber = currentQuestionNum();
-//        var questionID = currentQuestionID();
+    function loadNext(questionNumber){
+        var questionID = currentQuestionID();
         console.log(questionNumber);
         if($("#next_question_btn_" + questionNumber).is(":enabled")){
-            //hide current question (remove active class)
-            //activate next question (if any)
             //change next button if at last question (to details page)
             if(questionNumber != numQuestions){
-                hideActiveQuestionCard(questionNumber);
+                hideActiveQuestionCard(questionID, questionNumber);
 
                 //THIS DOES NOT WORK, CANNOT INCREMENT QUESTION ID.
-                activateQuestionCard(++questionNumber);
+                activateQuestionCard(++questionID, ++questionNumber);
                 footerUpdate();
 
             } else{
@@ -112,9 +100,11 @@ $(document).ready(function(){
     * ENABLE PREVIOUS CHECKS ENABLES MOVING TO THE PREVIOUS
     * QUESTION
     *******************************************************/
-    function enablePrevious(){
-        //Enable the next question (if any) //THIS WILL NEED TO BE BASED ON NUM QUESTIONS
-        $("#previous_question_btn").prop('disabled', false);
+    function enablePrevious(questionNumber){
+        //Enable the previous question (if any)
+        if(questionNumber != 1){
+            $("#previous_question_btn_" + questionNumber).prop('disabled', false);
+        }
     }
 
 
@@ -122,8 +112,7 @@ $(document).ready(function(){
     * LOAD PREVIOUS PERFORMS AN AJAX CALL TO RETRIEVE THE
     * PREVIOUS' QUESTION DATA (IF AVAILABLE)
     *******************************************************/
-    function loadPrevious(){
-        var questionNumber = currentQuestionNum();
+    function loadPrevious(questionNumber){
         if($("#previous_question_btn_" + questionNumber).is(":enabled")){
 
             alert("IM ENABLED!");
@@ -136,15 +125,15 @@ $(document).ready(function(){
     /******************************************************
     * THE HIDE QUESTION CARD FUNCTION HIDES QUESTIONS
     *******************************************************/
-    function hideActiveQuestionCard(questionNumber){
-        $('#question_card_' + questionNumber).removeClass('active');
+    function hideActiveQuestionCard(questionID, questionNumber){
+        $('#question_card_' + questionID + '-' + questionNumber).removeClass('active');
     }
 
     /********************************************************
     * THE ACTIVATE QUESTION CARD FUNCTION ACTIVATES QUESTIONS
     *********************************************************/
-    function activateQuestionCard(questionNumber){
-        $('#question_card_' + questionNumber).addClass('active');
+    function activateQuestionCard(questionID, questionNumber){
+        $('#question_card_' + questionID + '-' + questionNumber).addClass('active');
     }
 
     //TODO: WILL FOR LOOP ON ENTRY OVER COMPLETED QUESTIONS TO DISABLE
@@ -192,23 +181,34 @@ $(document).ready(function(){
 
 
 
-    /* ------------------ CLICK EVENTS ------------------ */
+    /* --------------------- CLICK EVENTS --------------------- */
 
 
 
     /******************************************************
-    * TOGGLE THE ANSWERS BOX (IF ENABLED)
+    * ANSWERS BUTTON CLICK EVENT
     *******************************************************/
-    $("#view_answers_btn").click(function(){
-        toggleAnswersDiv();
+    $("[id^=view_answers_btn_]").click(function(){
+        var questionNumber = currentQuestionNum();
+        toggleAnswersDiv(questionNumber);
     });
 
 
     /******************************************************
-    * TOGGLE THE ANSWERS BOX (IF ENABLED)
+    * NEXT QUESTION CLICK EVENT
     *******************************************************/
     $("[id^=next_question_btn_]").click(function(){
-        loadNext();
+        var questionNumber = currentQuestionNum();
+        loadNext(questionNumber);
+    });
+
+
+    /******************************************************
+    * PREVIOUS QUESTION CLICK EVENT
+    *******************************************************/
+    $("[id^=previous_question_btn_]").click(function(){
+        var questionNumber = currentQuestionNum();
+        loadPrevious(questionNumber);
     });
 
 
@@ -217,7 +217,8 @@ $(document).ready(function(){
     * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
     *******************************************************/
     $('.checkbox_item').click(function () {
-        $('#view_answers_btn').attr('disabled', !$('.checkbox_item:checked').length);
+        var questionNumber = currentQuestionNum();
+        $('#view_answers_btn_' + questionNumber).attr('disabled', !$('.checkbox_item:checked').length);
     });
 
 
@@ -225,7 +226,8 @@ $(document).ready(function(){
     * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
     *******************************************************/
     $('.radio_item').click(function () {
-        $('#view_answers_btn').attr('disabled', false);
+        var questionNumber = currentQuestionNum();
+        $('#view_answers_btn_' + questionNumber).attr('disabled', false);
     });
 
 
