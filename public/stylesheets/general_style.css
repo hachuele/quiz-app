@@ -32,6 +32,11 @@ body, html {
     display:block!important;
 }
 
+/* Use to not display item */
+.no_display{
+    visibility: collapse;
+}
+
 /**************HEADER STYLES (IN ORDER OF APPEARANCE)**************/
 
 .header_main{
