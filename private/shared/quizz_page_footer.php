@@ -1,10 +1,17 @@
 <?php
 
-    if(!isset($user_id)){ $user_id = 'N/A';}
+    /******************************************************************
+     * DESCRIPTION:
+     *
+     *                             ----
+     * @author: Eric J. Hachuel
+     * University of Southern California, High-Performance Computing
+     ******************************************************************/
+
 
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
     #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-    $user_id = 'hachuelb';
+//    $user_id = 'hachuelb';
 
     $help_modal_title = 'HPC QUIZZ HELP';
     $help_modal_txt = 'Please complete the selected Quizz...';
@@ -57,7 +64,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">COMPLETED QUIZZES FOR: <strong><?php echo h($user_id); ?></strong></h4>
+                  <h4 class="modal-title">COMPLETED QUIZZES FOR: <strong><?php echo h($_SESSION["user_id"]); ?></strong></h4>
               </div>
               <div class="modal-body">
                   <?php foreach($completed_coursework as $course => $compl_date) { ?>
@@ -77,7 +84,7 @@
         <div id="footer_row" class="row footer container-fluid">
             <div class="col-xs-6">
                 <button id="user_id_button" type="button" class="btn btn-info btn-sm" style="float: left;" data-toggle="modal" data-target="#UserInfoModal">
-                    <span class="glyphicon glyphicon-user"></span> <?php echo h($user_id); ?>
+                    <span class="glyphicon glyphicon-user"></span> <?php echo h($_SESSION["user_id"]); ?>
                 </button>
             </div>
             <div class="col-xs-6">
