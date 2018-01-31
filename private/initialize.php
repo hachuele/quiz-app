@@ -1,4 +1,15 @@
 <?php
+    /******************************************************************
+     * DESCRIPTION:
+     *
+     *                             ----
+     * @author: Eric J. Hachuel
+     * University of Southern California, High-Performance Computing
+     ******************************************************************/
+
+
+
+
     ob_start(); //output buffering on
     // Assign file paths to PHP constants
     // __FILE__ returns the current path to this file

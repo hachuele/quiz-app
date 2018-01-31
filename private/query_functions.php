@@ -1,5 +1,15 @@
 <?php
 
+/******************************************************************
+ * DESCRIPTION:
+ *
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
+
+
+/* -------------------------------- Data Retrieval Functions -------------------------------- */
 
     function find_all_visible_courses(){
         # bring in $db from outside scope (since not passed in as argument)
@@ -57,6 +67,15 @@
         confirm_result_set($result_choice_set);
         return $result_choice_set;
     }
+
+
+
+
+
+/* -------------------------------- Data Insertion Functions -------------------------------- */
+
+
+
 
 
 

@@ -1,4 +1,17 @@
 <?php
+
+/******************************************************************
+ * DESCRIPTION:
+ *
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
+
+
+
+
+
     #FUNCTION FOR EASY ACCESS OF PAGES WITHIN THE FOLDER STRUCTURE
     /** EXAMPLE TO RETRIEVE IMAGE: <img id="page_title_icon_img" src="<?php echo url_for('images/quizz_logo_1.png')?>"> **/
     function url_for($script_path) {
