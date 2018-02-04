@@ -1,18 +1,29 @@
 <?php
-    //start the session
-    session_start();
+
+/******************************************************************
+ * DESCRIPTION:
+ *
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
+
+//start the session
+session_start();
 ?>
+
 <?php require_once('../private/initialize.php'); ?>
 
 <?php
     $course_set = find_all_visible_courses();
 
-
-    //TODO: USE USER ID TO DIFFERENTIATE BETWEEN COMPLETED ASSIGNMENTS ETC.
-
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
         #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-    //    $user_id = 'hachuelb';
+    $user_id = 'hachuelb';
+
+    if(!isset($_SESSION["user_id"])){
+        $_SESSION["user_id"] = $user_id;
+    }
 ?>
 
 <!--STATIC VARIABLES FOR CURRENT PAGE-->

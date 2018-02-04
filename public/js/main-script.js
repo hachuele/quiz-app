@@ -1,3 +1,12 @@
+/******************************************************************
+ * DESCRIPTION:
+ *
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
+
+
 /*******************************************************
 * *******MAIN-SCRIPT CONTAINS GENERAL FUNCTIONS******* *
 ********************************************************/
@@ -40,7 +49,6 @@ $(document).ready(function(){
     footerUpdate();
 
     $(window).resize(function() {
-        console.log("resize!");
         footerUpdate();
     });
 

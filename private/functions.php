@@ -59,7 +59,7 @@
     /* helper function to push into an associative array */
     function array_push_assoc($array, $key, $value){
         $array[$key] = $value;
-        return $array;
+//        return $array;
     }
 
 ?>

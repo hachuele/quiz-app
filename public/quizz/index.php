@@ -1,42 +1,47 @@
 <?php
-    //start the session
-    session_start();
+/******************************************************************
+ * DESCRIPTION:
+ *
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
+
+/* start the session */
+session_start();
 ?>
+
 <?php require_once('../../private/initialize.php'); ?>
-
-<!--STATIC VARIABLES FOR CURRENT PAGE-->
-<?php
-    #define variales for current page
-    $site_title = 'HPC Assessments Site';
-    $page_title = 'HPC QUIZZ'; #TODO: INCLUDE QUIZZ SELECTED
-?>
-
-
-
-
 <!--DATA FROM SQL DATABASE-->
 <?php
 
     //INITIALIZE VARIABLES
+
+    $page_title = 'HPC QUIZZ';
+    $site_title = 'HPC Assessments Site';
+    //USER ID LATEST QUESTION IS MAX(QUESTION_ID AND ASSESSMENT ID [if done multiple times] FROM USER ANSWERS TABLE
     $user_id = 'hachuelb';
-    //USER ID LATEST QUESTION IS MAX(QUESTION_ID) FROM USER ANSWERS TABLE
 
 
-
-//    unset($_SESSION['currentQuestion']);
+//    unset($_SESSION['question_id']);
 
     //would set to latest completed question first, then change to whatever user is viewing
-    $_SESSION["currentQuestion"] = 1;
+    $_SESSION["question_id"] = 1;
 
 
 //    if(!isset($_SESSION["currentQuestion"])){
-//        $_SESSION["currentQuestion"] = 1; //should be the latest completed question from database
+//        $_SESSION["question_id"] = 1; //should be the latest completed question from database
 //    }
 
 
     //ALSO NEED TO PASS USER ID TO DETERMINE NUM QUESTIONS ALREADY COMPLETED ETC ETC - LOAD EXISTING DATA
 
     $assessment_id = $_GET['assessment_id'] ?? '1'; // get the assessment id from url
+
+    /* Update Session Variables */
+    $_SESSION["assessment_id"] = $assessment_id;
+
+
     $assessment_name = get_assessment_name($assessment_id); // get the name of this assessment for display
 
 
@@ -44,29 +49,8 @@
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
 
 
-    /*TESTING*/
-    $question_id_num = array();
-    $question_id_set = get_question_ids_by_assessment_id($assessment_id);
-
-    //add question set to array for future manipulation
-    while($row = mysqli_fetch_array($question_id_set, MYSQLI_BOTH)){
-        array_push($question_id_num, $row['question_id']);
-    }
-    /* TESTING*/
 
 
-//    $choice_set = find_choices_by_question_id(1);
-//    $choices_array = array();
-//     while($choice = mysqli_fetch_array($choice_set, MYSQLI_BOTH)){
-////        array_push($questions_array, $question);
-//         echo $choice['question_choice_text'];
-//    }
-
-    //use choice id for in the choice while loop (give an id to the check or radio name)
-//    for($i = 0; $i < $num_questions; $i++){
-//        $hello = "this:" . $questions_array[$i]['question_text'] . '<br>';
-//        echo $hello;
-//    }
 
 //SELECT MAX( `column` ) FROM `table` ;
     //NEED IF FUNCTION WITH FECTCHED DATA FROM user_answers TO FILL OUT FOR IF ALREADY SUBMITTED BEFORE. SINCE
@@ -75,10 +59,6 @@
     //TODO: NEED TO REMEBER DATA IN CASE OF A REFRESH WITH A SESSION!! (SAVE CURRENT QUESTION NUMBER FOR EXAMPLE)
 
     //TODO: WILL NEED TO FETCH USER'S DETAILS TO FILL OUT PERCENT COMPLETE AND QUESTION BY QUESTION
-
-    //only show previous button, for example, if not on first question
-    //<?php if ($questionumber == 1) { ...
-
 
 
 
@@ -106,14 +86,24 @@
     <?php while($question = mysqli_fetch_assoc($question_set)) { ?>
     <?php $question_active_class = ''; ?>
     <?php
-        if($question_num == $_SESSION["currentQuestion"]){
+        //TODO: CHANGE question_num  FOR question_id RETRIEVED FROM SET
+        if($question_num == $_SESSION["question_id"]){
             $question_active_class = 'active';
         } else{
             $question_active_class = '';
         }
     ?>
+    <?php
+        if ($question['question_multivalued'] == 1){
+            $question_type_class = 'checkbox';
+            $choice_name = 'check';
+        } else{
+            $question_type_class = 'radio';
+            $choice_name = 'radio';
+        }
+    ?>
     <!--question card's ID is composed of the db 'question_id' field and the question_num variable for future extraction-->
-    <div id="question_card_<?php echo $question_num ?>" class="hidden <?php echo $question_active_class ?> quizz_question_div container question_card">
+    <div id="question_card_<?php echo $question_num ?>" class="hidden <?php echo $question_active_class ?> quizz_question_div container question_card" data-questionid="<?php echo h($question['question_id']) ?>" data-questiontype="<?php echo $question_type_class ?>">
         <div class="page-header">
             <h4><strong>QUESTION <?php echo $question_num ?>:</strong> <?php echo h($question['question_text']) ?></h4>
         </div>
@@ -121,44 +111,34 @@
             <form id="question_form_<?php echo $question_num ?>" action="process_answers.php" method="POST">
                 <!--LOAD QUESTION CHOICES-->
                 <!--NOTE: HAVE TO PASS QUESTION ID IN HIDDEN FORM FIELD-->
-                <?php
-                    if ($question['question_multivalued'] == 1){
-                        $question_type_class = 'checkbox';
-                        $choice_name = 'check';
-                    } else{
-                        $question_type_class = 'radio';
-                        $choice_name = 'radio';
-                    }
-                ?>
                 <?php $choice_set = find_choices_by_question_id(h($question['question_id'])); ?>
+                <?php $choice_num = 1; ?>
+                <?php $radio_value = 1; ?>
                 <?php while($choice = mysqli_fetch_assoc($choice_set)) { ?>
-
                 <div class="question_item_div center">
                     <div class="<?php echo $question_type_class ?> question_item">
-                        <!--USE CHOICE ID FOR THE NAME, REMOVE HIDDEN CLASS and add other classes WITH AJAX-->
-                        <span class="hidden glyphicon glyphicon-ok solution_glyphicon_correct"></span><label class="question_label"><input class="<?php echo $question_type_class ?>_item" type="<?php echo $question_type_class ?>" name="<?php echo $choice_name ?>_<?php echo $question_num ?>" value=""><?php echo h($choice['question_choice_text']) ?></label>
+                        <span id="question_choice_id_<?php echo h($choice['question_choice_id']) ?>" class="" data-choiceid="<?php echo h($choice['question_choice_id']) ?>" ></span><label class="question_label"><input class="<?php echo $question_type_class ?>_item" type="<?php echo $question_type_class ?>" name="<?php echo $choice_name ?>_<?php echo $choice_num ?>" value="<?php echo $radio_value ?>"><?php echo h($choice['question_choice_text']) ?></label>
                     </div>
                 </div>
-
+                <?php
+                    if ($question['question_multivalued'] == 1){
+                        $choice_num++;
+                    } else{
+                        $radio_value++;
+                    }
+                ?>
                 <?php } ?>
-
-
-<!--
-                <div class="question_item_div center">
-                    <div class="checkbox question_item">
-                        <span class=" glyphicon glyphicon-remove solution_glyphicon_incorrect"></span><label class="question_label"><input class="checkbox_item" type="checkbox" name="check_3" value="">Option 3</label>
-                    </div>
-                </div>
--->
 
                 <br>
                 <hr>
                 <!--ECHO/ADD THIS DIV DYNAMICALLY WITH AJAX-->
-                <div id="answer_explanations_div_<?php echo $question_num ?>" class="well">
+                <div id="answer_explanations_div_<?php echo $question_num ?>" class="well answer_explanations">
+
                     <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
                     <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
                     <div class='alert alert-danger'><strong>Answer 3: </strong>This answer is wrong due to bla bla bla bla</div>
                     <div class='alert alert-success'><strong>Answer 4: </strong>This answer is correct due to bla bla bla bla</div>
+
                 </div>
 
                 <div class="row bottom_button_set">

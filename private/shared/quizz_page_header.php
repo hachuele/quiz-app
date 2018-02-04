@@ -1,5 +1,14 @@
 <?php
 
+/******************************************************************
+ * DESCRIPTION:
+ *
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
+
+
     if(!isset($site_title)){ $site_title = 'HPC Assessments Site';}
     if(!isset($page_title)){ $page_title = 'HPC ASSESSMENTS PAGE';}
 

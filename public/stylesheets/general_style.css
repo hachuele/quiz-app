@@ -1,4 +1,10 @@
-
+/******************************************************************
+ * DESCRIPTION:
+ *
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
 
 /*GENERAL STYLING FOR HEADER AND FOOTER*/
 body, html {
@@ -36,6 +42,7 @@ body, html {
 .no_display{
     visibility: collapse;
 }
+
 
 /**************HEADER STYLES (IN ORDER OF APPEARANCE)**************/
 
@@ -133,8 +140,7 @@ body, html {
 
 /**************CONTENT (QUIZZ SELECTION SITE)**************/
 #assessment_selection_div{
-    max-width: 600px;
-
+    max-width: 400px;
 }
 
 
@@ -168,8 +174,6 @@ body, html {
     margin-top: 2px;
     min-height: 40px;
     border-radius: 10px;
-
-
 }
 
 
@@ -177,6 +181,7 @@ body, html {
     font-size: 15px;
     vertical-align: middle;
     margin-left: 10px;
+    padding-left: 40px!important;
 
 }
 
@@ -189,15 +194,13 @@ body, html {
     color: #ff1f1f;
 }
 
-
-.view_answers_btn_div{
-    text-align: center;
+.solution_glyphicon_correct_not_selected{
+    color: #FFA500;
 }
 
 
-#answer_explanations_div{
-    margin-top: 20px;
-
+.view_answers_btn_div{
+    text-align: center;
 }
 
 
@@ -215,6 +218,13 @@ body, html {
 
 .next_question_btn_div{
     text-align:right;
+}
+
+
+.choice_mark{
+    position: absolute;
+    font-size: 20px;
+    transition-duration: 2s;
 }
 
 

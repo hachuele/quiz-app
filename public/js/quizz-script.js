@@ -1,27 +1,16 @@
+/******************************************************************
+ * DESCRIPTION:                                                   *
+ *                                                                *
+ * -------------------------------------------------------------- *
+ * @author: Eric J. Hachuel                                       *
+ * University of Southern California, High-Performance Computing  *
+ ******************************************************************/
+
+
 /************************************************
 * *******QUIZZ-SCRIPT CONTAINS FUNCTIONS******* *
 * *********SPECIFIC TO THE QUIZZ PAGE********** *
 *************************************************/
-
-
-/******************************************************
-* THE RESET QUIZZ PAGE FUNCTION UPDATES/RESTORES THE
-* FORM TO ITS ORIGINAL FORMAT.
-*******************************************************/
-function resetQuizzPage(){
-//    $("#answer_explanations_div").hide();
-    //RESET THE FORM
-//    $('#question_form')[0].reset();
-    //DISABLE VIEW ANSWERS AND SUBMIT
-//    $("#view_answers_btn").attr('disabled', true);
-//    $("#next_question_btn").attr('disabled', true);
-
-    $("[id^=answer_explanations_div]").hide();
-    $("[id^=view_answers_btn]").attr('disabled', true);
-    $("[id^=next_question_btn]").attr('disabled', true);
-
-
-}
 
 
 /******************code runs once DOM ready******************/
@@ -30,13 +19,24 @@ $(document).ready(function(){
     resetQuizzPage();
     footerUpdate();
 
+    //disable form input for completed questions
+
     /* Instantiate global variables */
-    var numQuestions = countNumQuestions();
-    var currQ = currentQuestionNum();
-    var currID = currentQuestionID();
+    numQuestions = countNumQuestions();
 
 
     /* ------------------ FUNCTION DEFINITIONS ------------------ */
+
+
+    /******************************************************
+    * THE RESET QUIZZ PAGE FUNCTION UPDATES/RESTORES THE
+    * FORM TO ITS ORIGINAL FORMAT.
+    *******************************************************/
+    function resetQuizzPage(){
+        $("[id^=answer_explanations_div]").hide();
+        $("[id^=view_answers_btn]").attr('disabled', true);
+        $("[id^=next_question_btn]").attr('disabled', true);
+    }
 
     /************************************************************
     * THE SUBMIT ANSWER FUNCTION SHOWS THE ANSWER BOX.
@@ -45,10 +45,82 @@ $(document).ready(function(){
     function submitAnswers(questionNumber){
         //check if the button is enabled (i.e: an answer has been selected)
         if($("#view_answers_btn_" + questionNumber).is(":enabled")){
+            /* Serialize for data for ajax request */
+            var formData = $("#question_form_" + questionNumber).serialize();
+            var questionID = currentQuestionID();
+            var questionType = currentQuestionType();
 
-            /* AJAX CALL TO PROCESS ANSWERS */
+            /* ------ AJAX CALL TO PROCESS ANSWERS ------ */
+            $.ajax({
+                type     : 'POST',
+                url      : '../../private/process_answers.php',
+                data     : formData + '&question_id=' + questionID + '&question_type=' + questionType,
+                dataType : 'json',
+                encode   : true
+            }).done(function(data){
+
+                console.log(data);
+
+                var numChoices = data['num_choices'];
 
 
+//correct_selected
+//correct_not_selected
+//incorrect_selected
+//incorrect_not_selected
+
+                /* Show answer details within form */
+                for(i = 0; i < numChoices; i++){
+                    if(questionType == 'checkbox'){
+                        if(data['user_selection_details'][i] == 'correct_selected'){
+                            $("#question_choice_id_" + data['choice_ids'][i]).addClass('glyphicon glyphicon-ok-circle solution_glyphicon_correct');
+                        }
+                        else if(data['user_selection_details'][i] == 'incorrect_selected'){
+                            $("#question_choice_id_" + data['choice_ids'][i]).addClass('glyphicon glyphicon-remove-circle solution_glyphicon_incorrect');
+                        }
+                        else if((data['user_selection_details'][i] == 'correct_not_selected')){
+                            $("#question_choice_id_" + data['choice_ids'][i]).addClass('glyphicon glyphicon-remove-circle solution_glyphicon_correct_not_selected');
+                        }
+                    }
+                    /* If question is of 'radio' type */
+                    else{
+                        if(data['user_selection_details'][i] == 'correct_selected'){
+                            $("#question_choice_id_" + data['choice_ids'][i]).addClass('glyphicon glyphicon-ok-circle solution_glyphicon_correct');
+                        }
+                        else if((data['user_selection_details'][i] == 'incorrect_selected')){
+                            $("#question_choice_id_" + data['choice_ids'][i]).addClass('glyphicon glyphicon-remove-circle solution_glyphicon_incorrect');
+                        }
+                    }
+                    /* Remove no_display class */
+                    $("#question_choice_id_" + data['choice_ids'][i]).addClass('choice_mark');
+                }
+
+
+
+                /* Show additional answer details in answers_div */
+
+
+
+
+//                <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
+//                <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
+                // add glyphicon to question_choice_id_#
+
+                //$data['correct-glyphicon-class'] = 'glyphicon glyphicon-ok solution_glyphicon_correct';
+                //$data['incorrect-glyphicon-class'] = 'glyphicon glyphicon-remove-sign solution_glyphicon_incorrect';
+
+
+               }).fail(function(data) {
+
+
+                console.log("Error in Request");
+
+                });
+
+
+
+            // update footer
+            $("#footer_row").removeClass("footer_adjust_abs").addClass("footer_adjust_rel");
 
             $("#answer_explanations_div_" + questionNumber).show(1000, function(){
                 footerUpdate();
@@ -56,6 +128,7 @@ $(document).ready(function(){
 
             $('html, body').animate({
                    scrollTop: $("#answer_explanations_div_" + questionNumber).offset().top}, 2000);
+
             disableFormInput(questionNumber);
             /* Enable Quizz Navigation Buttons */
             enableNext(questionNumber);
@@ -70,10 +143,9 @@ $(document).ready(function(){
     * ENABLE NEXT CHECKS ENABLES MOVING TO THE NEXT QUESTION
     * OR ENDING THE QUIZZ IF ALL QUESTIONS ANSWERED
     *******************************************************/
-    //TODO: MUST USE DATABASE INFORMATION TO KNOW IF LAST QUESTION
-    function enableNext(questionNum){
-        //Enable the next question (if any) //THIS WILL NEED TO BE BASED ON NUM QUESTIONS
-        $("#next_question_btn_" + questionNum).prop('disabled', false);
+    function enableNext(questionNumber){
+        //Enable the next question (if any)
+        $("#next_question_btn_" + questionNumber).prop('disabled', false);
     }
 
     /******************************************************
@@ -81,8 +153,6 @@ $(document).ready(function(){
     * (IF ANY AVAILABLE)
     *******************************************************/
     function loadNext(questionNumber){
-        var questionID = currentQuestionID();
-        console.log(questionNumber);
         if($("#next_question_btn_" + questionNumber).is(":enabled")){
             if(questionNumber != numQuestions){
                 hideActiveQuestionCard(questionNumber);
@@ -149,7 +219,7 @@ $(document).ready(function(){
     * COUNTS THE NUMBER OF QUESTIONS IN THE CURRENT ASSESSMENT
     **********************************************************/
     function countNumQuestions(){
-        numQuestions = $(".question_card").length;
+        var numQuestions = $(".question_card").length;
         return numQuestions;
     }
 
@@ -158,10 +228,8 @@ $(document).ready(function(){
     **********************************************************/
     function currentQuestionID(){
         //finds item with active class, gets question num using regex
-        questionCardID = $('div .active').attr('id');
-        questionIDStr = questionCardID.match(/[_]\d/g);
-        questionID = questionIDStr[0].match(/\d/g);
-        return parseInt(questionID);
+        var questionCardID = $('div .active').attr('data-questionid');
+        return parseInt(questionCardID);
     }
 
 
@@ -170,10 +238,20 @@ $(document).ready(function(){
     **********************************************************/
     function currentQuestionNum(){
         //finds item with active class, gets question num using regex
-        questionCardNum = $('div .active').attr('id');
-        questionNumStr = questionCardNum.match(/[_]\d/g);
-        questionNum = questionNumStr[0].match(/\d/g);
+        var questionCardNum = $('div .active').attr('id');
+        var questionNumStr = questionCardNum.match(/[_]\d/g);
+        var questionNum = questionNumStr[0].match(/\d/g);
         return parseInt(questionNum);
+    }
+
+
+    /*********************************************************
+    * GETS THE QUESTION TYPE OF THE CURRENT QUESTION
+    **********************************************************/
+    function currentQuestionType(){
+        //finds item with active class, gets question num using regex
+        var questionType = $('div .active').attr('data-questiontype');
+        return questionType;
     }
 
 
