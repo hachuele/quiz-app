@@ -69,13 +69,53 @@
     }
 
 
+    // doesnt work : need to insert first, data may not be there
+//    function get_latest_question($assessment_id){
+//        global $db;
+//        $sql_latest_question = "SELECT MAX(latest_quest_sequential_num) FROM user_assessments ";
+//        $sql_latest_question .= "WHERE assessment_id='" . $assessment_id . "'";
+//        $sql_latest_question .= "AND user_assessment_id= MAX(SELECT user_assessment_id FROM user_assessments)";
+//        # GET CHOICE SET FROM TABLE
+//        $latest_question_set = mysqli_query($db, $sql_latest_question);
+//        confirm_result_set($latest_question_set);
+//        return $latest_question_set;
+//    }
+
+
 
 
 
 /* -------------------------------- Data Insertion Functions -------------------------------- */
 
+//NEED FOLLOWING DATA: user_assessment_id, assessment_id, question_id, question_choice_id [USER_ANSWERS TABLE]
+//NEED FOLLOWING: assessment_id, user_id [USER ASESSMENTS]
 
 
+//The SQL UPDATE Statement to add to existing rows
+
+
+    function insert_user_answer($assessment_id, $question_id, $question_choice_id){
+        global $db;
+        $sql_insert_answer = "INSERT INTO user_answers ";
+        $sql_insert_answer .= "(assessment_id, question_id, question_choice_id) ";
+        $sql_insert_answer .= "VALUES (";
+        $sql_insert_answer .= "'" . db_escape($db, $subject['menu_name']) . "',";
+        $sql_insert_answer .= "'" . db_escape($db, $subject['position']) . "',";
+        $sql_insert_answer .= "'" . db_escape($db, $subject['visible']) . "'";
+        $sql_insert_answer .= ")";
+        $result = mysqli_query($db, $sql);
+
+
+
+
+
+        $sql_insert_answer .= "WHERE question_id='" . $question_id . "'";
+        $sql_insert_answer .=  "ORDER BY question_choice_id ASC";
+        # GET CHOICE SET FROM TABLE
+        $result_choice_set = mysqli_query($db, $sql_insert_answer);
+        confirm_result_set($result_choice_set);
+        return $result_choice_set;
+    }
 
 
 

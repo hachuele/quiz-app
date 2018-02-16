@@ -64,11 +64,6 @@ $(document).ready(function(){
                 var numChoices = data['num_choices'];
 
 
-//correct_selected
-//correct_not_selected
-//incorrect_selected
-//incorrect_not_selected
-
                 /* Show answer details within form */
                 for(i = 0; i < numChoices; i++){
                     if(questionType == 'checkbox'){
@@ -95,23 +90,33 @@ $(document).ready(function(){
                     $("#question_choice_id_" + data['choice_ids'][i]).addClass('choice_mark');
                 }
 
-
-
                 /* Show additional answer details in answers_div */
+                for(i = 0; i < numChoices; i++){
+                    if((data['user_selection_details'][i] == 'correct_selected') || (data['user_selection_details'][i] == 'correct_not_selected')){
+                        $("#answer_explanations_div_" + questionNumber).append("<div class=\"alert alert-success\"><strong>Choice " + (i + 1) + ": </strong>" + data['reponse_details'][i] + "</div>");
+                    }
+                    else if((data['user_selection_details'][i] == 'incorrect_selected') || (data['user_selection_details'][i] == 'incorrect_not_selected')){
+                        $("#answer_explanations_div_" + questionNumber).append("<div class=\"alert alert-danger\"><strong>Choice " + (i + 1) + ": </strong>" + data['reponse_details'][i] + "</div>");
+                    }
+                }
 
+                // update footer
+                $("#footer_row").removeClass("footer_adjust_abs").addClass("footer_adjust_rel");
 
+                $("#answer_explanations_div_" + questionNumber).show(1100, function(){
+                    footerUpdate();
+                });
 
+                $('html, body').animate({
+                       scrollTop: $("#answer_explanations_div_" + questionNumber).offset().top}, 2000);
 
-//                <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
-//                <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
-                // add glyphicon to question_choice_id_#
-
-                //$data['correct-glyphicon-class'] = 'glyphicon glyphicon-ok solution_glyphicon_correct';
-                //$data['incorrect-glyphicon-class'] = 'glyphicon glyphicon-remove-sign solution_glyphicon_incorrect';
+                disableFormInput(questionNumber);
+                /* Enable Quizz Navigation Buttons */
+                enableNext(questionNumber);
+                enablePrevious(questionNumber);
 
 
                }).fail(function(data) {
-
 
                 console.log("Error in Request");
 
@@ -119,20 +124,7 @@ $(document).ready(function(){
 
 
 
-            // update footer
-            $("#footer_row").removeClass("footer_adjust_abs").addClass("footer_adjust_rel");
 
-            $("#answer_explanations_div_" + questionNumber).show(1000, function(){
-                footerUpdate();
-            });
-
-            $('html, body').animate({
-                   scrollTop: $("#answer_explanations_div_" + questionNumber).offset().top}, 2000);
-
-            disableFormInput(questionNumber);
-            /* Enable Quizz Navigation Buttons */
-            enableNext(questionNumber);
-            enablePrevious(questionNumber);
         }
     }
 
@@ -145,6 +137,12 @@ $(document).ready(function(){
     *******************************************************/
     function enableNext(questionNumber){
         //Enable the next question (if any)
+        if(questionNumber == numQuestions){
+            $("#next_question_btn_" + questionNumber).animate({
+                width: '60px'
+            });
+            $('#next_question_btn_' + questionNumber).removeClass('btn-info').addClass('btn-success');
+        }
         $("#next_question_btn_" + questionNumber).prop('disabled', false);
     }
 
@@ -159,12 +157,16 @@ $(document).ready(function(){
                 activateQuestionCard(++questionNumber);
                 footerUpdate();
             } else{
-                /* Redirect to end of quizz page (details) */
-                alert('END OF QUIZZ');
+                /* Show quizz results! */
+
+                //TODO: AJAX CALL TO GET ALL THE DATA FROM THE TABLE FOR STATISTICS DISPLAY
+
+
+                showEndQuizzDetails(questionNumber);
+
             }
         }
     }
-
 
     /******************************************************
     * ENABLE PREVIOUS CHECKS ENABLES MOVING TO THE PREVIOUS
@@ -189,6 +191,16 @@ $(document).ready(function(){
         }
     }
 
+
+    /******************************************************
+    * LOAD LAST SHOWS THE LAST QUESTION OF THE QUIZZ
+    * FROM CURRENT END OF QUIZZ SCREEN
+    *******************************************************/
+    function loadLast(){
+        hideEndQuizzDetails();
+        footerUpdate();
+    }
+
     /******************************************************
     * THE HIDE QUESTION CARD FUNCTION HIDES QUESTIONS
     *******************************************************/
@@ -201,6 +213,25 @@ $(document).ready(function(){
     *********************************************************/
     function activateQuestionCard(questionNumber){
         $('#question_card_' + questionNumber).addClass('active');
+    }
+
+    /********************************************************
+    * SHOW END OF QUIZZ DETAILS 'PAGE'
+    *********************************************************/
+    function showEndQuizzDetails(questionNumber){
+        $('#question_card_' + questionNumber).removeClass('active');
+        $('#quizz_progress_bar_div').addClass('hidden');
+        $('#quizz_statistics_card').addClass('active');
+        $("#end_of_quizz_navigation").addClass('active');
+    }
+
+    /********************************************************
+    * HIDE END OF QUIZZ DETAILS 'PAGE' (SHOW LAST QUESTION)
+    *********************************************************/
+    function hideEndQuizzDetails(){
+        $('#quizz_statistics_card').removeClass('active');
+        $('#quizz_progress_bar_div').addClass('active');
+        $('#question_card_' + numQuestions).addClass('active');
     }
 
     //TODO: WILL FOR LOOP ON ENTRY OVER COMPLETED QUESTIONS TO DISABLE
@@ -232,7 +263,6 @@ $(document).ready(function(){
         return parseInt(questionCardID);
     }
 
-
     /*********************************************************
     * GETS THE NUMBER OF THE CURRENT QUESTION
     **********************************************************/
@@ -255,10 +285,14 @@ $(document).ready(function(){
     }
 
 
-
     /* --------------------- CLICK EVENTS --------------------- */
 
-
+    /******************************************************
+    * BACK HOME CLICK EVENT
+    *******************************************************/
+    $("#back_home_btn").click(function(){
+        window.location.href = "../index.php";
+    });
 
     /******************************************************
     * ANSWERS BUTTON CLICK EVENT
@@ -286,8 +320,6 @@ $(document).ready(function(){
         loadPrevious(questionNumber);
     });
 
-
-    //NEED TO ADD QUESTION ID (AND EVERYTHING ELSE ON THE FUNCTIONS PAGE)
     /******************************************************
     * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
     *******************************************************/
@@ -295,7 +327,6 @@ $(document).ready(function(){
         var questionNumber = currentQuestionNum();
         $('#view_answers_btn_' + questionNumber).attr('disabled', !$('.checkbox_item:checked').length);
     });
-
 
     /******************************************************
     * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
@@ -305,6 +336,11 @@ $(document).ready(function(){
         $('#view_answers_btn_' + questionNumber).attr('disabled', false);
     });
 
-
+    /******************************************************
+    * END OF QUIZZ: LOAD LAST QUESTION
+    *******************************************************/
+    $('#end_previous_question_btn').click(function () {
+        loadLast();
+    });
 
 });

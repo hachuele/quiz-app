@@ -83,7 +83,7 @@
 
         <div id="footer_row" class="row footer container-fluid">
             <div class="col-xs-6">
-                <button id="user_id_button" type="button" class="btn btn-info btn-sm" style="float: left;" data-toggle="modal" data-target="#UserInfoModal">
+                <button id="user_id_button" type="button" class="btn btn-info btn-sm" style="float: left;">
                     <span class="glyphicon glyphicon-user"></span> <?php echo h($_SESSION["user_id"]); ?>
                 </button>
             </div>

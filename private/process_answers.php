@@ -23,6 +23,17 @@
 
 
 //use assessment_id session variable for data insert
+//NEED FOLLOWING DATA: user_assessment_id, assessment_id, question_id, question_choice_id
+// latest_quest_sequential_num, user_assessment_score, user_assessment_is_complete [USER_ANSWERS TABLE]
+
+//for score; normalize to 100, add equal amount of points per answered question
+//  score per correct answer: 100 / num questions (round up, set max to 100)
+
+//NEED FOLLOWING: assessment_id, user_id [USER ASESSMENTS]
+
+
+
+
 
 
 

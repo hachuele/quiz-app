@@ -41,6 +41,8 @@ session_start();
     /* Update Session Variables */
     $_SESSION["assessment_id"] = $assessment_id;
 
+    /* Get the question_id for the most recently completed question for the current assessment */
+//    $latest_question = get_latest_question($assessment_id);
 
     $assessment_name = get_assessment_name($assessment_id); // get the name of this assessment for display
 
@@ -73,7 +75,13 @@ session_start();
     <div id ="assessment_title_row_div" class="row centered_div">
         <div class="col-sm-12">
             <div class="row">
-                <h3 id="assessment_title_txt"><?php echo h($assessment_name) ?></h3>
+                <h3 id="assessment_title_txt">
+                    <button id="back_home_btn" type="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </button>
+                    <?php echo h($assessment_name) ?>
+                </h3>
+
             </div>
         </div>
     </div>
@@ -131,14 +139,8 @@ session_start();
 
                 <br>
                 <hr>
-                <!--ECHO/ADD THIS DIV DYNAMICALLY WITH AJAX-->
+
                 <div id="answer_explanations_div_<?php echo $question_num ?>" class="well answer_explanations">
-
-                    <div class='alert alert-danger'><strong>Answer 1: </strong>This answer is wrong due to bla bla bla bla</div>
-                    <div class='alert alert-success'><strong>Answer 2: </strong>This answer is correct due to bla bla bla bla</div>
-                    <div class='alert alert-danger'><strong>Answer 3: </strong>This answer is wrong due to bla bla bla bla</div>
-                    <div class='alert alert-success'><strong>Answer 4: </strong>This answer is correct due to bla bla bla bla</div>
-
                 </div>
 
                 <div class="row bottom_button_set">
@@ -150,15 +152,15 @@ session_start();
                         }
                     ?>
                     <div class="<?php echo $previous_display ?> previous_question_btn_div col-xs-3">
-                        <button id="previous_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info previous_button">
+                        <button id="previous_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info btn-sm previous_button">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
                     </div>
                     <div class="view_answers_btn_div col-xs-6">
-                        <button id="view_answers_btn_<?php echo $question_num ?>" class="btn btn-info btn-block answers_button" type="button">SUBMIT</button>
+                        <button id="view_answers_btn_<?php echo $question_num ?>" class="btn btn-info btn-block btn-sm answers_button" type="button">SUBMIT</button>
                     </div>
                     <div class="next_question_btn_div col-xs-3">
-                        <button id="next_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info next_button">
+                        <button id="next_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info btn-sm next_button">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
@@ -173,7 +175,51 @@ session_start();
     <!--end of question while loop-->
     <?php } ?>
 
+
+    <!--Quizz Statistics Div for end of quiz results (Ajax call?)-->
+    <div id="quizz_statistics_card" class=" hidden container">
+        <div class="page-header">
+            <h3 style="text-align: center; margin-bottom: 25px;">Quizz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>
+        </div>
+        <div id="quizz_statistics_data_table">
+            <div id="total_score_display">
+                <p id="final_score_percent">85%</p>
+                <p id="final_score_txt">FINAL SCORE</p>
+            </div>
+            <hr>
+            <div id="quizz_results_summary_div" class="row">
+                <div id="num_correct_div" class ="col-xs-6">
+                    <p id="num_correct_digit">6</p>
+                    <p id="num_correct_txt">CORRECT</p>
+                </div>
+                <div id="num_incorrect_div" class ="col-xs-6">
+                    <p id="num_incorrect_digit">2</p>
+                    <p id="num_incorrect_txt">INCORRECT</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="end_of_quizz_nav_bar">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button id="end_previous_question_btn" type="button" class="btn btn-default btn-sm previous_button">
+                        <span class="glyphicon glyphicon-chevron-left"></span> BACK
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <button id="retry_quizz_btn" type="button" class="btn btn-default btn-sm previous_button">
+                        <span class="glyphicon glyphicon-repeat" style="margin-right:10px;"></span>RETRY QUIZZ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <hr>
+
+
 
     <div id="quizz_progress_bar_div">
         <div class="progress">

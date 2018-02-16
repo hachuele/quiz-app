@@ -8,6 +8,10 @@
  * University of Southern California, High-Performance Computing
  ******************************************************************/
 
+
+// NOTE: CHECK IF SESSION IS SET, OTHERWISE CALL THE DATABASE.!!!!!
+
+
 //start the session
 session_start();
 ?>
@@ -48,6 +52,10 @@ session_start();
     <?php } ?>
 
     <br>
+
+    <button id="view_compl_quizzes_button" type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#UserInfoModal">
+        <span style="float: left;" class="glyphicon glyphicon-search"></span> View Completed Quizzes
+    </button>
 
 </div>
 <!-- *********************************** CONTENT END *********************************** -->
