@@ -59,7 +59,7 @@
 
     function find_choices_by_question_id($question_id){
         global $db;
-        $sql_choices = "SELECT * FROM question_choices ";
+        $sql_choices = "SELECT * FROM question_choices "; //NOTE: Space after table name CRITICAL
         $sql_choices .= "WHERE question_id='" . $question_id . "'";
         $sql_choices .=  "ORDER BY question_choice_id ASC";
         # GET CHOICE SET FROM TABLE
@@ -67,20 +67,6 @@
         confirm_result_set($result_choice_set);
         return $result_choice_set;
     }
-
-
-    // doesnt work : need to insert first, data may not be there
-//    function get_latest_question($assessment_id){
-//        global $db;
-//        $sql_latest_question = "SELECT MAX(latest_quest_sequential_num) FROM user_assessments ";
-//        $sql_latest_question .= "WHERE assessment_id='" . $assessment_id . "'";
-//        $sql_latest_question .= "AND user_assessment_id= MAX(SELECT user_assessment_id FROM user_assessments)";
-//        # GET CHOICE SET FROM TABLE
-//        $latest_question_set = mysqli_query($db, $sql_latest_question);
-//        confirm_result_set($latest_question_set);
-//        return $latest_question_set;
-//    }
-
 
 
 

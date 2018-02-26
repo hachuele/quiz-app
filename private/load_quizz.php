@@ -1,52 +1,23 @@
 <?php require_once('initialize.php'); ?>
 <?php
+
+
 /******************************************************************
- * DESCRIPTION: Processes user submitted answers through the Ajax *
- * calls, returns answer details as data to the user, stores      *
- * user answers.                                                  *
+ * DESCRIPTION: restore page to prior visit state      *
+ *                                                                  *
+ *                                                                  *
  * -------------------------------------------------------------- *
  * @author: Eric J. Hachuel                                       *
  * University of Southern California, High-Performance Computing  *
  ******************************************************************/
-session_start();
 
-/**
--DATA: WHAT THE USER SELECTS (CHOICES), THE QUESTION, THE ASSESSMENT ID
--PERFORMS: ADDS THE DATA TO THE TABLE FOR THE SPECIFIC USER
--RETURN: THE ANSWER DETAILS FOR DISPLAY
-*/
-
-
-
-/* --------------------------------- UPDATE SESSION --------------------------------- */
-
-//$_SESSION["question_id"] = $_POST['question_id'];
-
-
-
-/* --------------------------------- DATA INSERT --------------------------------- */
-
-
-//use assessment_id session variable for data insert
-//NEED FOLLOWING DATA: user_assessment_id, assessment_id, question_id, question_choice_id
-// latest_quest_sequential_num, user_assessment_score, user_assessment_is_complete [USER_ANSWERS TABLE]
-
-//for score; normalize to 100, add equal amount of points per answered question
-//  score per correct answer: 100 / num questions (round up, set max to 100)
-
-//NEED FOLLOWING: assessment_id, user_id [USER ASESSMENTS]
-
-
-
-
-
-
-
-
-
+// GET CURREN INFORMATION, LOOP OVER ALL QUESTIONS AND ALL CHOICES AND FILL OUT.
+// NO NEED FOR $_POST, SIMPLY QUERY THE DATABASE FOR THE INFORMATION, REPLACE IN LOOP.
 
 /* --------------------------------- ANSWER DISPLAY --------------------------------- */
 
+//NEED ASSESSMENT ID TO KNOW WHAT TO LOAD
+//CAN USE   require_once(load_quizz)
 
 /* Instantiate arrays */
 $choices_array = array(); // the set of choices for a particular question
@@ -56,9 +27,15 @@ $response_text_array = array(); // to store the answer details for display
 $output_array = array(); // array to encode for ajax
 $choice_ids = array(); // store choice ids
 
+// USE ASSESSMENT ID TO GET LATEST ASSESSMENT (IF MULTIPLE COMPLETED)
+// USE ASSESSMENT ID TO GET USER ANSWERS
+//LOOP THROUGH USER ANSWERS TO FILL OUT QUIZZ
+// PROPER QUESTION ACTIVATES IN HEADER OF FILE
 
+// INSTEAD OF $results_array[$i] == 1, ACTUAL ANSWER FROM TABLE
 
-
+//update current question session variable
+$_SESSION["question_id"] = $_POST['question_id'];
 /* Get the question type */
 $question_type = $_POST['question_type'];
 
@@ -69,6 +46,9 @@ $num_choices = mysqli_num_rows($choice_set);
 while($choice = mysqli_fetch_array($choice_set, MYSQLI_BOTH)){
     array_push($choices_array, $choice);
 }
+
+
+//for($i = 0; $i < $num_questions; $i++){
 
 /* Format for checkbox parameters  */
 if($question_type == 'checkbox'){

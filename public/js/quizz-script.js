@@ -59,11 +59,7 @@ $(document).ready(function(){
                 encode   : true
             }).done(function(data){
 
-                console.log(data);
-
                 var numChoices = data['num_choices'];
-
-
                 /* Show answer details within form */
                 for(i = 0; i < numChoices; i++){
                     if(questionType == 'checkbox'){
@@ -102,11 +98,10 @@ $(document).ready(function(){
 
                 // update footer
                 $("#footer_row").removeClass("footer_adjust_abs").addClass("footer_adjust_rel");
-
                 $("#answer_explanations_div_" + questionNumber).show(1100, function(){
                     footerUpdate();
                 });
-
+                // animate show of question answers
                 $('html, body').animate({
                        scrollTop: $("#answer_explanations_div_" + questionNumber).offset().top}, 2000);
 
@@ -115,20 +110,25 @@ $(document).ready(function(){
                 enableNext(questionNumber);
                 enablePrevious(questionNumber);
 
-
                }).fail(function(data) {
-
                 console.log("Error in Request");
-
                 });
-
-
-
-
         }
     }
 
 
+
+
+    /***************************************************************
+    * THE LOAD ANSWERS FUNCTION LOADS PREVIOUSLY COMPLETED QUESTIONS
+    * PERFORMS AJAX CALL TO LOOP THROUGH USER DATA AND DISPLAY
+    * - (used on page load and reload)
+    ****************************************************************/
+    function loadPreviousAnswers(){
+
+
+
+    }
 
 
     /******************************************************
@@ -159,7 +159,7 @@ $(document).ready(function(){
             } else{
                 /* Show quizz results! */
 
-                //TODO: AJAX CALL TO GET ALL THE DATA FROM THE TABLE FOR STATISTICS DISPLAY
+                //TODO: AJAX CALL TO GET ALL THE DATA FROM THE TABLE FOR STATISTICS DISPLAY !!!!!!!!
 
 
                 showEndQuizzDetails(questionNumber);

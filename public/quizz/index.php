@@ -6,21 +6,25 @@
  * @author: Eric J. Hachuel
  * University of Southern California, High-Performance Computing
  ******************************************************************/
-
-/* start the session */
 session_start();
 ?>
-
 <?php require_once('../../private/initialize.php'); ?>
-<!--DATA FROM SQL DATABASE-->
+
+
 <?php
-
-    //INITIALIZE VARIABLES
-
+    /* -------- Initialize page variables -------- */
     $page_title = 'HPC QUIZZ';
     $site_title = 'HPC Assessments Site';
-    //USER ID LATEST QUESTION IS MAX(QUESTION_ID AND ASSESSMENT ID [if done multiple times] FROM USER ANSWERS TABLE
+
+
+    /* -------- Get User ID -------- */
+
+    //USE $_SESSION["user_id"] SET IN PUBLIC SITE
+
     $user_id = 'hachuelb';
+
+
+    //USER ID LATEST QUESTION IS MAX(QUESTION_ID AND ASSESSMENT ID [if done multiple times] FROM USER ANSWERS TABLE
 
 
 //    unset($_SESSION['question_id']);
@@ -29,9 +33,9 @@ session_start();
     $_SESSION["question_id"] = 1;
 
 
-//    if(!isset($_SESSION["currentQuestion"])){
-//        $_SESSION["question_id"] = 1; //should be the latest completed question from database
-//    }
+    if(!isset($_SESSION["question_id"])){
+        $_SESSION["question_id"] = 1; //should be the latest completed question from database
+    }
 
 
     //ALSO NEED TO PASS USER ID TO DETERMINE NUM QUESTIONS ALREADY COMPLETED ETC ETC - LOAD EXISTING DATA
@@ -42,11 +46,9 @@ session_start();
     $_SESSION["assessment_id"] = $assessment_id;
 
     /* Get the question_id for the most recently completed question for the current assessment */
-//    $latest_question = get_latest_question($assessment_id);
+
 
     $assessment_name = get_assessment_name($assessment_id); // get the name of this assessment for display
-
-
     $question_set = find_questions_by_assessment_id($assessment_id); //get questions for selected assessment
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
 
@@ -61,7 +63,7 @@ session_start();
     //TODO: NEED TO REMEBER DATA IN CASE OF A REFRESH WITH A SESSION!! (SAVE CURRENT QUESTION NUMBER FOR EXAMPLE)
 
     //TODO: WILL NEED TO FETCH USER'S DETAILS TO FILL OUT PERCENT COMPLETE AND QUESTION BY QUESTION
-
+    //    $latest_question = get_latest_question($assessment_id);
 
 
 ?>
@@ -86,8 +88,6 @@ session_start();
         </div>
     </div>
 </div>
-<!--CAN USE QUESTION NUMBER TO HIDE/ACTIVATE QUESTIONS - WHEN HAVE COMPLETED SOME QUESTIONS, GO TO THAT ONE-->
-<!--ADD ACTIVE CLASS TO MAKE IT VISIBLE, NO NEED TO REMOVE HIDDEN CLASS-->
 <div class="container main_content">
     <?php $question_num = 1; ?>
     <!--START MAIN PHP LOOP FOR GENERATING QUESTIONS-->

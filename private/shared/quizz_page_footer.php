@@ -10,8 +10,10 @@
 
 
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
+    // get from session id
+
     #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-//    $user_id = 'hachuelb';
+    // $user_id = 'hachuelb';
 
     $help_modal_title = 'HPC QUIZZ HELP';
     $help_modal_txt = 'Please complete the selected Quizz...';
@@ -23,22 +25,20 @@
     $completed_coursework = array('HPC New User'=>'11/7/17', 'Intro to Linux'=>'11/7/17', 'HPC Installing Software'=>'11/9/17', 'HPC Advanced Topics'=>'11/10/17');
 
 
-    if(($completed_coursework != "")){
-        #TODO: CHANGE THIS AND DO IT THE SAME WAY AS FOREACH FOR THE COURSES AVAILABLE IN PUBLIC PAGE
-        #WILL ADD IN PROGRESS COURSES (ON CLICK VIEW ANSWER, INFORMATION STORED.)
-        foreach($completed_coursework as $x => $x_date) {
-            $completed_coursework_tbl .= "<div class='alert alert-success completed_course'><strong>".$x."</strong><span style='float:right;'><i>  (Completed on: ".$x_date.")</i></span></div>";
-        }
-    }
-    else{
-        //WILL ACTUALLY LOOK IN DATABASE, IF NO RECORDS, RETURN THIS.
-        $completed_coursework_tbl .= "<div class='alert alert-danger'> No courses completed.</div>";
-    }
-
+//    if(($completed_coursework != "")){
+//        #TODO: CHANGE THIS AND DO IT THE SAME WAY AS FOREACH FOR THE COURSES AVAILABLE IN PUBLIC PAGE
+//        #WILL ADD IN PROGRESS COURSES (ON CLICK VIEW ANSWER, INFORMATION STORED.)
+//        foreach($completed_coursework as $x => $x_date) {
+//            $completed_coursework_tbl .= "<div class='alert alert-success completed_course'><strong>".$x."</strong><span style='float:right;'><i>  (Completed on: ".$x_date.")</i></span></div>";
+//        }
+//    }
+//    else{
+//        //WILL ACTUALLY LOOK IN DATABASE, IF NO RECORDS, RETURN THIS.
+//        $completed_coursework_tbl .= "<div class='alert alert-danger'> No courses completed.</div>";
+//    }
 
 
 ?>
-
         <!-- Help Modal -->
         <div id="HelpModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -57,22 +57,41 @@
             </div>
           </div>
         </div>
-        <!-- User Info Modal -->
+        <!-- User Info Modal [COULD MOVE TO PUBLIC INDEX SINCE BUTTON ONLY THERE] -->
         <div id="UserInfoModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
             <!-- Help Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">COMPLETED QUIZZES FOR: <strong><?php echo h($_SESSION["user_id"]); ?></strong></h4>
+                  <h4 class="modal-title" style="text-align: center;">ASSESSMENTS STATUS FOR: <strong><?php echo h($_SESSION["user_id"]); ?></strong></h4>
               </div>
               <div class="modal-body">
+
+
+                  <div class="page-header">
+                    <h4 style="text-align: center;">COMPLETED QUIZZES  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
+                  </div>
+
+                  <!-- COMPLETED QUIZZES -->
+                  <?php foreach($completed_coursework as $course => $compl_date) { ?>
+                  <button type="button" class="btn btn-block btn-success"><?php echo h($course); ?><span class="badge">3</span></button>
+                  <?php } ?>
+
+
+                  <div class="page-header">
+                    <h4 style="text-align: center;">IN PROGRESS QUIZZES   <span class="glyphicon glyphicon-edit solution_glyphicon_correct_not_selected"></span></h4>
+                  </div>
+
+                  <!-- QUIZZES IN PROGRESS -->
                   <?php foreach($completed_coursework as $course => $compl_date) { ?>
                   <div class="alert alert-success completed_course">
                       <strong><?php echo h($course); ?></strong>
                       <span style='float:right;'><i>(Completed on: <?php echo h($compl_date); ?>)</i></span>
                   </div>
                   <?php } ?>
+
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -93,15 +112,11 @@
                 </button>
             </div>
         </div>
-
-
     </body>
 </html>
 
+
 <!--DISCONNECT FROM THE DATABASE-->
-
 <?php
-
     db_disconnect($db);
-
 ?>

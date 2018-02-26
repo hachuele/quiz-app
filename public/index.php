@@ -7,12 +7,6 @@
  * @author: Eric J. Hachuel
  * University of Southern California, High-Performance Computing
  ******************************************************************/
-
-
-// NOTE: CHECK IF SESSION IS SET, OTHERWISE CALL THE DATABASE.!!!!!
-
-
-//start the session
 session_start();
 ?>
 
@@ -20,6 +14,9 @@ session_start();
 
 <?php
     $course_set = find_all_visible_courses();
+
+
+    /* ---- Get User ID ---- */
 
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
         #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
@@ -38,6 +35,11 @@ session_start();
 ?>
 
 
+
+<!--REDESIGN THIS INTO A DASHBOARD | WANT TO SEE STATISTICS AS SOON AS GET IN!!!!!-->
+
+
+
 <!-- *********************************** PAGE HEADER *********************************** -->
 <?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
 
@@ -54,7 +56,7 @@ session_start();
     <br>
 
     <button id="view_compl_quizzes_button" type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#UserInfoModal">
-        <span style="float: left;" class="glyphicon glyphicon-search"></span> View Completed Quizzes
+        <span style="float: left;" class="glyphicon glyphicon-search"></span> View Your Quizz Data
     </button>
 
 </div>
