@@ -47,10 +47,14 @@ session_start();
 
     /* Get the question_id for the most recently completed question for the current assessment */
 
-
+    /* ---------------- Get Data from the DB ---------------- */
     $assessment_name = get_assessment_name($assessment_id); // get the name of this assessment for display
     $question_set = find_questions_by_assessment_id($assessment_id); //get questions for selected assessment
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
+
+
+
+
 
 
 
