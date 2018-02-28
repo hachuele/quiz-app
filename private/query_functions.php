@@ -74,8 +74,20 @@
         $sql_completed = "SELECT * FROM user_assessments "; //NOTE: Space after table name CRITICAL
         $sql_completed .= "WHERE user_id='" . $user_id . "'";
         $sql_completed .= " AND user_assessment_is_complete= 1 ";
-        $sql_completed .= "ORDER BY user_assessment_start_stamp DESC";
+        $sql_completed .= "ORDER BY user_assessment_end_stamp DESC";
         # GET COMPLETED SET FROM TABLE
+        $result_completed_set = mysqli_query($db, $sql_completed);
+        confirm_result_set($result_completed_set);
+        return $result_completed_set;
+    }
+
+    function find_completed_quizz_ids_by_user($user_id){
+        global $db;
+        $sql_completed = "SELECT assessment_id FROM user_assessments "; //NOTE: Space after table name CRITICAL
+        $sql_completed .= "WHERE user_id='" . $user_id . "'";
+        $sql_completed .= " AND user_assessment_is_complete= 1 ";
+        $sql_completed .= "ORDER BY user_assessment_end_stamp DESC";
+        # GET COMPLETED IDs SET FROM TABLE
         $result_completed_set = mysqli_query($db, $sql_completed);
         confirm_result_set($result_completed_set);
         return $result_completed_set;
@@ -88,7 +100,7 @@
         $sql_ip .= "WHERE user_id='" . $user_id . "'";
         $sql_ip .= " AND user_assessment_is_complete= 0 ";
         $sql_ip .= "ORDER BY user_assessment_start_stamp DESC";
-        # GET COMPLETED SET FROM TABLE
+        # GET IN PROGRESS SET FROM TABLE
         $result_ip_set = mysqli_query($db, $sql_ip);
         confirm_result_set($result_ip_set);
         return $result_ip_set;

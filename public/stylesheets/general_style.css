@@ -194,6 +194,10 @@ body, html {
 }
 
 
+#compl_quizzes_tbl{
+    font-size: 12px;
+}
+
 #compl_quizz_dash_score_low{
     text-align: center;
     color: #d9534f;

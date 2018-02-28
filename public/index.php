@@ -18,7 +18,7 @@ session_start();
 
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
         #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-    $user_id = 'hachuelb';
+    $user_id = 'johndoe';
 
     /* ---------------- Define Current Page Variables ---------------- */
     $site_title = 'HPC Assessments Site';
@@ -30,8 +30,24 @@ session_start();
 
 
     $completed_quizz_array = array();
+    $completed_quizz_unique_array = array();
+
+    /* get all completed quizz data from given user */
     $completed_by_user_set = find_completed_quizzes_by_user($user_id);
     $num_completed_quizzes = mysqli_num_rows($completed_by_user_set);
+
+
+    /* fill array with completed quizzes for user */
+    $quizzes_checked = array();
+    while($complete_quizz = mysqli_fetch_array($completed_by_user_set, MYSQLI_BOTH)){
+        array_push($completed_quizz_array, $complete_quizz);
+        /* if current assessment ID has not yet been seenm add to unique list */
+        if(!in_array($complete_quizz['assessment_id'], $quizzes_checked)){
+            array_push($quizzes_checked, $complete_quizz['assessment_id']);
+            array_push($completed_quizz_unique_array, $complete_quizz);
+        }
+    }
+
 
     $in_progress_quizz_array = array();
     $in_progress_by_user_set = find_in_progress_quizzes_by_user($user_id);
@@ -105,11 +121,15 @@ session_start();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while($completed_quizz = mysqli_fetch_assoc($completed_by_user_set)) { ?>
+                            <?php
+                              foreach($completed_quizz_unique_array as $completed_quizz){
+
+
+                            ?>
                                 <tr>
                                     <?php
                                         /* format the SQL timestamp to show (MM-DD-YYYY) */
-                                        $time = strtotime(h($completed_quizz['user_assessment_start_stamp']));
+                                        $time = strtotime(h($completed_quizz['user_assessment_end_stamp']));
                                         $time_formated = date("m-d-Y", $time);
                                     ?>
                                     <td><?php echo h($time_formated) ?></td>
