@@ -56,12 +56,6 @@ body, html {
 }
 
 .assessment_title_main{
-/*
-    background: #757F9A;
-    background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);
-    background: linear-gradient(to right, #D7DDE8, #757F9A);
-*/
-
     background: #9e9e9e;
     height: 55px;
     text-align: center;
@@ -180,10 +174,15 @@ body, html {
     max-width: 250px;
 }
 
-#completed_quizzes_list{
+.completed_quizzes_list{
     margin: auto;
     text-align: left;
     max-width: 345px;
+}
+
+.all_completed_quizzes_list{
+    margin: auto;
+    text-align: left;
 }
 
 
@@ -194,17 +193,17 @@ body, html {
 }
 
 
-#compl_quizzes_tbl{
+.compl_quizzes_tbl{
     font-size: 12px;
 }
 
-#compl_quizz_dash_score_low{
+.compl_quizz_dash_score_low{
     text-align: center;
     color: #d9534f;
 
 }
 
-#compl_quizz_dash_score_high{
+.compl_quizz_dash_score_high{
     text-align: center;
     color: #5cb85c;
 

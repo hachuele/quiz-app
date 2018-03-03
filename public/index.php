@@ -18,25 +18,27 @@ session_start();
 
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
         #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-    $user_id = 'johndoe';
+    $user_id = 'hachuelb';
 
     /* ---------------- Define Current Page Variables ---------------- */
     $site_title = 'HPC Assessments Site';
     $page_title = 'HPC ASSESSMENTS PAGE';
 
+// DELETE BELOW
+    $completed_coursework = "";
+    $completed_coursework_tbl = "";
+    $completed_coursework = array('HPC New User'=>'11/7/17', 'Intro to Linux'=>'11/7/17', 'HPC Installing Software'=>'11/9/17', 'HPC Advanced Topics'=>'11/10/17');
+
 
     /* ---------------- Get DB Data ---------------- */
+
+    /* get set of all available quizzes */
     $course_set = find_all_visible_courses();
-
-
     $completed_quizz_array = array();
     $completed_quizz_unique_array = array();
-
     /* get all completed quizz data from given user */
     $completed_by_user_set = find_completed_quizzes_by_user($user_id);
     $num_completed_quizzes = mysqli_num_rows($completed_by_user_set);
-
-
     /* fill array with completed quizzes for user */
     $quizzes_checked = array();
     while($complete_quizz = mysqli_fetch_array($completed_by_user_set, MYSQLI_BOTH)){
@@ -48,21 +50,16 @@ session_start();
         }
     }
 
-
+    /* get set of all in-progress quizzes for given user */
     $in_progress_quizz_array = array();
     $in_progress_by_user_set = find_in_progress_quizzes_by_user($user_id);
     $num_in_progress_quizzes = mysqli_num_rows($in_progress_by_user_set);
-
-
     /* fill array with in progress quizzes for user */
     while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
         array_push($in_progress_quizz_array, $ip_quizz);
     }
 
 
-    /* ---------------- Get Dashboard Data ---------------- */
-//    $num_completed_quizzes = 0;
-//    $num_in_progress_quizzes = 0;
 
 
 
@@ -111,13 +108,13 @@ session_start();
 
                 <?php } else { ?>
 
-                <div id="completed_quizzes_list">
-                    <table id="compl_quizzes_tbl" class="table table-hover">
+                <div class="completed_quizzes_list">
+                    <table class="table table-hover compl_quizzes_tbl">
                         <thead>
                             <tr>
                                 <th>DATE</th>
                                 <th>NAME</th>
-                                <th>SCORE</th>
+                                <th style="text-align: center;">SCORE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,13 +138,13 @@ session_start();
                                     <?php
                                         /* calculate the final score for the given completed quizz */
                                         $final_score = ((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
-                                                + h($completed_quizz['user_assessment_num_incorrect']))) * 100.0 ." %";
+                                                + h($completed_quizz['user_assessment_num_incorrect']))) * 100.0 ."%";
                                     ?>
 
                                     <?php if ($final_score <= 75.0) { ?>
-                                    <td id="compl_quizz_dash_score_low"><strong><?php echo h($final_score) ?></strong></td>
+                                    <td class="compl_quizz_dash_score_low"><strong><?php echo h($final_score) ?></strong></td>
                                     <?php } else { ?>
-                                    <td id="compl_quizz_dash_score_high"><strong><?php echo h($final_score) ?></strong></td>
+                                    <td class="compl_quizz_dash_score_high"><strong><?php echo h($final_score) ?></strong></td>
 
                                     <?php } ?>
                                 </tr>
@@ -206,6 +203,101 @@ session_start();
     <br>
 
 </div>
+
+<!-- ***************************** FULL STATISTICS DISPLAY (MODAL) ***************************** -->
+<div id="UserInfoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="text-align: center;">USER QUIZZ HISTORY</h4>
+          <p style="text-align: center; color: #e53935;"><strong><?php echo h($_SESSION["user_id"]); ?></strong></p>
+      </div>
+      <div class="modal-body">
+          <div class="page-header">
+            <h4 style="text-align: center;">COMPLETED QUIZZES  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
+          </div>
+          <!-- COMPLETED QUIZZES -->
+          <div class="all_completed_quizzes_list">
+              <table class="table table-hover compl_quizzes_tbl">
+                  <thead>
+                    <tr>
+                        <th>COMPLETED</th>
+                        <th>NAME</th>
+                        <th style="text-align: center;">CORRECT</th>
+                        <th style="text-align: center;">INCORRECT</th>
+                        <th style="text-align: center;">SCORE</th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                        <?php foreach($completed_quizz_array as $completed_quizz){ ?>
+                            <tr>
+                                <?php
+                                    /* format the SQL timestamp to show (MM-DD-YYYY) */
+                                    $time = strtotime(h($completed_quizz['user_assessment_end_stamp']));
+                                    $time_formated = date("m-d-Y", $time);
+                                ?>
+                                <td><?php echo h($time_formated) ?></td>
+                                <?php
+                                    /* get the assessment name with the given ID */
+                                    $assessment_name = get_assessment_name($completed_quizz['assessment_id']);
+                                ?>
+
+
+                                <td><?php echo h($assessment_name) ?></td>
+                                <td class="compl_quizz_dash_score_high"><?php echo h($completed_quizz['user_assessment_num_correct']) ?></td>
+                                <td class="compl_quizz_dash_score_low"><?php echo h($completed_quizz['user_assessment_num_incorrect']) ?></td>
+                                <?php
+                                    /* calculate the final score for the given completed quizz */
+                                    $final_score = ((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
+                                            + h($completed_quizz['user_assessment_num_incorrect']))) * 100.0 ."%";
+                                ?>
+                                <?php if ($final_score <= 75.0) { ?>
+                                <td class="compl_quizz_dash_score_low"><strong><?php echo h($final_score) ?></strong></td>
+                                <?php } else { ?>
+                                <td class="compl_quizz_dash_score_high"><strong><?php echo h($final_score) ?></strong></td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+              </table>
+          </div>
+          <div class="page-header">
+            <h4 style="text-align: center;">IN PROGRESS QUIZZES   <span class="glyphicon glyphicon-edit solution_glyphicon_correct_not_selected"></span></h4>
+          </div>
+
+          <!-- QUIZZES IN PROGRESS -->
+          <?php foreach($in_progress_quizz_array as $ip_quizz){ ?>
+
+          <?php
+            /* get the assessment name with the given ID */
+            $assessment_name = get_assessment_name($ip_quizz['assessment_id']);
+          ?>
+              <button style="text-align:left;" type="button" class="btn btn-info btn-block btn-sm" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($ip_quizz['assessment_id']))); ?>'">
+                <span class="pull-left"><?php echo h($assessment_name); ?></span>
+                <span style="float:right;" class="pull-right glyphicon glyphicon-menu-right"></span>
+              </button>
+          <?php } ?>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- *********************************** CONTENT END *********************************** -->
 
 <!--load personal scripts-->
