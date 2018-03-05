@@ -109,6 +109,7 @@ $(document).ready(function(){
                 /* Enable Quizz Navigation Buttons */
                 enableNext(questionNumber);
                 enablePrevious(questionNumber);
+                animateProgressBar();
 
                }).fail(function(data) {
                 console.log("Error in Request");
@@ -156,6 +157,8 @@ $(document).ready(function(){
                 hideActiveQuestionCard(questionNumber);
                 activateQuestionCard(++questionNumber);
                 footerUpdate();
+//                animateProgressBar();
+
             } else{
                 /* Show quizz results! */
 
@@ -188,6 +191,7 @@ $(document).ready(function(){
             hideActiveQuestionCard(questionNumber);
             activateQuestionCard(--questionNumber);
             footerUpdate();
+//            animateProgressBar();
         }
     }
 
@@ -199,6 +203,7 @@ $(document).ready(function(){
     function loadLast(){
         hideEndQuizzDetails();
         footerUpdate();
+//        animateProgressBar();
     }
 
     /******************************************************
@@ -272,6 +277,33 @@ $(document).ready(function(){
         var questionNumStr = questionCardNum.match(/[_]\d/g);
         var questionNum = questionNumStr[0].match(/\d/g);
         return parseInt(questionNum);
+    }
+
+
+    /*********************************************************
+    * GETS THE PERCENTAGE COMPLETION OF QUIZZ
+    **********************************************************/
+    function getPercentComplete(){
+        var questionNum = currentQuestionNum();
+        return parseInt((questionNum / numQuestions) * 100);
+    }
+
+
+    /*********************************************************
+    * ANIMATES THE PROGRESS BAR FOR PERCENT COMPLETE
+    **********************************************************/
+    function animateProgressBar(){
+        var percentComplete = getPercentComplete();
+        var widthComplete = percentComplete + '%';
+
+        $("#quizz_progress_bar").attr('aria-valuenow', percentComplete);
+
+        $("#quizz_progress_bar").animate({
+            width: widthComplete
+        }, 1000);
+
+        $("#quizz_progress_bar").text(widthComplete);
+
     }
 
 

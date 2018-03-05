@@ -43,12 +43,16 @@ body, html {
     visibility: collapse;
 }
 
+/* to enable modified progress bar animations */
+.progress.active .progress-bar {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
 
 /**************HEADER STYLES (IN ORDER OF APPEARANCE)**************/
 
 .header_main{
-    /* header with color from main HPC web */
-/*    background:#990000;*/
     background: #e53935;
     height: 150px;
     text-align: center;
@@ -180,9 +184,10 @@ body, html {
     max-width: 345px;
 }
 
-.all_completed_quizzes_list{
+.all_statistics_lists{
     margin: auto;
     text-align: left;
+    overflow: auto;
 }
 
 

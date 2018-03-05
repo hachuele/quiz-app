@@ -57,6 +57,17 @@
     }
 
 
+    function get_num_question_by_assessment_id($assessment_id){
+        global $db;
+        $sql_questions = "SELECT question_id FROM questions ";
+        $sql_questions .= "WHERE assessment_id='" . $assessment_id . "'";
+        $result_question_set = mysqli_query($db, $sql_questions);
+        confirm_result_set($result_question_set);
+        $num_questions = mysqli_num_rows($result_question_set);
+        return $num_questions;
+    }
+
+
     function find_choices_by_question_id($question_id){
         global $db;
         $sql_choices = "SELECT * FROM question_choices "; //NOTE: Space after table name CRITICAL

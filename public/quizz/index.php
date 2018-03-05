@@ -23,10 +23,6 @@ session_start();
 
     $user_id = 'hachuelb';
 
-
-    //USER ID LATEST QUESTION IS MAX(QUESTION_ID AND ASSESSMENT ID [if done multiple times] FROM USER ANSWERS TABLE
-
-
 //    unset($_SESSION['question_id']);
 
     //would set to latest completed question first, then change to whatever user is viewing
@@ -66,8 +62,6 @@ session_start();
 
     //TODO: NEED TO REMEBER DATA IN CASE OF A REFRESH WITH A SESSION!! (SAVE CURRENT QUESTION NUMBER FOR EXAMPLE)
 
-    //TODO: WILL NEED TO FETCH USER'S DETAILS TO FILL OUT PERCENT COMPLETE AND QUESTION BY QUESTION
-    //    $latest_question = get_latest_question($assessment_id);
 
 
 ?>
@@ -122,7 +116,6 @@ session_start();
         <div class="questions_list_div">
             <form id="question_form_<?php echo $question_num ?>" action="process_answers.php" method="POST">
                 <!--LOAD QUESTION CHOICES-->
-                <!--NOTE: HAVE TO PASS QUESTION ID IN HIDDEN FORM FIELD-->
                 <?php $choice_set = find_choices_by_question_id(h($question['question_id'])); ?>
                 <?php $choice_num = 1; ?>
                 <?php $radio_value = 1; ?>
@@ -180,7 +173,7 @@ session_start();
     <?php } ?>
 
 
-    <!--Quizz Statistics Div for end of quiz results (Ajax call?)-->
+    <!--Quizz Statistics Div for end of quiz results (Ajax call - will fill through javascript)-->
     <div id="quizz_statistics_card" class=" hidden container">
         <div class="page-header">
             <h3 style="text-align: center; margin-bottom: 25px;">Quizz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>
@@ -227,7 +220,7 @@ session_start();
 
     <div id="quizz_progress_bar_div">
         <div class="progress">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">40%</div>
+          <div id="quizz_progress_bar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
         </div>
     </div>
 </div>

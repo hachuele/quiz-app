@@ -18,16 +18,11 @@ session_start();
 
     #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
         #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-    $user_id = 'hachuelb';
+    $user_id = 'johndoe';
 
     /* ---------------- Define Current Page Variables ---------------- */
     $site_title = 'HPC Assessments Site';
     $page_title = 'HPC ASSESSMENTS PAGE';
-
-// DELETE BELOW
-    $completed_coursework = "";
-    $completed_coursework_tbl = "";
-    $completed_coursework = array('HPC New User'=>'11/7/17', 'Intro to Linux'=>'11/7/17', 'HPC Installing Software'=>'11/9/17', 'HPC Advanced Topics'=>'11/10/17');
 
 
     /* ---------------- Get DB Data ---------------- */
@@ -219,7 +214,7 @@ session_start();
             <h4 style="text-align: center;">COMPLETED QUIZZES  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
           </div>
           <!-- COMPLETED QUIZZES -->
-          <div class="all_completed_quizzes_list">
+          <div class="all_statistics_lists">
               <table class="table table-hover compl_quizzes_tbl">
                   <thead>
                     <tr>
@@ -268,26 +263,48 @@ session_start();
           </div>
 
           <!-- QUIZZES IN PROGRESS -->
-          <?php foreach($in_progress_quizz_array as $ip_quizz){ ?>
+          <div class="all_statistics_lists">
+              <table class="table table-hover compl_quizzes_tbl">
+                  <thead>
+                    <tr>
+                        <th>STARTED</th>
+                        <th>NAME</th>
+                        <th style="text-align: center;">% COMPL</th>
+                        <th style="text-align: center;">CONTINUE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        <?php foreach($in_progress_quizz_array as $ip_quizz){ ?>
+                            <tr>
+                                <?php
+                                    /* format the SQL timestamp to show (MM-DD-YYYY) */
+                                    $time = strtotime(h($ip_quizz['user_assessment_start_stamp']));
+                                    $time_formated = date("m-d-Y", $time);
+                                ?>
+                                <td><?php echo h($time_formated) ?></td>
+                                <?php
+                                    /* get the assessment name with the given ID */
+                                    $assessment_name = get_assessment_name($ip_quizz['assessment_id']);
+                                ?>
+                                <td><?php echo h($assessment_name) ?></td>
 
-          <?php
-            /* get the assessment name with the given ID */
-            $assessment_name = get_assessment_name($ip_quizz['assessment_id']);
-          ?>
-              <button style="text-align:left;" type="button" class="btn btn-info btn-block btn-sm" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($ip_quizz['assessment_id']))); ?>'">
-                <span class="pull-left"><?php echo h($assessment_name); ?></span>
-                <span style="float:right;" class="pull-right glyphicon glyphicon-menu-right"></span>
-              </button>
-          <?php } ?>
-
-
-
-
-
-
-
-
-
+                                <?php
+                                    /* get the number of questions for the quizz */
+                                    $num_questions = get_num_question_by_assessment_id($ip_quizz['assessment_id']);
+                                    /* calculate the final score for the given completed quizz */
+                                    $perc_compl = (h($ip_quizz['latest_quest_sequential_num']) / h($num_questions)) * 100.0 ."%";
+                                ?>
+                                <td class="compl_quizz_dash_score_high"><strong><?php echo h($perc_compl) ?></strong></td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn btn-default btn-sm" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($ip_quizz['assessment_id']))); ?>'">
+                                        <span  class="glyphicon glyphicon-menu-right"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+              </table>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -295,9 +312,6 @@ session_start();
     </div>
   </div>
 </div>
-
-
-
 <!-- *********************************** CONTENT END *********************************** -->
 
 <!--load personal scripts-->
