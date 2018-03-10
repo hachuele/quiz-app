@@ -44,7 +44,6 @@ session_start();
             array_push($completed_quizz_unique_array, $complete_quizz);
         }
     }
-
     /* get set of all in-progress quizzes for given user */
     $in_progress_quizz_array = array();
     $in_progress_by_user_set = find_in_progress_quizzes_by_user($user_id);
@@ -53,11 +52,6 @@ session_start();
     while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
         array_push($in_progress_quizz_array, $ip_quizz);
     }
-
-
-
-
-
 
 
     /* ---------------- Set Relevant Session Variables ---------------- */
@@ -79,7 +73,6 @@ session_start();
 
 <!-- *********************************** PAGE HEADER *********************************** -->
 <?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
-
 
 <!-- *********************************** CONTENT START *********************************** -->
 <div id="assessment_selection_div" class="container-fluid main_content">

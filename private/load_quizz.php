@@ -19,6 +19,7 @@
 //NEED ASSESSMENT ID TO KNOW WHAT TO LOAD
 //CAN USE   require_once(load_quizz)
 
+
 /* Instantiate arrays */
 $choices_array = array(); // the set of choices for a particular question
 $results_array = array(); // what the user has selected

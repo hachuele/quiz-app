@@ -33,9 +33,12 @@ $(document).ready(function(){
     * FORM TO ITS ORIGINAL FORMAT.
     *******************************************************/
     function resetQuizzPage(){
-        $("[id^=answer_explanations_div]").hide();
-        $("[id^=view_answers_btn]").attr('disabled', true);
-        $("[id^=next_question_btn]").attr('disabled', true);
+//        $("[id^=answer_explanations_div]").hide();
+
+//        $("[id^=answer_explanations_div]").attr('hidden', 'true');
+//
+//        $("[id^=view_answers_btn]").attr('disabled', true);
+//        $("[id^=next_question_btn]").attr('disabled', true);
     }
 
     /************************************************************
@@ -45,6 +48,10 @@ $(document).ready(function(){
     function submitAnswers(questionNumber){
         //check if the button is enabled (i.e: an answer has been selected)
         if($("#view_answers_btn_" + questionNumber).is(":enabled")){
+
+            /* hide the answers div and remove hidden class */
+            $("#answer_explanations_div_" + questionNumber).hide().removeClass('hidden');
+
             /* Serialize for data for ajax request */
             var formData = $("#question_form_" + questionNumber).serialize();
             var questionID = currentQuestionID();
@@ -123,10 +130,10 @@ $(document).ready(function(){
     /***************************************************************
     * THE LOAD ANSWERS FUNCTION LOADS PREVIOUSLY COMPLETED QUESTIONS
     * PERFORMS AJAX CALL TO LOOP THROUGH USER DATA AND DISPLAY
-    * - (used on page load and reload)
+    * - (called on page load [doc redy] and reload)
     ****************************************************************/
     function loadPreviousAnswers(){
-
+//CHECK IF IN PROGRESS, LOOP OVER QUESTIONS, DISABLING AND ENBLING BUTTONS AND FORMS
 
 
     }
@@ -157,8 +164,6 @@ $(document).ready(function(){
                 hideActiveQuestionCard(questionNumber);
                 activateQuestionCard(++questionNumber);
                 footerUpdate();
-//                animateProgressBar();
-
             } else{
                 /* Show quizz results! */
 
@@ -191,7 +196,6 @@ $(document).ready(function(){
             hideActiveQuestionCard(questionNumber);
             activateQuestionCard(--questionNumber);
             footerUpdate();
-//            animateProgressBar();
         }
     }
 
@@ -203,7 +207,6 @@ $(document).ready(function(){
     function loadLast(){
         hideEndQuizzDetails();
         footerUpdate();
-//        animateProgressBar();
     }
 
     /******************************************************

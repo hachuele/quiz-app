@@ -118,9 +118,36 @@
     }
 
 
+    function get_in_progress_by_assessment_id($assessment_id, $user_id){
+        global $db;
+        $sql_ip = "SELECT * FROM user_assessments "; //NOTE: Space after table name CRITICAL
+        $sql_ip .= "WHERE assessment_id='" . $assessment_id . "'";
+        $sql_ip .= "and user_id='" . $user_id . "'";
+        $sql_ip .= " AND user_assessment_is_complete= 0 ";
+        $result_ip_set = mysqli_query($db, $sql_ip);
+        confirm_result_set($result_ip_set);
+        return $result_ip_set;
+    }
 
 
+    function get_user_answers_by_user_assessment_id($user_assessment_id){
+        global $db;
+        $sql_user_answers = "SELECT * FROM user_answers "; //NOTE: Space after table name CRITICAL
+        $sql_user_answers .= "WHERE user_assessment_id='" . $user_assessment_id . "'";
+        $result_user_answers_set = mysqli_query($db, $sql_user_answers);
+        confirm_result_set($result_user_answers_set);
+        return $result_user_answers_set;
+    }
 
+    function get_user_answers_by_ua_q_id($user_assessment_id, $question_id){
+        global $db;
+        $sql_user_answers = "SELECT * FROM user_answers "; //NOTE: Space after table name CRITICAL
+        $sql_user_answers .= "WHERE user_assessment_id='" . $user_assessment_id . "'";
+        $sql_user_answers .= " AND question_id='" . $question_id . "'";
+        $result_user_answers_set = mysqli_query($db, $sql_user_answers);
+        confirm_result_set($result_user_answers_set);
+        return $result_user_answers_set;
+    }
 
 
 

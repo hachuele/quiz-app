@@ -47,7 +47,6 @@ session_start();
 
 /* --------------------------------- ANSWER DISPLAY --------------------------------- */
 
-
 /* Instantiate arrays */
 $choices_array = array(); // the set of choices for a particular question
 $results_array = array(); // what the user has selected
@@ -55,9 +54,6 @@ $answers_data = array(); // the output
 $response_text_array = array(); // to store the answer details for display
 $output_array = array(); // array to encode for ajax
 $choice_ids = array(); // store choice ids
-
-
-
 
 /* Get the question type */
 $question_type = $_POST['question_type'];
