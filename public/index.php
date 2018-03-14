@@ -11,22 +11,16 @@ session_start();
 ?>
 
 <?php require_once('../private/initialize.php'); ?>
-
 <?php
-
     /* ---- Get User ID ---- */
-
-    #NEED TO GET USER ID THROUGH SHIB ENV VARIABLES
-        #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-    $user_id = 'johndoe';
+    #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
+    $user_id = 'hachuelb';
 
     /* ---------------- Define Current Page Variables ---------------- */
     $site_title = 'HPC Assessments Site';
     $page_title = 'HPC ASSESSMENTS PAGE';
 
-
     /* ---------------- Get DB Data ---------------- */
-
     /* get set of all available quizzes */
     $course_set = find_all_visible_courses();
     $completed_quizz_array = array();
@@ -53,7 +47,6 @@ session_start();
         array_push($in_progress_quizz_array, $ip_quizz);
     }
 
-
     /* ---------------- Set Relevant Session Variables ---------------- */
 
 //    if(!isset($_SESSION["user_id"])){
@@ -61,15 +54,7 @@ session_start();
 //    }
 
 
-
-
-
-
-
 ?>
-
-
-
 
 <!-- *********************************** PAGE HEADER *********************************** -->
 <?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
@@ -108,8 +93,6 @@ session_start();
                         <tbody>
                             <?php
                               foreach($completed_quizz_unique_array as $completed_quizz){
-
-
                             ?>
                                 <tr>
                                     <?php
@@ -128,12 +111,10 @@ session_start();
                                         $final_score = ((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
                                                 + h($completed_quizz['user_assessment_num_incorrect']))) * 100.0 ."%";
                                     ?>
-
                                     <?php if ($final_score <= 75.0) { ?>
                                     <td class="compl_quizz_dash_score_low"><strong><?php echo h($final_score) ?></strong></td>
                                     <?php } else { ?>
                                     <td class="compl_quizz_dash_score_high"><strong><?php echo h($final_score) ?></strong></td>
-
                                     <?php } ?>
                                 </tr>
                             <?php } ?>
@@ -144,10 +125,8 @@ session_start();
                     <span class="glyphicon glyphicon-search"></span> Full Quizz History
                 </button>
                 <?php } ?>
-
             </div>
         </div>
-
         <div class=" col-sm-6" style="margin-top: 15px;">
             <div id="available_quizzes_dash_div" class="dashboard_element_card">
                 <div class="dash_card_title_div">
@@ -173,7 +152,6 @@ session_start();
                             if($is_in_progress){
                                 $button_class = "btn-info";
                                 $button_glyphicon = "glyphicon glyphicon-menu-right";
-
                             } else{
                                 $button_class = "btn-primary";
                             }
@@ -189,7 +167,6 @@ session_start();
     </div>
     <hr>
     <br>
-
 </div>
 
 <!-- ***************************** FULL STATISTICS DISPLAY (MODAL) ***************************** -->
@@ -231,8 +208,6 @@ session_start();
                                     /* get the assessment name with the given ID */
                                     $assessment_name = get_assessment_name($completed_quizz['assessment_id']);
                                 ?>
-
-
                                 <td><?php echo h($assessment_name) ?></td>
                                 <td class="compl_quizz_dash_score_high"><?php echo h($completed_quizz['user_assessment_num_correct']) ?></td>
                                 <td class="compl_quizz_dash_score_low"><?php echo h($completed_quizz['user_assessment_num_incorrect']) ?></td>
@@ -254,8 +229,6 @@ session_start();
           <div class="page-header">
             <h4 style="text-align: center;">IN PROGRESS QUIZZES   <span class="glyphicon glyphicon-edit solution_glyphicon_correct_not_selected"></span></h4>
           </div>
-
-          <!-- QUIZZES IN PROGRESS -->
           <div class="all_statistics_lists">
               <table class="table table-hover compl_quizzes_tbl">
                   <thead>
@@ -280,7 +253,6 @@ session_start();
                                     $assessment_name = get_assessment_name($ip_quizz['assessment_id']);
                                 ?>
                                 <td><?php echo h($assessment_name) ?></td>
-
                                 <?php
                                     /* get the number of questions for the quizz */
                                     $num_questions = get_num_question_by_assessment_id($ip_quizz['assessment_id']);

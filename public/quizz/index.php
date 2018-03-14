@@ -16,19 +16,14 @@ session_start();
     $page_title = 'HPC QUIZZ';
     $site_title = 'HPC Assessments Site';
 
-
     /* -------- Get User ID -------- */
     $user_id = $_SESSION["user_id"];
-
-
     //would set to latest completed question first, then change to whatever user is viewing
     $_SESSION["question_id"] = 1;
-
 
     if(!isset($_SESSION["question_id"])){
         $_SESSION["question_id"] = 1; //should be the latest completed question from database
     }
-
 
     $assessment_id = $_GET['assessment_id'] ?? '1'; // get the assessment id from url
 
@@ -41,7 +36,6 @@ session_start();
     $assessment_name = get_assessment_name($assessment_id); // get the name of this assessment for display
     $question_set = find_questions_by_assessment_id($assessment_id); //get questions for selected assessment
     $num_questions = mysqli_num_rows($question_set); //get the number of questions in the set
-
     /* check if assessment is in progress */
     $is_in_progress = 0;
     /* NOTE: only one row output (max) for a given in progress assessment id and user id */
@@ -51,7 +45,6 @@ session_start();
     }
     /* if quizz in progress, retrieve required info for page load */
     $latest_quest_seq = 0;
-
     /* if the current quizz is in progress, instantiate variables to update user profile */
     if($is_in_progress){
         /* fecth the completed information (response information and status) */
@@ -59,14 +52,7 @@ session_start();
         $latest_quest_seq = $user_assessments_row['latest_quest_sequential_num'];
         $user_assessment_id = $user_assessments_row['user_assessment_id'];
     }
-
-
-
-
-
-
 ?>
-
 
 <!-- *********************************** PAGE HEADER *********************************** -->
 <?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
@@ -88,9 +74,7 @@ session_start();
 </div>
 <div class="container main_content">
     <?php $question_num = 1; ?>
-    <!--START MAIN PHP LOOP FOR GENERATING QUESTIONS-->
     <?php while($question = mysqli_fetch_assoc($question_set)) { ?>
-    <!--INSTANTIATE ACTIVE CLASS TO EMPTY-->
     <?php
         /* get choice set to for given question id */
         $choices_array = array();
@@ -100,8 +84,6 @@ session_start();
         while($choice = mysqli_fetch_array($choice_set, MYSQLI_BOTH)){
             array_push($choices_array, $choice);
         }
-
-
         $question_active_class = '';
         $is_completed_question = 0;
         $hidden_incomplete = 'hidden';
@@ -115,7 +97,6 @@ session_start();
             $hidden_incomplete ='';
             $disabled_complete = 'disabled';
             $enabled_completed = '';
-
             $user_answers_array = array();
             /* get the user submitted answers for the current question */
             $user_answers_set = get_user_answers_by_ua_q_id($user_assessment_id, $question['question_id']);
@@ -124,17 +105,8 @@ session_start();
             while($user_answer = mysqli_fetch_array($user_answers_set, MYSQLI_BOTH)){
                 array_push($user_answers_array, $user_answer);
             }
-
-
         }
-
-
-
     ?>
-
-
-
-
     <?php
         if($question_num == $latest_quest_seq || ($latest_quest_seq == 0 && $question_num == 1)){
             $question_active_class = 'active';
@@ -196,9 +168,6 @@ session_start();
                                 }
                             }
                         }
-
-
-
                 ?>
                 <div class="question_item_div center">
                     <div class="<?php echo $question_type_class; ?> question_item">
@@ -216,7 +185,6 @@ session_start();
                 <br>
                 <hr>
                 <div id="answer_explanations_div_<?php echo $question_num; ?>" class="<?php echo $hidden_incomplete; ?> well answer_explanations">
-
                     <?php
                         /* if in progress and question complete, show answer details */
                         if($is_completed_question){
@@ -224,22 +192,16 @@ session_start();
                             foreach($choices_array as $choice){
                                 if($choice['question_choice_correct'] == 1) {
                     ?>
-
                         <div class="alert alert-success">
                             <strong>Choice <?php echo $choice_cur_num; ?>: </strong> <?php echo $choice['question_choice_reason']; ?>
                         </div>
-
                                 <?php
                                 }
                                 else if($choice['question_choice_correct'] == 0) {
                                 ?>
-
                         <div class="alert alert-danger">
                             <strong>Choice <?php echo $choice_cur_num; ?>: </strong> <?php echo $choice['question_choice_reason']; ?>
                         </div>
-
-
-
                                 <?php } ?>
                             <?php $choice_cur_num++; } ?>
                         <?php } ?>
