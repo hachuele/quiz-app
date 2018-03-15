@@ -56,12 +56,23 @@ $(document).ready(function(){
             var formData = $("#question_form_" + questionNumber).serialize();
             var questionID = currentQuestionID();
             var questionType = currentQuestionType();
+            var questionIndex = '';
+            /* use question index for database inserts */
+            if(questionNumber == 1){
+                questionIndex = 'first';
+            }
+            else if(questionNumber == numQuestions){
+                questionIndex = 'last';
+            }
+            else{
+                questionIndex = 'other';
+            }
 
             /* ------ AJAX CALL TO PROCESS ANSWERS ------ */
             $.ajax({
                 type     : 'POST',
                 url      : '../../private/process_answers.php',
-                data     : formData + '&question_id=' + questionID + '&question_type=' + questionType,
+                data     : formData + '&question_id=' + questionID + '&question_type=' + questionType + '&question_index=' + questionIndex,
                 dataType : 'json',
                 encode   : true
             }).done(function(data){
@@ -119,24 +130,11 @@ $(document).ready(function(){
                 animateProgressBar();
 
                }).fail(function(data) {
-                console.log("Error in Request");
+                console.log(data);
                 });
         }
     }
 
-
-
-
-    /***************************************************************
-    * THE LOAD ANSWERS FUNCTION LOADS PREVIOUSLY COMPLETED QUESTIONS
-    * PERFORMS AJAX CALL TO LOOP THROUGH USER DATA AND DISPLAY
-    * - (called on page load [doc redy] and reload)
-    ****************************************************************/
-    function loadPreviousAnswers(){
-//CHECK IF IN PROGRESS, LOOP OVER QUESTIONS, DISABLING AND ENBLING BUTTONS AND FORMS
-
-
-    }
 
 
     /******************************************************

@@ -7,9 +7,6 @@
      * University of Southern California, High-Performance Computing
      ******************************************************************/
 
-
-
-
     ob_start(); //output buffering on
     // Assign file paths to PHP constants
     // __FILE__ returns the current path to this file
@@ -37,8 +34,6 @@
     // Initiate a database connection when initialize.php gets loaded
     // This ensures every page will immediately log into the server
     $db = db_connect();
-
-
 ?>
 
 

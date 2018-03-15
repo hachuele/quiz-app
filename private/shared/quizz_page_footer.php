@@ -11,11 +11,6 @@
     $help_modal_title = 'HPC QUIZZ HELP';
     $help_modal_txt = 'Please complete the selected Quizz...';
 
-
-
-
-
-
 ?>
         <!-- Help Modal -->
         <div id="HelpModal" class="modal fade" role="dialog">
@@ -36,7 +31,6 @@
           </div>
         </div>
 
-
         <div id="footer_row" class="row footer container-fluid">
             <div class="col-xs-6">
                 <button id="user_id_button" type="button" class="btn btn-info btn-sm" style="float: left;">
@@ -53,7 +47,7 @@
 </html>
 
 
-<!--DISCONNECT FROM THE DATABASE-->
 <?php
+    /* disconnect from the db */
     db_disconnect($db);
 ?>

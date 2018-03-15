@@ -14,7 +14,8 @@ session_start();
 <?php
     /* ---- Get User ID ---- */
     #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
-    $user_id = 'hachuelb';
+    $user_id = 'eric';
+    $_SESSION["user_id"] = $user_id;
 
     /* ---------------- Define Current Page Variables ---------------- */
     $site_title = 'HPC Assessments Site';
@@ -47,11 +48,8 @@ session_start();
         array_push($in_progress_quizz_array, $ip_quizz);
     }
 
-    /* ---------------- Set Relevant Session Variables ---------------- */
 
-//    if(!isset($_SESSION["user_id"])){
-        $_SESSION["user_id"] = $user_id;
-//    }
+
 
 
 ?>

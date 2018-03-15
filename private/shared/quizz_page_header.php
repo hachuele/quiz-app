@@ -8,9 +8,8 @@
  * University of Southern California, High-Performance Computing
  ******************************************************************/
 
-
-    if(!isset($site_title)){ $site_title = 'HPC Assessments Site';}
-    if(!isset($page_title)){ $page_title = 'HPC ASSESSMENTS PAGE';}
+    $site_title = 'HPC Assessments Site';
+    $page_title = 'HPC ASSESSMENTS PAGE';
 
 ?>
 

@@ -18,17 +18,18 @@ session_start();
 
     /* -------- Get User ID -------- */
     $user_id = $_SESSION["user_id"];
-    //would set to latest completed question first, then change to whatever user is viewing
-    $_SESSION["question_id"] = 1;
 
-    if(!isset($_SESSION["question_id"])){
-        $_SESSION["question_id"] = 1; //should be the latest completed question from database
-    }
+    //would set to latest completed question first, then change to whatever user is viewing
+//    $_SESSION["question_id"] = 1;
+//
+//    if(!isset($_SESSION["question_id"])){
+//        $_SESSION["question_id"] = 1; //should be the latest completed question from database
+//    }
 
     $assessment_id = $_GET['assessment_id'] ?? '1'; // get the assessment id from url
 
-    /* Update Session Variables */
-//    $_SESSION["assessment_id"] = $assessment_id;
+    /* ---------------- Update Session Variables ---------------- */
+    $_SESSION["assessment_id"] = $assessment_id;
 
     /* Get the question_id for the most recently completed question for the current assessment */
 
@@ -223,7 +224,7 @@ session_start();
                         <button disabled id="view_answers_btn_<?php echo $question_num ?>" class="btn btn-info btn-block btn-sm answers_button" type="button">SUBMIT</button>
                     </div>
                     <div class="next_question_btn_div col-xs-3">
-                        <button id="next_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info btn-sm next_button">
+                        <button <?php echo $enabled_completed; ?> id="next_question_btn_<?php echo $question_num ?>" type="button" class="btn btn-info btn-sm next_button">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
@@ -232,10 +233,9 @@ session_start();
         </div>
         <br>
     </div>
-    <!--increment question number for display-->
     <?php $question_num++; ?>
-    <!--end of question while loop-->
     <?php } ?>
+
     <!--Quizz Statistics Div for end of quiz results (Ajax call - will fill through javascript)-->
     <div id="quizz_statistics_card" class=" hidden container">
         <div class="page-header">
@@ -274,11 +274,21 @@ session_start();
         </div>
     </div>
     <hr>
+
+    <?php
+        $aria_value_now = 0;
+        /* if quizz is in progress - calculate percent complete and display */
+        if($is_in_progress){
+            $percent_complete_ip = ($latest_quest_seq / $num_questions) * 100.0;
+            $aria_value_now = $percent_complete_ip;
+        }
+    ?>
     <div style="max-width: 700px; margin: auto;" id="quizz_progress_bar_div">
         <div class="progress">
-          <div id="quizz_progress_bar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+          <div id="quizz_progress_bar" class="progress-bar progress-bar-success" style="width:<?php echo $aria_value_now; ?>%" role="progressbar" aria-valuenow="<?php echo $aria_value_now; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $aria_value_now; ?>%</div>
         </div>
     </div>
+
 </div>
 <!-- *********************************** CONTENT END *********************************** -->
 
