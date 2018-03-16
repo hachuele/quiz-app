@@ -1,6 +1,6 @@
 /******************************************************************
- * DESCRIPTION:
- *
+ * DESCRIPTION: general_style.css defines the style accross the
+ * Assessments Site.
  *                             ----
  * @author: Eric J. Hachuel
  * University of Southern California, High-Performance Computing
@@ -11,6 +11,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: 'Helvetica';
 }
 
 .centering_div{
@@ -49,6 +50,51 @@ body, html {
     transition: none !important;
 }
 
+/* modify bootstrap btn-primary colors */
+.btn-primary {
+    color: #fff;
+    background-color: #1976d2;
+    border-color: #357ebd;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #2196f3;
+    border-color: #2196f3;
+}
+
+
+.btn-success {
+    color: #fff;
+    background-color: #43a047;
+    border-color: #43a047;
+}
+.btn-success:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #81c784;
+    border-color: #81c784;
+}
+
+
+.btn-grey-lighten {
+    color: #fff;
+    background-color: #9e9e9e;
+    border-color: #9e9e9e;
+}
+.btn-grey-lighten:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #bdbdbd;
+    border-color: #bdbdbd;
+}
+
+
+
+.blue_darken_2{
+    color: #1976d2;
+}
+
+.grey lighten-1{
+    color: #bdbdbd;
+}
 
 /**************HEADER STYLES (IN ORDER OF APPEARANCE)**************/
 
@@ -60,12 +106,11 @@ body, html {
 }
 
 .assessment_title_main{
-    background: #9e9e9e;
+    background: #bdbdbd;
     height: 55px;
     text-align: center;
     width: 100%;
     color: white;
-    font-family: 'Trebuchet MS';
     box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -87,7 +132,6 @@ body, html {
 #page_title_txt{
     font-size: 25px;
     color: white;
-    font-family: 'Trebuchet MS';
 }
 
 #page_logo_right_div{
@@ -153,16 +197,10 @@ body, html {
 }
 
 
-#assessment_select_contents_title{
-
-}
-
-
-
 .dashboard_element_card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     max-width: 400px;
-    height: 300px;
+    height: 310px;
     margin: auto;
 }
 
@@ -182,6 +220,7 @@ body, html {
     margin: auto;
     text-align: left;
     max-width: 345px;
+    overflow: auto;
 }
 
 .all_statistics_lists{
@@ -272,6 +311,11 @@ body, html {
     color: #FFA500;
 }
 
+.alert-incorrect{
+    background-color: #eeeeee;
+    border-color: #e0e0e0;
+}
+
 
 .view_answers_btn_div{
     text-align: center;
@@ -301,6 +345,10 @@ body, html {
     transition-duration: 2s;
 }
 
+
+.progress-bar-grey{
+    background-color: #9e9e9e;
+}
 
 
 #quizz_statistics_page_header{

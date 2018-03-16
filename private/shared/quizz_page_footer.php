@@ -1,15 +1,16 @@
 <?php
 
-    /******************************************************************
-     * DESCRIPTION:
-     *
-     *                             ----
-     * @author: Eric J. Hachuel
-     * University of Southern California, High-Performance Computing
-     ******************************************************************/
+/******************************************************************
+ * DESCRIPTION: quizz_page_footer.php serves as a modular footer
+ * to use accross multiple pages in the site. Also serves as the
+ * exit point for the database
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
 
-    $help_modal_title = 'HPC QUIZZ HELP';
-    $help_modal_txt = 'Please complete the selected Quizz...';
+$help_modal_title = 'HPC QUIZZ HELP';
+$help_modal_txt = 'Please complete the selected Quizz...';
 
 ?>
         <!-- Help Modal -->
@@ -30,15 +31,14 @@
             </div>
           </div>
         </div>
-
         <div id="footer_row" class="row footer container-fluid">
             <div class="col-xs-6">
-                <button id="user_id_button" type="button" class="btn btn-info btn-sm" style="float: left;">
+                <button id="user_id_button" type="button" class="btn btn-primary btn-sm" style="float: left;">
                     <span class="glyphicon glyphicon-user"></span> <?php echo h($_SESSION["user_id"]); ?>
                 </button>
             </div>
             <div class="col-xs-6">
-                <button id="help_button" type="button" class="btn btn-success btn-sm" style="float: right;" data-toggle="modal" data-target="#HelpModal">
+                <button id="help_button" type="button" class="btn btn-grey-lighten btn-sm" style="float: right;" data-toggle="modal" data-target="#HelpModal">
                     <span class="glyphicon glyphicon-question-sign"></span> Help
                 </button>
             </div>

@@ -1,45 +1,19 @@
 /******************************************************************
- * DESCRIPTION:                                                   *
- *                                                                *
- * -------------------------------------------------------------- *
- * @author: Eric J. Hachuel                                       *
- * University of Southern California, High-Performance Computing  *
+ * DESCRIPTION: quizz-script.js contains javascript code for the
+ * public/quizz/index.php page
+ *                            ---
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
  ******************************************************************/
-
-
-/************************************************
-* *******QUIZZ-SCRIPT CONTAINS FUNCTIONS******* *
-* *********SPECIFIC TO THE QUIZZ PAGE********** *
-*************************************************/
 
 
 /******************code runs once DOM ready******************/
 $(document).ready(function(){
-    //Reset the quizz page then update the footer
-    resetQuizzPage();
     footerUpdate();
-
-    //disable form input for completed questions
-
-    /* Instantiate global variables */
     numQuestions = countNumQuestions();
 
 
-    /* ------------------ FUNCTION DEFINITIONS ------------------ */
-
-
-    /******************************************************
-    * THE RESET QUIZZ PAGE FUNCTION UPDATES/RESTORES THE
-    * FORM TO ITS ORIGINAL FORMAT.
-    *******************************************************/
-    function resetQuizzPage(){
-//        $("[id^=answer_explanations_div]").hide();
-
-//        $("[id^=answer_explanations_div]").attr('hidden', 'true');
-//
-//        $("[id^=view_answers_btn]").attr('disabled', true);
-//        $("[id^=next_question_btn]").attr('disabled', true);
-    }
+    /* ------------------------------------ FUNCTION DEFINITIONS ------------------------------------ */
 
     /************************************************************
     * THE SUBMIT ANSWER FUNCTION SHOWS THE ANSWER BOX.
@@ -110,7 +84,7 @@ $(document).ready(function(){
                         $("#answer_explanations_div_" + questionNumber).append("<div class=\"alert alert-success\"><strong>Choice " + (i + 1) + ": </strong>" + data['reponse_details'][i] + "</div>");
                     }
                     else if((data['user_selection_details'][i] == 'incorrect_selected') || (data['user_selection_details'][i] == 'incorrect_not_selected')){
-                        $("#answer_explanations_div_" + questionNumber).append("<div class=\"alert alert-danger\"><strong>Choice " + (i + 1) + ": </strong>" + data['reponse_details'][i] + "</div>");
+                        $("#answer_explanations_div_" + questionNumber).append("<div class=\"alert alert-incorrect\"><strong>Choice " + (i + 1) + ": </strong>" + data['reponse_details'][i] + "</div>");
                     }
                 }
 
@@ -131,11 +105,10 @@ $(document).ready(function(){
 
                }).fail(function(data) {
                 console.log(data);
+                alert("The was an error. Please try again later or contact your HPC POC.");
                 });
         }
     }
-
-
 
     /******************************************************
     * ENABLE NEXT CHECKS ENABLES MOVING TO THE NEXT QUESTION
@@ -147,7 +120,7 @@ $(document).ready(function(){
             $("#next_question_btn_" + questionNumber).animate({
                 width: '60px'
             });
-            $('#next_question_btn_' + questionNumber).removeClass('btn-info').addClass('btn-success');
+            $('#next_question_btn_' + questionNumber).removeClass('btn-primary').addClass('btn-success');
         }
         $("#next_question_btn_" + questionNumber).prop('disabled', false);
     }
