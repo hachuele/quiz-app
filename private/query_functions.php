@@ -149,6 +149,15 @@ function get_user_answers_by_ua_q_id($user_assessment_id, $question_id){
     return $result_user_answers_set;
 }
 
+function get_user_assessment_by_ua_id($user_assessment_id){
+    global $db;
+    $sql_user_assessment = "SELECT * FROM user_assessments ";
+    $sql_user_assessment .= "WHERE user_assessment_id='" . $user_assessment_id . "'";
+    $result_user_assessment_set = mysqli_query($db, $sql_user_assessment);
+    confirm_result_set($result_user_assessment_set);
+    return $result_user_assessment_set;
+}
+
 
 /* ------------------------------------------------------------------------------------------ */
 /* -------------------------------- Data Insertion Functions -------------------------------- */

@@ -179,7 +179,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title" style="text-align: center;">USER QUIZZ HISTORY</h4>
-          <p class="blue_darken_2" style="text-align: center;"><strong><?php echo h($_SESSION["user_id"]); ?></strong></p>
+          <p class="blue_darken_2" style="text-align: center;"><strong><?php echo h($user_id); ?></strong></p>
       </div>
       <div class="modal-body">
           <div class="page-header">

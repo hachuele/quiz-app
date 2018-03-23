@@ -19,7 +19,10 @@ $page_title = 'HPC QUIZZ';
 $site_title = 'HPC Assessments Site';
 
 /* -------- Get User ID from session variable -------- */
-$user_id = $_SESSION["user_id"];
+
+#my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
+$user_id = 'hachuelb';
+$_SESSION["user_id"] = $user_id;
 
 /* -------- get the assessment id from url (if not found, set to one) -------- */
 $assessment_id = $_GET['assessment_id'] ?? '1';
@@ -43,6 +46,7 @@ if(mysqli_num_rows($user_assessments_set)){
     $is_in_progress = 1;
 }
 
+$user_assessment_id = '';
 /* if the current quizz is in progress, instantiate variables to update user profile */
 $latest_quest_seq = 0;
 if($is_in_progress){
@@ -58,7 +62,7 @@ if($is_in_progress){
 
 <!-- *********************************** CONTENT START *********************************** -->
 <div class="container-fluid assessment_title_main centering_div">
-    <div id ="assessment_title_row_div" class="row centered_div">
+    <div id ="assessment_title_row_div" class="row centered_div" data-user-assessment-id="<?php echo h($user_assessment_id); ?>">
         <div class="col-sm-12">
             <div class="row">
                 <h3 id="assessment_title_txt">
@@ -250,17 +254,17 @@ if($is_in_progress){
         </div>
         <div id="quizz_statistics_data_table">
             <div id="total_score_display">
-                <p id="final_score_percent">85%</p>
+                <p id="final_score_percent"></p>
                 <p id="final_score_txt">FINAL SCORE</p>
             </div>
             <hr>
             <div id="quizz_results_summary_div" class="row">
                 <div id="num_correct_div" class ="col-xs-6">
-                    <p id="num_correct_digit">6</p>
+                    <p id="num_correct_digit"></p>
                     <p id="num_correct_txt">CORRECT</p>
                 </div>
                 <div id="num_incorrect_div" class ="col-xs-6">
-                    <p id="num_incorrect_digit">2</p>
+                    <p id="num_incorrect_digit"></p>
                     <p id="num_incorrect_txt">INCORRECT</p>
                 </div>
             </div>

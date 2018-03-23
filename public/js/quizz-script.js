@@ -52,6 +52,9 @@ $(document).ready(function(){
             }).done(function(data){
 
                 var numChoices = data['num_choices'];
+                var userAssessmentID = data['user_assessment_id'];
+                $('#assessment_title_row_div').attr('data-user-assessment-id', userAssessmentID);
+
                 /* Show answer details within form */
                 for(i = 0; i < numChoices; i++){
                     if(questionType == 'checkbox'){
@@ -135,13 +138,38 @@ $(document).ready(function(){
                 hideActiveQuestionCard(questionNumber);
                 activateQuestionCard(++questionNumber);
                 footerUpdate();
-            } else{
-                /* Show quizz results! */
+            }
+            /* Show quizz results! */
+            else{
+                var userAssessmentID = $('#assessment_title_row_div').attr('data-user-assessment-id');
 
-                //TODO: AJAX CALL TO GET ALL THE DATA FROM THE TABLE FOR STATISTICS DISPLAY !!!!!!!!
+                /* ------ AJAX CALL TO GET FINAL STATISTICS ANSWERS ------ */
+                $.ajax({
+                    type     : 'POST',
+                    url      : '../../private/load_stats.php',
+                    data     : 'user_assessment_id=' + userAssessmentID,
+                    dataType : 'json',
+                    encode   : true
+                }).done(function(data){
+
+                    var assessmentID = data['assessment_id'];
+                    var numCorrect = data['num_correct'];
+                    var numIncorrect = data['num_incorrect'];
+                    var finalScore = ((numCorrect) / (numQuestions)) * 100.0;
+                    var finalScoreString = finalScore + '%';
+
+                    $("#final_score_percent").html(finalScoreString);
+                    $('#num_correct_digit').html(numCorrect);
+                    $("#num_incorrect_digit").html(numIncorrect);
+
+                    showEndQuizzDetails(questionNumber);
+
+                   }).fail(function(data) {
+                    console.log(data);
+                    alert("The was an error. Please try again later or contact your HPC POC.");
+                    });
 
 
-                showEndQuizzDetails(questionNumber);
 
             }
         }
