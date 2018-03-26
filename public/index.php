@@ -67,11 +67,11 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
 <?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
 
 <!-- *********************************** CONTENT START *********************************** -->
-<div id="assessment_selection_div" class="container-fluid main_content">
-    <div id="assessment_select_contents_title" class="page-header">
+<div id="assessments_main_dash_div" class="container-fluid main_content">
+    <div class="page-header">
         <h2 id="dash_title_txt">HPC Assessments Dashboard</h2>
     </div>
-    <div id="dash_compl_ip_row_div" class="row" style="margin:auto;">
+    <div id="dash_compl_ip_row_div" class="row">
         <div class="col-sm-6" style="margin-top: 15px;">
             <div id="completed_quizzes_dash_div" class="dashboard_element_card">
                 <div class="dash_card_title_div">

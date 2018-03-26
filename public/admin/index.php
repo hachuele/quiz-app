@@ -1,34 +1,58 @@
-<?php require_once('../../private/initialize.php'); ?>
+
+<?php
+/******************************************************************
+ * DESCRIPTION: 'public/admin/index.php' serves as the main page
+ * for administrative purposes. Allows to create and edit quizzes,
+ * as well as to view user statistics
+ *                             ----
+ * @author: Eric J. Hachuel
+ * University of Southern California, High-Performance Computing
+ ******************************************************************/
+session_start();
+require_once('../../private/initialize.php');
+?>
+
+<?php
+/* ---------------- Dynamic Naming Variables ---------------- */
+$site_title = 'HPC Assessments Admin Site';
+$page_title = 'HPC ASSESSMENTS ADMIN';
+$help_modal_title = 'HPC ASSESSMENTS ADMIN HELP';
+$help_modal_txt = 'Create a new quizz...';
+
+/* ----------------------------------------------------------------------------------------- */
+/* -------------------------------------- Get User ID -------------------------------------- */
+/* ----------------------------------------------------------------------------------------- */
+
+#my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
+$user_id = 'hachuelb';
+$_SESSION["user_id"] = $user_id;
+
+/* ----------------------------------------------------------------------------------------- */
+/* ------------------------------------ Retrieve from DB ----------------------------------- */
+/* ----------------------------------------------------------------------------------------- */
 
 
-<html lang="en">
+?>
 
-    <head>
-        <title>Assessment Site Administration Page</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" media="all" href="../stylesheets/general.css" />
-        <link rel="stylesheet" media="all" href="../stylesheets/admin.css" />
-    </head>
+<!-- *********************************** PAGE HEADER *********************************** -->
+<?php require(SHARED_PATH . '/quizz_admin_header.php'); ?>
 
+<!-- *********************************** CONTENT START *********************************** -->
+<div id="assessments_main_dash_div" class="container-fluid main_content">
+    <div class="page-header">
+        <h2 id="dash_title_txt">HPC Assessments: Create or Modify</h2>
+    </div>
 
-    <body>
-
-        <h1 class="header_main">HPC Assessment Administration Site Coming Soon</h1>
-
-    </body>
+    <hr>
+    <br>
+</div>
 
 
+<!-- *********************************** CONTENT END *********************************** -->
+
+<script src="<?php echo url_for('js/main-script.js');?>"></script>
+
+<!-- *********************************** PAGE FOOTER *********************************** -->
+<?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>
 
 
-
-
-
-
-</html>

@@ -1,7 +1,7 @@
 <?php
 /******************************************************************
- * DESCRIPTION: quizz_page_header.php serves as a modular header
- * to use accross multiple pages in the site.
+ * DESCRIPTION: quizz_admin_header.php serves as a modular header
+ * to use accross multiple admin pages in the site.
  *                             ----
  * @author: Eric J. Hachuel
  * University of Southern California, High-Performance Computing
@@ -21,7 +21,7 @@
         <link rel="stylesheet" media="all" href="<?php echo url_for('stylesheets/general_style.css'); ?>"/>
     </head>
     <body>
-        <div class="container-fluid header_main centering_div red_darken_2_header">
+        <div class="container-fluid header_main centering_div gray_darken_4_back">
             <div id ="header_row_div" class="row centered_div">
                 <div id="page_title_left_div" class="col-sm-6">
                     <div class="row">
