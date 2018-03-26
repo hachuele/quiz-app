@@ -1,20 +1,13 @@
 /******************************************************************
- * DESCRIPTION:
- *
+ * DESCRIPTION: main-script.js contains javascript code to be
+ * shared by most pages in the assessments site
  *                             ----
  * @author: Eric J. Hachuel
  * University of Southern California, High-Performance Computing
  ******************************************************************/
 
-
-/*******************************************************
-* *******MAIN-SCRIPT CONTAINS GENERAL FUNCTIONS******* *
-********************************************************/
-
-
-
 /******************************************************
-* THE FOOTER UPDATE FUNCTION ENSURE PROPER ALIGNMENT
+* THE FOOTER UPDATE FUNCTION ENSURES PROPER ALIGNMENT
 * OF THE FOOTER TO THE BOTTOM OF THE PAGE.
 *******************************************************/
 function footerUpdate(){
@@ -24,6 +17,7 @@ function footerUpdate(){
     else{
         var header_height = $(".header_main").height() + $(".assessment_title_main").height();
     }
+
     var footer_height = $("#footer_row").height();
     var scrollTopHeigh = $(window).scrollTop();
     var mainContentDiv = $(".main_content").innerHeight();

@@ -1,5 +1,4 @@
 <?php
-
 /******************************************************************
  * DESCRIPTION: database.php contains all the functions required
  * to connect and (safely) interact with the MySQL database
@@ -41,7 +40,7 @@ function confirm_result_set($result_set) {
     }
 }
 
-/* prepare items prior to insert or update of a db table */
+/* prepare items prior to insert or update of a db table (avoid SQL injection) */
 function db_escape($connection, $string) {
     return mysqli_real_escape_string($connection, $string);
 }

@@ -1,5 +1,4 @@
 <?php
-
 /******************************************************************
  * DESCRIPTION: quizz_page_footer.php serves as a modular footer
  * to use accross multiple pages in the site. Also serves as the
@@ -8,15 +7,9 @@
  * @author: Eric J. Hachuel
  * University of Southern California, High-Performance Computing
  ******************************************************************/
-
-$help_modal_title = 'HPC QUIZZ HELP';
-$help_modal_txt = 'Please complete the selected Quizz...';
-
 ?>
-        <!-- Help Modal -->
         <div id="HelpModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
-            <!-- Help Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -39,7 +32,7 @@ $help_modal_txt = 'Please complete the selected Quizz...';
             </div>
             <div class="col-xs-6">
                 <button id="help_button" type="button" class="btn btn-grey-lighten btn-sm" style="float: right;" data-toggle="modal" data-target="#HelpModal">
-                    <span class="glyphicon glyphicon-question-sign"></span> Help
+                    <span class="glyphicon glyphicon-question-sign"></span> HELP
                 </button>
             </div>
         </div>

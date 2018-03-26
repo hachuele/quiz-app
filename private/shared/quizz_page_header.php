@@ -1,5 +1,4 @@
 <?php
-
 /******************************************************************
  * DESCRIPTION: quizz_page_header.php serves as a modular header
  * to use accross multiple pages in the site.
@@ -7,10 +6,6 @@
  * @author: Eric J. Hachuel
  * University of Southern California, High-Performance Computing
  ******************************************************************/
-
-$site_title = 'HPC Assessments Site';
-$page_title = 'HPC ASSESSMENTS PAGE';
-
 ?>
 
 <!DOCTYPE html>

@@ -13,19 +13,23 @@ require_once('../../private/initialize.php');
 ?>
 
 <?php
-
-/* ---------------- Define Current Page & Site Name Variables ---------------- */
-$page_title = 'HPC QUIZZ';
+/* ---------------- Dynamic Naming Variables ---------------- */
 $site_title = 'HPC Assessments Site';
+$page_title = 'HPC ASSESSMENTS';
+$help_modal_title = 'HPC QUIZZ HELP';
+$help_modal_txt = 'Please complete the selected Quizz...';
 
-/* -------- Get User ID from session variable -------- */
+/* ----------------------------------------------------------------------------------------- */
+/* -------------------------------------- Get User ID -------------------------------------- */
+/* ----------------------------------------------------------------------------------------- */
 
+//TODO: get ID from internal database
 #my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
 /* -------- get the assessment id from url (if not found, set to one) -------- */
-$assessment_id = $_GET['assessment_id'] ?? '1';
+$assessment_id = $_GET['assessment_id'];
 $_SESSION["assessment_id"] = $assessment_id;
 
 /* ----------------------------------------------------------------------------------------- */
@@ -34,6 +38,11 @@ $_SESSION["assessment_id"] = $assessment_id;
 
 /* -------- get the name of this assessment for display -------- */
 $assessment_name = get_assessment_name($assessment_id);
+/* if the quizz for the given id does not exist, redirect to main page */
+if($assessment_name == FALSE){
+    redirect_to('../index.php');
+}
+
 /* -------- get questions for selected assessment -------- */
 $question_set = find_questions_by_assessment_id($assessment_id);
 $num_questions = mysqli_num_rows($question_set);
@@ -181,7 +190,7 @@ if($is_in_progress){
                 ?>
                 <div class="question_item_div center">
                     <div class="<?php echo $question_type_class; ?> question_item">
-                        <span id="question_choice_id_<?php echo h($choice['question_choice_id']); ?>" class="<?php echo $choice_glyph_class; ?>" data-choiceid="<?php echo h($choice['question_choice_id']); ?>" ></span><label class="question_label"><input <?php echo $input_checked; ?> <?php echo $disabled_complete; ?> class="<?php echo $question_type_class; ?>_item" type="<?php echo $question_type_class; ?>" name="<?php echo $choice_name; ?>_<?php echo $choice_num; ?>" value="<?php echo $radio_value; ?>"><?php echo h($choice['question_choice_text']); ?></label>
+                        <span id="question_choice_id_<?php echo h($choice['question_choice_id']); ?>" class="<?php echo $choice_glyph_class; ?>" data-choiceid="<?php echo h($choice['question_choice_id']); ?>" ></span><label class="question_label"><input <?php echo $input_checked; ?> <?php echo $disabled_complete; ?> class="<?php echo $question_type_class; ?>_item_<?php echo $question_num; ?>" type="<?php echo $question_type_class; ?>" name="<?php echo $choice_name; ?>_<?php echo $choice_num; ?>" value="<?php echo $radio_value; ?>"><?php echo h($choice['question_choice_text']); ?></label>
                     </div>
                 </div>
                 <?php
@@ -277,7 +286,7 @@ if($is_in_progress){
                     </button>
                 </div>
                 <div class="col-xs-6">
-                    <button id="retry_quizz_btn" type="button" class="btn btn-default btn-sm previous_button">
+                    <button id="retry_quizz_btn" type="button" class="btn btn-default btn-sm previous_button" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h($assessment_id)); ?>'">
                         <span class="glyphicon glyphicon-repeat" style="margin-right:10px;"></span>RETRY QUIZZ
                     </button>
                 </div>
@@ -285,7 +294,6 @@ if($is_in_progress){
         </div>
     </div>
     <hr>
-
     <?php
     $aria_value_now = 0;
     /* if quizz is in progress - calculate percent complete and display */

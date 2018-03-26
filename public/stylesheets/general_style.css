@@ -62,7 +62,6 @@ body, html {
     border-color: #2196f3;
 }
 
-
 .btn-success {
     color: #fff;
     background-color: #43a047;
@@ -74,7 +73,6 @@ body, html {
     border-color: #81c784;
 }
 
-
 .btn-grey-lighten {
     color: #fff;
     background-color: #9e9e9e;
@@ -85,8 +83,6 @@ body, html {
     background-color: #bdbdbd;
     border-color: #bdbdbd;
 }
-
-
 
 .blue_darken_2{
     color: #1976d2;
@@ -188,7 +184,6 @@ body, html {
 /**************CONTENT (QUIZZ SELECTION SITE)**************/
 #assessment_selection_div{
     max-width: 1000px;
-
     text-align: center;
 }
 
@@ -353,7 +348,6 @@ body, html {
 
 #quizz_statistics_page_header{
     text-align: center;
-
 }
 
 #end_of_quizz_navigation{
@@ -424,17 +418,7 @@ body, html {
 }
 
 
-
-/**************CONTENT (ADMIN SITE)**************/
-
-
-
-
-
 /**************BOOTSTRAP MEDIA QUERIES**************/
-/*Extra small devices (portrait phones, less than 576px)*/
-/*// No media query since this is the default in Bootstrap*/
-/*// Small devices (landscape phones, 576px and up)*/
 @media screen and (max-width: 767px) {
 
     #page_header_logo{
@@ -446,7 +430,7 @@ body, html {
     }
 
     #page_title_txt{
-        font-size: 15px;
+        display: none;
     }
 
     #page_title_txt_left_div{
@@ -457,26 +441,25 @@ body, html {
         text-align: inherit;
     }
 
+    #dash_title_txt{
+        font-size: 20px;
+    }
+
     #assessment_title_txt{
         font-size: 20px;
     }
 
-}
+    .dash_card_title_txt{
+        font-size: 15px;
+    }
 
-/*// Medium devices (tablets, 768px and up)*/
-@media screen and (max-width: 768px) {
-
-
-}
-
-/*// Large devices (desktops, 992px and up)*/
-@media screen and (max-width: 992px) {
+    .quizz_list_btn{
+        max-width: 220px;
+        margin: auto;
+    }
 
 
 }
-
-/*// Extra large devices (large desktops, 1200px and up)*/
-/*@media (min-width: 1200px) { ... }*/
 
 
 

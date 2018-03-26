@@ -6,12 +6,9 @@
  * University of Southern California, High-Performance Computing
  ******************************************************************/
 
-
 /******************code runs once DOM ready******************/
 $(document).ready(function(){
-    footerUpdate();
     numQuestions = countNumQuestions();
-
 
     /* ------------------------------------ FUNCTION DEFINITIONS ------------------------------------ */
 
@@ -41,7 +38,6 @@ $(document).ready(function(){
             else{
                 questionIndex = 'other';
             }
-
             /* ------ AJAX CALL TO PROCESS ANSWERS ------ */
             $.ajax({
                 type     : 'POST',
@@ -54,7 +50,6 @@ $(document).ready(function(){
                 var numChoices = data['num_choices'];
                 var userAssessmentID = data['user_assessment_id'];
                 $('#assessment_title_row_div').attr('data-user-assessment-id', userAssessmentID);
-
                 /* Show answer details within form */
                 for(i = 0; i < numChoices; i++){
                     if(questionType == 'checkbox'){
@@ -80,7 +75,6 @@ $(document).ready(function(){
                     /* Remove no_display class */
                     $("#question_choice_id_" + data['choice_ids'][i]).addClass('choice_mark');
                 }
-
                 /* Show additional answer details in answers_div */
                 for(i = 0; i < numChoices; i++){
                     if((data['user_selection_details'][i] == 'correct_selected') || (data['user_selection_details'][i] == 'correct_not_selected')){
@@ -90,7 +84,6 @@ $(document).ready(function(){
                         $("#answer_explanations_div_" + questionNumber).append("<div class=\"alert alert-incorrect\"><strong>Choice " + (i + 1) + ": </strong>" + data['reponse_details'][i] + "</div>");
                     }
                 }
-
                 // update footer
                 $("#footer_row").removeClass("footer_adjust_abs").addClass("footer_adjust_rel");
                 $("#answer_explanations_div_" + questionNumber).show(1100, function(){
@@ -168,9 +161,6 @@ $(document).ready(function(){
                     console.log(data);
                     alert("The was an error. Please try again later or contact your HPC POC.");
                     });
-
-
-
             }
         }
     }
@@ -197,7 +187,6 @@ $(document).ready(function(){
             footerUpdate();
         }
     }
-
 
     /******************************************************
     * LOAD LAST SHOWS THE LAST QUESTION OF THE QUIZZ
@@ -252,7 +241,6 @@ $(document).ready(function(){
         $("#question_form_" + questionNumber + " :input").prop("disabled", true);
     }
 
-
     /*********************************************************
     * COUNTS THE NUMBER OF QUESTIONS IN THE CURRENT ASSESSMENT
     **********************************************************/
@@ -281,7 +269,6 @@ $(document).ready(function(){
         return parseInt(questionNum);
     }
 
-
     /*********************************************************
     * GETS THE PERCENTAGE COMPLETION OF QUIZZ
     **********************************************************/
@@ -289,7 +276,6 @@ $(document).ready(function(){
         var questionNum = currentQuestionNum();
         return parseInt((questionNum / numQuestions) * 100);
     }
-
 
     /*********************************************************
     * ANIMATES THE PROGRESS BAR FOR PERCENT COMPLETE
@@ -307,7 +293,6 @@ $(document).ready(function(){
         $("#quizz_progress_bar").text(widthComplete);
 
     }
-
 
     /*********************************************************
     * GETS THE QUESTION TYPE OF THE CURRENT QUESTION
@@ -336,7 +321,6 @@ $(document).ready(function(){
         submitAnswers(questionNumber);
     });
 
-
     /******************************************************
     * NEXT QUESTION CLICK EVENT
     *******************************************************/
@@ -344,7 +328,6 @@ $(document).ready(function(){
         var questionNumber = currentQuestionNum();
         loadNext(questionNumber);
     });
-
 
     /******************************************************
     * PREVIOUS QUESTION CLICK EVENT
@@ -357,15 +340,15 @@ $(document).ready(function(){
     /******************************************************
     * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
     *******************************************************/
-    $('.checkbox_item').click(function () {
+    $("[class^=checkbox_item_]").click(function () {
         var questionNumber = currentQuestionNum();
-        $('#view_answers_btn_' + questionNumber).attr('disabled', !$('.checkbox_item:checked').length);
+        $('#view_answers_btn_' + questionNumber).attr('disabled', !$('.checkbox_item_' + questionNumber + ':checked').length);
     });
 
     /******************************************************
-    * ENABLE ANSWER BUTTON ON INPUT CLICK (CHECKBOXES)
+    * ENABLE ANSWER BUTTON ON INPUT CLICK (RADIO BUTTONS)
     *******************************************************/
-    $('.radio_item').click(function () {
+    $("[class^=radio_item_]").click(function () {
         var questionNumber = currentQuestionNum();
         $('#view_answers_btn_' + questionNumber).attr('disabled', false);
     });
