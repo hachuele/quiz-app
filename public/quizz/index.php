@@ -23,8 +23,6 @@ $help_modal_txt = 'Please complete the selected Quizz...';
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
-//TODO: get ID from internal database
-#my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 

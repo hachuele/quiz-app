@@ -23,13 +23,15 @@ $help_modal_txt = 'Create a new quizz...';
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
-#my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
 /* ----------------------------------------------------------------------------------------- */
 /* ------------------------------------ Retrieve from DB ----------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
+
+/* get set of all available quizzes (for edit purposes) */
+$course_set = find_all_visible_courses();
 
 
 ?>
@@ -40,9 +42,58 @@ $_SESSION["user_id"] = $user_id;
 <!-- *********************************** CONTENT START *********************************** -->
 <div id="assessments_main_dash_div" class="container-fluid main_content">
     <div class="page-header">
-        <h2 id="dash_title_txt">HPC Assessments: Create or Modify</h2>
+        <h2 id="dash_title_txt">HPC Assessments Administration</h2>
     </div>
-
+    <div class="row dash_content_row_div">
+        <div class="col-sm-12" style="margin-top: 15px;">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                <div class="carousel-inner" style="height: 330px;">
+                    <div class="item active">
+                        <div class="dashboard_element_card">
+                            <div class="dash_card_title_div">
+                                <h4 class="dash_card_title_txt">SELECT AN OPTION &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon glyphicon-hand-down blue_darken_2"></span></h4>
+                                <hr>
+                            </div>
+                            <div class="available_options_list">
+                                <button style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm">
+                                    <span class="pull-left">CREATE NEW QUIZZ</span>
+                                    <span style="float:right;" class="pull-right glyphicon glyphicon-plus-sign"></span>
+                                </button>
+                                <button id="admin_edit_quizz_btn" style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm">
+                                    <span class="pull-left">EDIT EXISTING QUIZZ</span>
+                                    <span style="float:right;" class="pull-right glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm">
+                                    <span class="pull-left">STATISTICS DASHBOARD</span>
+                                    <span style="float:right;" class="pull-right glyphicon glyphicon-stats"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="dashboard_element_card">
+                            <div class="dash_card_title_div">
+                                <button id="admin_edit_return_btn" type="button" class="btn-grey-lighten btn btn-default btn-sm" style="float:left; margin-left:10px; margin-top: 7px;">
+                                    <span class="glyphicon glyphicon-triangle-left"></span>
+                                </button>
+                                <h4 class="dash_card_title_txt"> SELECT A QUIZZ </h4>
+                                <hr>
+                            </div>
+                            <div class="available_options_list">
+                                <?php
+                                /* loop through all avaliable courses in the course set */
+                                while($available_course = mysqli_fetch_assoc($course_set)) { ?>
+                                <button style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'">
+                                    <span class="pull-left"><?php echo h($available_course['assessment_name']) ?></span>
+                                </button>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
     <hr>
     <br>
 </div>
@@ -51,6 +102,7 @@ $_SESSION["user_id"] = $user_id;
 <!-- *********************************** CONTENT END *********************************** -->
 
 <script src="<?php echo url_for('js/main-script.js');?>"></script>
+<script src="<?php echo url_for('js/admin-script.js');?>"></script>
 
 <!-- *********************************** PAGE FOOTER *********************************** -->
 <?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>

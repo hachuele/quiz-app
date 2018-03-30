@@ -22,7 +22,6 @@ $help_modal_txt = 'Please complete the selected Quizz...';
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
-#my $pi_sql = "select pi_id from pi_info where pi_rcf_user='$ENV{ShibuscNetID}'";
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
@@ -71,11 +70,11 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
     <div class="page-header">
         <h2 id="dash_title_txt">HPC Assessments Dashboard</h2>
     </div>
-    <div id="dash_compl_ip_row_div" class="row">
+    <div class="row dash_content_row_div">
         <div class="col-sm-6" style="margin-top: 15px;">
-            <div id="completed_quizzes_dash_div" class="dashboard_element_card">
+            <div class="dashboard_element_card">
                 <div class="dash_card_title_div">
-                    <h4 class="dash_card_title_txt">COMPLETED QUIZZES  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
+                    <h4 class="dash_card_title_txt">COMPLETED QUIZZES &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
                     <hr>
                 </div>
                 <?php
@@ -139,10 +138,10 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
         <div class=" col-sm-6" style="margin-top: 15px;">
             <div id="available_quizzes_dash_div" class="dashboard_element_card">
                 <div class="dash_card_title_div">
-                    <h4 class="dash_card_title_txt">AVAILABLE QUIZZES <span class="glyphicon glyphicon-education blue_darken_2"></span></h4>
+                    <h4 class="dash_card_title_txt">AVAILABLE QUIZZES &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-education blue_darken_2"></span></h4>
                     <hr>
                 </div>
-                <div id="available_quizzes_list">
+                <div class="available_options_list">
                     <?php
                     /* loop through all avaliable courses in the course set */
                     while($available_course = mysqli_fetch_assoc($course_set)) {
@@ -195,7 +194,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
       </div>
       <div class="modal-body">
           <div class="page-header">
-            <h4 style="text-align: center;">IN PROGRESS QUIZZES  <span class="glyphicon glyphicon-edit blue_darken_2"></span></h4>
+            <h4 style="text-align: center;">IN PROGRESS QUIZZES &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-edit blue_darken_2"></span></h4>
           </div>
 
           <?php if($num_in_progress_quizzes > 0){ ?>
@@ -249,7 +248,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
           <?php } ?>
 
           <div class="page-header">
-            <h4 style="text-align: center;">COMPLETED QUIZZES  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
+            <h4 style="text-align: center;">COMPLETED QUIZZES &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
           </div>
           <div class="all_statistics_lists">
               <table class="table table-hover compl_quizzes_tbl">
