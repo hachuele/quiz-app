@@ -30,6 +30,23 @@ $(document).ready(function(){
     });
 
 
+    $("#edit_quizz_name_span").click(function(){
+        $("#QuizzNameModal").modal("toggle");
+
+    });
+
+    $("#add_new_question_btn").click(function(){
+        $("#QuizzQuestionEditModal").modal("toggle");
+
+    });
+
+    $("#add_new_q_choice_btn").click(function(){
+        $("#QuizzQuestionChoiceModal").modal("toggle");
+
+    });
+
+
+
 
 
 

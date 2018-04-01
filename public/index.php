@@ -68,7 +68,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
 <!-- *********************************** CONTENT START *********************************** -->
 <div id="assessments_main_dash_div" class="container-fluid main_content">
     <div class="page-header">
-        <h2 id="dash_title_txt">HPC Assessments Dashboard</h2>
+        <h2 class="dash_title_txt">HPC Assessments Dashboard</h2>
     </div>
     <div class="row dash_content_row_div">
         <div class="col-sm-6" style="margin-top: 15px;">

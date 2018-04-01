@@ -296,13 +296,13 @@ if($is_in_progress){
     $aria_value_now = 0;
     /* if quizz is in progress - calculate percent complete and display */
     if($is_in_progress){
-        $percent_complete_ip = ($latest_quest_seq / $num_questions) * 100.0;
+        $percent_complete_ip = round(($latest_quest_seq / $num_questions) * 100);
         $aria_value_now = $percent_complete_ip;
     }
     ?>
     <div style="max-width: 700px; margin: auto;" id="quizz_progress_bar_div">
         <div class="progress">
-          <div id="quizz_progress_bar" class="progress-bar progress-bar-grey" style="width:<?php echo $aria_value_now; ?>%" role="progressbar" aria-valuenow="<?php echo $aria_value_now; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $aria_value_now; ?>%</div>
+          <div id="quizz_progress_bar" class="progress-bar progress-bar-grey" style="width:<?php echo $aria_value_now; ?>%" role="progressbar" aria-valuenow="<?php echo h($aria_value_now); ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $aria_value_now; ?>%</div>
         </div>
     </div>
 

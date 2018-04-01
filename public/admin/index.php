@@ -42,7 +42,7 @@ $course_set = find_all_visible_courses();
 <!-- *********************************** CONTENT START *********************************** -->
 <div id="assessments_main_dash_div" class="container-fluid main_content">
     <div class="page-header">
-        <h2 id="dash_title_txt">HPC Assessments Administration</h2>
+        <h2 class="dash_title_txt">HPC Assessments Administration</h2>
     </div>
     <div class="row dash_content_row_div">
         <div class="col-sm-12" style="margin-top: 15px;">
@@ -73,9 +73,6 @@ $course_set = find_all_visible_courses();
                     <div class="item">
                         <div class="dashboard_element_card">
                             <div class="dash_card_title_div">
-                                <button id="admin_edit_return_btn" type="button" class="btn-grey-lighten btn btn-default btn-sm" style="float:left; margin-left:10px; margin-top: 7px;">
-                                    <span class="glyphicon glyphicon-triangle-left"></span>
-                                </button>
                                 <h4 class="dash_card_title_txt"> SELECT A QUIZZ </h4>
                                 <hr>
                             </div>
@@ -83,11 +80,15 @@ $course_set = find_all_visible_courses();
                                 <?php
                                 /* loop through all avaliable courses in the course set */
                                 while($available_course = mysqli_fetch_assoc($course_set)) { ?>
-                                <button style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'">
+                                <button style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm" onclick="location.href='<?php echo url_for('admin/edit/index.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'">
                                     <span class="pull-left"><?php echo h($available_course['assessment_name']) ?></span>
                                 </button>
                                 <?php } ?>
+                                <button id="admin_edit_return_btn" type="button" style="margin-top: 15px;" class="quizz_list_btn btn btn-grey-lighten btn-block btn-sm" >
+                                <span class="glyphicon glyphicon-triangle-left"></span>
+                            </button>
                             </div>
+                            <hr>
                         </div>
                     </div>
                 </div>

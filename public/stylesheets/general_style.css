@@ -111,6 +111,7 @@ body, html {
     background: #212121;
 }
 
+
 /* ------------------------------------------------------------------------------------------ */
 /* -------------------------------------- HEADER STYLES ------------------------------------- */
 /* ------------------------------------------------------------------------------------------ */
@@ -202,6 +203,11 @@ body, html {
 
 #assessments_main_dash_div{
     max-width: 1000px;
+    text-align: center;
+}
+
+#edit_assessments_main_div{
+    max-width: 1100px;
     text-align: center;
 }
 
@@ -452,10 +458,27 @@ body, html {
 /* ------------------------------------------------------------------------------------------ */
 
 
+#quizz_title_txt{
+    text-align: left;
+}
 
 
+.dash_subsection_div{
+    text-align: left;
+    margin-top: 50px;
+    width: 100%;
+    margin: auto;
+}
 
+.add_new_item_btn{
+    margin-top: 15px;
+}
 
+.submit_new_record_btn_div{
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+}
 
 
 /* ------------------------------------------------------------------------------------------ */
@@ -483,8 +506,12 @@ body, html {
         text-align: inherit;
     }
 
-    #dash_title_txt{
+    .dash_title_txt{
         font-size: 20px;
+    }
+
+    .dash_subsection_div h3{
+        font-size: 18px;
     }
 
     #assessment_title_txt{
