@@ -116,8 +116,8 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                                 <td><?php echo h($assessment_name); ?></td>
                                 <?php
                                 /* calculate the final score for the given completed quizz */
-                                $final_score = ((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
-                                        + h($completed_quizz['user_assessment_num_incorrect']))) * 100.0 ."%";
+                                $final_score = round(((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
+                                        + h($completed_quizz['user_assessment_num_incorrect']))) * 100) ."%";
                                 ?>
                                 <?php if ($final_score <= 75.0) { ?>
                                 <td class="compl_quizz_dash_score_low"><strong><?php echo h($final_score); ?></strong></td>
@@ -155,7 +155,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                                 /* get the number of questions for the in progress quizz */
                                 $num_questions = get_num_question_by_assessment_id($ip_quizz['assessment_id']);
                                 /* calculate the final score for the given completed quizz */
-                                $perc_compl = '(' . (h($ip_quizz['latest_quest_sequential_num']) / h($num_questions)) * 100.0 ."%)";
+                                $perc_compl = '(' . round((h($ip_quizz['latest_quest_sequential_num']) / h($num_questions)) * 100) ."%)";
                             }
                         }
 
@@ -227,7 +227,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                             /* get the number of questions for the quizz */
                             $num_questions = get_num_question_by_assessment_id($ip_quizz['assessment_id']);
                             /* calculate the final score for the given completed quizz */
-                            $perc_compl = (h($ip_quizz['latest_quest_sequential_num']) / h($num_questions)) * 100.0 ."%";
+                            $perc_compl = round((h($ip_quizz['latest_quest_sequential_num']) / h($num_questions)) * 100) ."%";
                             ?>
                             <td class="compl_quizz_dash_score_high"><strong><?php echo h($perc_compl); ?></strong></td>
                             <td style="text-align: center;">
@@ -279,8 +279,8 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                         <td class="compl_quizz_dash_score_low"><?php echo h($completed_quizz['user_assessment_num_incorrect']); ?></td>
                         <?php
                         /* calculate the final score for the given completed quizz */
-                        $final_score = ((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
-                                + h($completed_quizz['user_assessment_num_incorrect']))) * 100.0 ."%";
+                        $final_score = round(((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
+                                + h($completed_quizz['user_assessment_num_incorrect']))) * 100) ."%";
                         ?>
                         <?php if ($final_score <= 75.0) { ?>
                         <td class="compl_quizz_dash_score_low"><strong><?php echo h($final_score); ?></strong></td>
