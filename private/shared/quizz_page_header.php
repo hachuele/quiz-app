@@ -21,7 +21,7 @@
         <link rel="stylesheet" media="all" href="<?php echo url_for('stylesheets/general_style.css'); ?>"/>
     </head>
     <body>
-        <div class="container-fluid header_main centering_div red_darken_2_header">
+        <div class="container-fluid header_main centering_div red_pantone_201c_back">
             <div id ="header_row_div" class="row centered_div">
                 <div id="page_title_left_div" class="col-sm-6">
                     <div class="row">
