@@ -1,13 +1,13 @@
 <?php require_once('initialize.php'); ?>
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: load_stats.php retrieves and displays results of
  * the completed quizz.
  *
  * --------------------------------------------------------------
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 session_start();
 
 $user_assessment_id = $_POST['user_assessment_id'];

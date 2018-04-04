@@ -1,12 +1,12 @@
 <?php require_once('initialize.php'); ?>
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: Processes question ID on table row click to
  * retrieve choice information (if available)
  * --------------------------------------------------------------
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 session_start();
 
 /* --------------------------------- DATA RETRIEVAL --------------------------------- */

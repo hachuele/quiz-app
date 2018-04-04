@@ -1,11 +1,11 @@
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: functions.php includes misc. functions to improve
  * the site's usability
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 
 /** example usage: <img id="page_title_icon_img" src="<?php echo url_for('images/quizz_logo_1.png')?>"> **/
 function url_for($script_path) {

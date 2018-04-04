@@ -1,11 +1,11 @@
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: database.php contains all the functions required
  * to connect and (safely) interact with the MySQL database
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 
 require_once('db_credentials.php');
 

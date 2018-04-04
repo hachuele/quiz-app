@@ -1,13 +1,13 @@
 <?php
-/*********************************************************************
+/**************************************************************************
  * DESCRIPTION: 'public/quizz/index.php' serves as the main page for
  * the actual quizz and all of its questions. These are shown one
  * at a time. If the selected quizz is in progress, the page displays
  * all previously provided answers
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- *********************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ **************************************************************************/
 session_start();
 require_once('../../private/initialize.php');
 ?>

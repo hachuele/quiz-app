@@ -1,11 +1,11 @@
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: query_functions.php contains the php functions to
  * interact with the MySQL database
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 
 /* ------------------------------------------------------------------------------------------ */
 /* -------------------------------- Data Retrieval Functions -------------------------------- */

@@ -1,12 +1,12 @@
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: quizz_page_footer.php serves as a modular footer
  * to use accross multiple pages in the site. Also serves as the
  * exit point for the database
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 ?>
         <div id="HelpModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -25,12 +25,15 @@
           </div>
         </div>
         <div id="footer_row" class="row footer container-fluid">
-            <div class="col-xs-6">
+            <div class="col-xs-3">
                 <button id="user_id_button" type="button" class="btn btn-primary btn-sm" style="float: left;">
                     <span class="glyphicon glyphicon-user"></span> <?php echo h($user_id); ?>
                 </button>
             </div>
             <div class="col-xs-6">
+                <p style="margin-top: 20px; font-size: 10px; color: #757575;">&copy; Copyright 2018 University of Southern California. All rights reserved.</p>
+            </div>
+            <div class="col-xs-3">
                 <button id="help_button" type="button" class="btn btn-grey-lighten btn-sm" style="float: right;" data-toggle="modal" data-target="#HelpModal">
                     <span class="glyphicon glyphicon-question-sign"></span> HELP
                 </button>

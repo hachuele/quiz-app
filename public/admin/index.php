@@ -1,13 +1,13 @@
 
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: 'public/admin/index.php' serves as the main page
  * for administrative purposes. Allows to create and edit quizzes,
  * as well as to view user statistics
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 session_start();
 require_once('../../private/initialize.php');
 ?>

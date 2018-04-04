@@ -1,10 +1,10 @@
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: main-script.js contains javascript code to be
  * shared by most pages in the assessments site
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 
 /******************************************************
 * THE FOOTER UPDATE FUNCTION ENSURES PROPER ALIGNMENT

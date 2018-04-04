@@ -1,12 +1,12 @@
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: public/index.php serves as the main page for the
  * user's dashboard. Used to select new or in progress quizzes
  * and view user statistics for previously completed quizzes
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 session_start();
 require_once('../private/initialize.php');
 ?>

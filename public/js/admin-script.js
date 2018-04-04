@@ -1,10 +1,10 @@
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: admin-script.js contains javascript code for the
  * set of admin pages
  *                            ---
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 
 /******************code runs once DOM ready******************/
 
@@ -70,13 +70,9 @@ $(document).ready(function(){
             dataType : 'json',
             encode   : true
         }).done(function(data){
-
-            console.log(data);
-
             /* set name of selected question */
             $("#select_quest_edit_name").empty();
             $("#select_quest_edit_name").append(" :&nbsp;&nbsp;" + data['question_text']);
-
             /* if no choices exist for selected question, let user know */
             if(data['num_edit_choices'] == 0){
                 $("#no_choice_text").fadeOut(500, function(){
@@ -118,20 +114,14 @@ $(document).ready(function(){
                                                 <span class=\"glyphicon glyphicon-trash\"></span>\
                                             </button>\
                                         </td>";
-
                     /* append buttons */
                     $("#choice_edit_tbl_row_" + choiceEditID).append(choiceEditBtn);
                     $("#choice_edit_tbl_row_" + choiceEditID).append(choiceDeleteBtn);
                 }
-
                 /* show the choices table and the button to add new choices */
                 $("#selec_q_choices_tbl").hide().removeAttr("hidden").fadeIn(500);
                 $("#add_new_q_choice_div").hide().removeAttr("hidden").fadeIn(500);
-
             }
-
-
-
 
            }).fail(function(data) {
 
@@ -140,23 +130,7 @@ $(document).ready(function(){
             });
 
 
-
-
-
-
     });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

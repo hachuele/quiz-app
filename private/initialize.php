@@ -1,12 +1,12 @@
 <?php
-/********************************************************************
+/*************************************************************************
  * DESCRIPTION: initialize.php defines critical file paths, includes
  * required files and initiates the database connection
  * NOTE: this file is included at the top of all public pages
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ********************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ *************************************************************************/
 
 ob_start(); //output buffering on
 // Assign file paths to PHP constants

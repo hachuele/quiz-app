@@ -1,11 +1,11 @@
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: quizz_admin_header.php serves as a modular header
  * to use accross multiple admin pages in the site.
  *                             ----
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 ?>
 
 <!DOCTYPE html>

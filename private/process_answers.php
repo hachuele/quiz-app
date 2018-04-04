@@ -1,13 +1,13 @@
 <?php require_once('initialize.php'); ?>
 <?php
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: Processes user submitted answers through the Ajax
  * calls, returns answer details as data to the user, stores
  * user answers.
  * --------------------------------------------------------------
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 session_start();
 
 /* --------------------------------- ANSWER RETRIEVAL --------------------------------- */

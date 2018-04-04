@@ -1,10 +1,10 @@
-/******************************************************************
+/***********************************************************************
  * DESCRIPTION: quizz-script.js contains javascript code for the
  * public/quizz/index.php page
  *                            ---
  * @author: Eric J. Hachuel
- * University of Southern California, High-Performance Computing
- ******************************************************************/
+ * Copyright 2018 University of Southern California. All rights reserved.
+ ***********************************************************************/
 
 /******************code runs once DOM ready******************/
 $(document).ready(function(){
