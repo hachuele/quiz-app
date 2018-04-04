@@ -254,7 +254,6 @@ if($is_in_progress){
     <?php $question_num++; ?>
     <?php } ?>
 
-    <!--Quizz Statistics Div for end of quiz results (Ajax call - will fill through javascript)-->
     <div id="quizz_statistics_card" class=" hidden container">
         <div class="page-header">
             <h3 style="text-align: center; margin-bottom: 25px;">Quizz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>

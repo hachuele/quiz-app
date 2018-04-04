@@ -30,8 +30,8 @@ $_SESSION["user_id"] = $user_id;
 /* ------------------------------------ Retrieve from DB ----------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
-/* get set of all available quizzes (for edit purposes) */
-$course_set = find_all_visible_courses();
+/* get set of all quizzes (for edit purposes) */
+$course_set = find_all_courses();
 
 
 ?>
@@ -47,7 +47,7 @@ $course_set = find_all_visible_courses();
     <div class="row dash_content_row_div">
         <div class="col-sm-12" style="margin-top: 15px;">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                <div class="carousel-inner" style="height: 330px;">
+                <div class="carousel-inner" style="min-height: 330px;">
                     <div class="item active">
                         <div class="dashboard_element_card">
                             <div class="dash_card_title_div">
@@ -97,6 +97,38 @@ $course_set = find_all_visible_courses();
     </div>
     <hr>
     <br>
+</div>
+
+
+<!-- ***************************** CREATE QUIZZ: NAME EDIT (MODAL) ***************************** -->
+<div id="NewQuizzNameModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="text-align: center;">NEW QUIZZ DETAILS</h4>
+      </div>
+      <div class="modal-body">
+          <form id="quizz_general_details_edit_form">
+              <div class="form-group">
+                  <label for="quizz_name_text">Quizz Name:</label>
+                  <input type="text" class="form-control" id="quizz_name_text">
+              </div>
+              <div class="form-group">
+                  <label for="quizz_descr_text_area">Quizz Description:</label>
+                  <textarea class="form-control" rows="3" id="quizz_descr_text_area"></textarea>
+              </div>
+              <div class="submit_new_record_btn_div">
+                  <button disabled id="submit_quizz_general_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
+              </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 

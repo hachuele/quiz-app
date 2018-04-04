@@ -148,7 +148,7 @@ $(document).ready(function(){
                     var assessmentID = data['assessment_id'];
                     var numCorrect = data['num_correct'];
                     var numIncorrect = data['num_incorrect'];
-                    var finalScore = ((numCorrect) / (numQuestions)) * 100.0;
+                    var finalScore = Math.round(((numCorrect) / (numQuestions)) * 100);
                     var finalScoreString = finalScore + '%';
 
                     $("#final_score_percent").html(finalScoreString);

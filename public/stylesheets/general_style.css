@@ -104,7 +104,8 @@ body, html {
 }
 
 .red_pantone_201c_back{
-    background: #9d2235;
+/*    background: #9d2235;*/
+    background: #990000;
 }
 
 .gray_darken_4_back{
@@ -207,7 +208,7 @@ body, html {
 }
 
 #edit_assessments_main_div{
-    max-width: 1100px;
+    max-width: 1000px;
     text-align: center;
 }
 
@@ -220,7 +221,7 @@ body, html {
 .dashboard_element_card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     max-width: 400px;
-    height: 310px;
+    min-height: 310px;
     margin: auto;
 }
 
@@ -392,14 +393,6 @@ body, html {
     margin-bottom: 15px;
 }
 
-/*
-#back_admin_btn{
-    float: left;
-    margin-bottom: 15px;
-    margin-left: 10px;
-    margin-top: 5px;
-}
-*/
 
 #final_score_percent{
     font-family: futura;
@@ -460,18 +453,19 @@ body, html {
 
 #quizz_title_txt{
     text-align: left;
+    font-weight: 550;
 }
 
 
 .dash_subsection_div{
     text-align: left;
-    margin-top: 50px;
     width: 100%;
     margin: auto;
 }
 
 .add_new_item_btn{
     margin-top: 15px;
+    float: right;
 }
 
 .submit_new_record_btn_div{
@@ -479,6 +473,20 @@ body, html {
     margin: auto;
     margin-top: 20px;
 }
+
+.question_choice_tbl{
+    font-size: 12px;
+}
+
+.admin_dash_tbl_card{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    margin: auto;
+}
+
+.delete_question_trash_btn:hover{
+    color: #9d2235;
+}
+
 
 
 /* ------------------------------------------------------------------------------------------ */

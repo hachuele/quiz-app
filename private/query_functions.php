@@ -23,6 +23,17 @@ function find_all_visible_courses(){
     return $result_course_set;
 }
 
+/* retrieve all assessments */
+function find_all_courses(){
+    # bring in $db from outside scope
+    global $db;
+    $sql_assessments = "SELECT * FROM assessments "; //whitespace after assessments required
+    $sql_assessments .= "ORDER BY assessment_id ASC";
+    $result_course_set = mysqli_query($db, $sql_assessments);
+    confirm_result_set($result_course_set);
+    return $result_course_set;
+}
+
 /* retrieve the name of the assessment given its ID */
 function get_assessment_name($assessment_id){
     global $db;
@@ -32,6 +43,28 @@ function get_assessment_name($assessment_id){
     confirm_result_set($assessment_name_set);
     $assessment_name = mysqli_fetch_assoc($assessment_name_set);
     return $assessment_name['assessment_name'];
+}
+
+/* retrieve the question text of the question given its ID */
+function get_question_text($question_id){
+    global $db;
+    $sql_question_text = "SELECT question_text FROM questions ";
+    $sql_question_text .= "WHERE question_id='" . db_escape($db, $question_id) . "'";
+    $question_text_set = mysqli_query($db, $sql_question_text);
+    confirm_result_set($question_text_set);
+    $question_text = mysqli_fetch_assoc($question_text_set);
+    return $question_text['question_text'];
+}
+
+/* retrieve assessment row set */
+function get_assessment_row($assessment_id){
+    global $db;
+    $sql_assessment_row = "SELECT * FROM assessments ";
+    $sql_assessment_row .= "WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $assessment_row_set = mysqli_query($db, $sql_assessment_row);
+    confirm_result_set($assessment_row_set);
+    $assessment_row = mysqli_fetch_assoc($assessment_row_set);
+    return $assessment_row;
 }
 
 /* retrieve all questions for a given assessment ID */
