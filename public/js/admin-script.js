@@ -27,6 +27,11 @@ $(document).ready(function(){
         $("#myCarousel").carousel("prev");
     });
 
+     $("#create_new_quizz_btn").click(function(){
+        $("#NewQuizzNameModal").modal("toggle");
+
+    });
+
 
     $("#edit_quizz_name_span").click(function(){
         $("#QuizzNameModal").modal("toggle");
@@ -40,6 +45,17 @@ $(document).ready(function(){
 
     $("#add_new_q_choice_btn").click(function(){
         $("#QuizzQuestionChoiceModal").modal("toggle");
+
+    });
+
+    $("#edit_settings_span").click(function(){
+        $("#QuizzSettingsModal").modal("toggle");
+
+    });
+
+     $("#edit_new_quizz_btn").click(function(){
+        var newAssessmentID = $('#edit_new_quizz_btn').attr('data-new-assessment-id');
+        window.location.replace("edit/edit.php?assessment_id=" + newAssessmentID);
 
     });
 
@@ -98,9 +114,9 @@ $(document).ready(function(){
                     $("#choice_edit_tbl_row_" + choiceEditID).append("<td style=\"text-align: left;\">" + choiceEditTxt + "</td>");
                     /* check if given choice is set to correct or incorrect answer */
                     if(choiceEditCorrect == 1){
-                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span class=\"glyphicon glyphicon-ok-circle solution_glyphicon_correct\"></span></td>");
+                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span style=\"font-size: 20px;\" class=\"glyphicon glyphicon-ok-circle solution_glyphicon_correct\"></span></td>");
                     } else {
-                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span class=\"glyphicon glyphicon-remove-circle solution_glyphicon_incorrect\"></span></td>");
+                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span style=\"font-size: 20px;\" class=\"glyphicon glyphicon-remove-circle solution_glyphicon_incorrect\"></span></td>");
                     }
                     /* append buttons */
                     var choiceEditBtn = "<td>\
@@ -120,14 +136,113 @@ $(document).ready(function(){
                 }
                 /* show the choices table and the button to add new choices */
                 $("#selec_q_choices_tbl").hide().removeAttr("hidden").fadeIn(500);
-                $("#add_new_q_choice_div").hide().removeAttr("hidden").fadeIn(500);
             }
+            /* show button to add new choice */
+            $("#add_new_q_choice_div").hide().removeAttr("hidden").fadeIn(500);
+
+            footerUpdate();
+
+            // animate show of question answers
+            $('html, body').animate({
+                   scrollTop: $("#questions_choices_edit_div").offset().top}, 2000);
 
            }).fail(function(data) {
 
             console.log(data);
             alert("The was an error. Please try again later or contact your HPC POC.");
             });
+
+
+
+
+
+
+    });
+
+
+
+    /******************************************************
+    * CREATE NEW QUIZZ
+    *******************************************************/
+    $("#submit_new_quizz_details").click(function(){
+        /* error check the input */
+        if($("#quizz_name_text").val() == 0 && $("#quizz_descr_text_area").val() == 0){
+            $("#quizz_name_text").hide().attr('Placeholder', 'Please enter the name of the quizz...').fadeIn(500).focus();
+            $("#quizz_descr_text_area").hide().attr('Placeholder', 'Please enter a short description for the quizz...').fadeIn(500);
+        } else if($("#quizz_name_text").val() == 0){
+            $("#quizz_name_text").hide().attr('Placeholder', 'Please enter the name of the quizz...').fadeIn(500).focus();
+        } else if($("#quizz_descr_text_area").val() == 0){
+            $("#quizz_descr_text_area").hide().attr('Placeholder', 'Please enter a short description for the quizz...').fadeIn(500).focus();
+        }
+        else{
+
+            /* Serialize for data for ajax request */
+            var formDataNewQuizz = $("#quizz_create_new_form").serialize();
+
+
+            /* ------ AJAX CALL TO CREATE NEW QUIZZ ------ */
+                $.ajax({
+                    type     : 'POST',
+                    url      : '../../private/create_new_quizz.php',
+                    data     : formDataNewQuizz,
+                    dataType : 'json',
+                    encode   : true
+                }).done(function(data){
+
+                    //redirect_to(url_for('/admin/edit/index.php?id=' . $new_quizz_id));
+                   $('#edit_new_quizz_btn').attr('data-new-assessment-id', data['new_assessment_id']);
+
+                    if(data['error'] == 0){
+                        $("#input_error_span").hide();
+                        $("#input_name_success_span").hide().removeClass('hidden').fadeIn(500);
+                        $("#input_descr_success_span").hide().removeClass('hidden').fadeIn(500);
+                        /* disable inputs */
+                        $("#quizz_name_text").prop('disabled', true);
+                        $("#quizz_descr_text_area").prop('disabled', true);
+
+                        $("#quizz_name_form_group").removeClass("has-error has-feedback").addClass("has-success has-feedback");
+                        $("#quizz_descr_form_group").addClass("has-success has-feedback");
+
+                        $("#submit_new_quizz_details").fadeOut(500, function(){
+                            $("#edit_new_quizz_btn").hide().removeClass('hidden').fadeIn(500);
+                        });
+                    }
+                    else{
+                        $("#input_name_success_span").hide();
+                        $("#input_descr_success_span").hide();
+                        $("#input_error_span").hide().removeClass('hidden').fadeIn(500);
+                        $("#quizz_descr_form_group").removeClass("has-success has-feedback")
+                        $("#quizz_name_form_group").removeClass("has-success has-feedback").addClass("has-error has-feedback");
+                        $("#alert_new_quizz").text(data['error']);
+                        $("#NewQuizzAlertModal").modal("toggle");
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   }).fail(function(data) {
+                    console.log(data);
+                    alert("The was an error. Please try again later or contact your HPC POC.");
+                    });
+
+
+
+
+        }
+
+
 
 
     });

@@ -190,10 +190,30 @@ function get_user_assessment_by_ua_id($user_assessment_id){
     return $result_user_assessment_set;
 }
 
+/* function to check if quizz name already used */
+function is_name_used($assessment_name){
+    global $db;
+    $sql_assessment_name = "SELECT assessment_name FROM assessments ";
+    $sql_assessment_name .= "WHERE assessment_name='" . db_escape($db, $assessment_name) . "'";
+    $result_assessment_name_set = mysqli_query($db, $sql_assessment_name);
+    confirm_result_set($result_assessment_name_set);
+    $num_assessments = mysqli_num_rows($result_assessment_name_set);
+    if($num_assessments != 0){
+        return true;
+    } else{
+        return false;
+    }
+
+}
+
+
+
 
 /* ------------------------------------------------------------------------------------------ */
 /* -------------------------------- Data Insertion Functions -------------------------------- */
 /* ------------------------------------------------------------------------------------------ */
+
+/* -------------------------------- USER INPUTS -------------------------------- */
 
 /* insert new user assessment into the database */
 function insert_new_user_assessment($assessment_id, $user_id, $num_correct, $num_incorrect){
@@ -271,6 +291,104 @@ function insert_user_answer($user_assessment_id, $assessment_id, $question_id, $
         exit;
     }
 }
+
+
+
+/* -------------------------------- ADMIN INPUTS -------------------------------- */
+
+
+/* ------------------------- general quizz ------------------------- */
+
+function validate_quizz_general($quizz_name, $quizz_description) {
+    $errors = array();
+
+
+
+
+}
+
+
+function create_new_quizz($quizz_name, $quizz_description) {
+    global $db;
+    $sql_insert_new_quizz = "INSERT INTO assessments ";
+    $sql_insert_new_quizz .= "(assessment_name, assessment_description) ";
+    $sql_insert_new_quizz .= "VALUES (";
+    $sql_insert_new_quizz .= "'" . db_escape($db, $quizz_name) . "',";
+    $sql_insert_new_quizz .= "'" . db_escape($db, $quizz_description) . "'";
+    $sql_insert_new_quizz .= ")";
+    $result = mysqli_query($db, $sql_insert_new_quizz);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+
+
+
+
+
+}
+
+function edit_general_quizz($quizz_name, $quizz_description) {
+
+
+
+}
+
+/* ------------------------- question inputs ------------------------- */
+
+function validate_quizz_question($q_text, $is_multivalued, $is_required) {
+    $errors = array();
+
+
+}
+
+
+function add_new_quizz_question($q_text, $is_multivalued, $is_required) {
+
+
+}
+
+
+function edit_quizz_question($q_id, $q_text, $is_multivalued, $is_required) {
+
+
+}
+
+
+/* ------------------------- question choice inputs ------------------------- */
+
+
+function validate_quizz_choice($c_text, $c_details) {
+    $errors = array();
+
+
+}
+
+
+function add_new_quizz_choice($q_id, $c_text, $is_correct, $c_details) {
+
+
+}
+
+
+function edit_quizz_choice($c_id, $c_text, $is_correct, $c_details) {
+
+
+}
+
+
+
+
+
+
+
+
 
 
 ?>

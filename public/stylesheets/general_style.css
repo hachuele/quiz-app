@@ -81,10 +81,23 @@ body, html {
     background-color: #9e9e9e;
     border-color: #9e9e9e;
 }
+
 .btn-grey-lighten:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
     color: #fff;
     background-color: #bdbdbd;
     border-color: #bdbdbd;
+}
+
+.btn-red-delete {
+    color: #fff;
+    background-color: #d32f2f;
+    border-color: #ef5350 ;
+}
+
+.btn-red-delete:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #ef5350 ;
+    border-color: #d32f2f;
 }
 
 .blue_darken_2{
@@ -111,6 +124,7 @@ body, html {
 .gray_darken_4_back{
     background: #212121;
 }
+
 
 
 /* ------------------------------------------------------------------------------------------ */
@@ -221,8 +235,9 @@ body, html {
 .dashboard_element_card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     max-width: 400px;
-    min-height: 310px;
+    height: 310px;
     margin: auto;
+    overflow: auto;
 }
 
 
@@ -468,7 +483,7 @@ body, html {
     float: right;
 }
 
-.submit_new_record_btn_div{
+.submit_to_db_btn_div{
     text-align: center;
     margin: auto;
     margin-top: 20px;
@@ -485,6 +500,18 @@ body, html {
 
 .delete_question_trash_btn:hover{
     color: #9d2235;
+}
+
+.delete_choice_trash_btn:hover{
+    color: #9d2235;
+}
+
+#edit_quizz_name_span:hover{
+    color: #1976d2;
+}
+
+#edit_settings_span:hover{
+    color: #1976d2;
 }
 
 
