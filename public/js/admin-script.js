@@ -4,6 +4,19 @@
  *                            ---
  * @author: Eric J. Hachuel
  * Copyright 2018 University of Southern California. All rights reserved.
+ * ----------------------------------------------------------------------
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ***********************************************************************/
 
 /******************code runs once DOM ready******************/
@@ -22,57 +35,77 @@ $(document).ready(function(){
     });
 
 
-
+    /******************************************************
+    * X
+    *******************************************************/
     $("#admin_edit_return_btn").click(function(){
         $("#myCarousel").carousel("prev");
     });
 
-     $("#create_new_quizz_btn").click(function(){
+    /******************************************************
+    * X
+    *******************************************************/
+    $("#create_new_quizz_btn").click(function(){
         $("#NewQuizzNameModal").modal("toggle");
-
     });
 
-
+    /******************************************************
+    * X
+    *******************************************************/
     $("#edit_quizz_name_span").click(function(){
         $("#QuizzNameModal").modal("toggle");
-
     });
 
+    /******************************************************
+    * X
+    *******************************************************/
     $("#add_new_question_btn").click(function(){
         $("#QuizzQuestionEditModal").modal("toggle");
-
     });
 
+    /******************************************************
+    * X
+    *******************************************************/
     $("#add_new_q_choice_btn").click(function(){
         $("#QuizzQuestionChoiceModal").modal("toggle");
-
     });
 
+    /******************************************************
+    * X
+    *******************************************************/
     $("#edit_settings_span").click(function(){
         $("#QuizzSettingsModal").modal("toggle");
-
     });
 
-     $("#edit_new_quizz_btn").click(function(){
+    /******************************************************
+    * EDIT QUIZZ REDIRECT
+    *******************************************************/
+    $("#edit_new_quizz_btn").click(function(){
         var newAssessmentID = $('#edit_new_quizz_btn').attr('data-new-assessment-id');
         window.location.replace("edit/edit.php?assessment_id=" + newAssessmentID);
-
     });
 
+    /******************************************************
+    * X
+    *******************************************************/
     $(".edit_question_pencil_btn").click(function(event) {
          /* disable row click event */
         alert('edit');
          event.stopPropagation();
     });
 
+    /******************************************************
+    * X
+    *******************************************************/
      $(".delete_question_trash_btn").click(function(event) {
          /* disable row click event */
          alert('delete');
          event.stopPropagation();
     });
 
+
     /******************************************************
-    * GET CHOICES ON QUESTION CLICK
+    * GET CHOICES ON QUESTION CLICK (AJAX)
     *******************************************************/
     $(".question_edit_tbl_row").click(function(){
         var questionEditID = $(this).attr('data-question-id');
@@ -98,15 +131,13 @@ $(document).ready(function(){
             /* create table with choices */
             else{
                 $("#selec_q_choices_tbl_body").empty();
-
                 var numEditChoices = data['num_edit_choices'];
                 $("#no_choice_text").hide();
-
+                /* loop through existing choices and display in table */
                 for(i = 0; i < numEditChoices; i++){
                     var choiceEditID = data['choices_edit_array'][i]['question_choice_id'];
                     var choiceEditTxt = data['choices_edit_array'][i]['question_choice_text'];
                     var choiceEditCorrect = data['choices_edit_array'][i]['question_choice_correct'];
-
 
                     $("#selec_q_choices_tbl_body").append("<tr id=\"choice_edit_tbl_row_" + choiceEditID + "\" data-q-choice-id=" +
                                                            choiceEditID + "\"></tr>");
@@ -139,10 +170,9 @@ $(document).ready(function(){
             }
             /* show button to add new choice */
             $("#add_new_q_choice_div").hide().removeAttr("hidden").fadeIn(500);
-
+            /* update footer to fit size */
             footerUpdate();
-
-            // animate show of question answers
+            /* scroll to choices */
             $('html, body').animate({
                    scrollTop: $("#questions_choices_edit_div").offset().top}, 2000);
 
@@ -151,9 +181,6 @@ $(document).ready(function(){
             console.log(data);
             alert("The was an error. Please try again later or contact your HPC POC.");
             });
-
-
-
 
 
 
@@ -179,7 +206,6 @@ $(document).ready(function(){
             /* Serialize for data for ajax request */
             var formDataNewQuizz = $("#quizz_create_new_form").serialize();
 
-
             /* ------ AJAX CALL TO CREATE NEW QUIZZ ------ */
                 $.ajax({
                     type     : 'POST',
@@ -189,7 +215,6 @@ $(document).ready(function(){
                     encode   : true
                 }).done(function(data){
 
-                    //redirect_to(url_for('/admin/edit/index.php?id=' . $new_quizz_id));
                    $('#edit_new_quizz_btn').attr('data-new-assessment-id', data['new_assessment_id']);
 
                     if(data['error'] == 0){
@@ -199,15 +224,16 @@ $(document).ready(function(){
                         /* disable inputs */
                         $("#quizz_name_text").prop('disabled', true);
                         $("#quizz_descr_text_area").prop('disabled', true);
-
+                        /* show success span */
                         $("#quizz_name_form_group").removeClass("has-error has-feedback").addClass("has-success has-feedback");
                         $("#quizz_descr_form_group").addClass("has-success has-feedback");
-
+                        /* show edit quizz button */
                         $("#submit_new_quizz_details").fadeOut(500, function(){
                             $("#edit_new_quizz_btn").hide().removeClass('hidden').fadeIn(500);
                         });
                     }
                     else{
+                        /* display error */
                         $("#input_name_success_span").hide();
                         $("#input_descr_success_span").hide();
                         $("#input_error_span").hide().removeClass('hidden').fadeIn(500);
