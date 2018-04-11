@@ -5,6 +5,15 @@
  *                             ----
  * @author: Eric J. Hachuel
  * Copyright 2018 University of Southern California. All rights reserved.
+ *
+ * This software is experimental in nature and is provided on an AS-IS basis only.
+ * The University SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
+ * INCLUDING WITHOUT LIMITATION ANY WARRANTY AS TO MERCHANTIBILITY OR FITNESS
+ * FOR A PARTICULAR PURPOSE.
+ *
+ * This software may be reproduced and used for non-commercial purposes only,
+ * so long as this copyright notice is reproduced with each such copy made.
+ *
  * ----------------------------------------------------------------------
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -340,18 +349,37 @@ function create_new_quizz($quizz_name, $quizz_description) {
         db_disconnect($db);
         exit;
     }
+}
 
 
+
+function edit_general_quizz($assessment_id, $quizz_name, $quizz_description) {
+    global $db;
+    $sql_edit_general_quizz = "UPDATE assessments ";
+    $sql_edit_general_quizz .= "SET assessment_name='" . db_escape($db, $quizz_name) . "', ";
+    $sql_edit_general_quizz .= " assessment_description='" . db_escape($db, $quizz_description) . "', ";
+    $sql_edit_general_quizz .= "WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $result = mysqli_query($db, $sql_edit_general_quizz);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+
+}
+
+
+function edit_advanced_quizz($num_quest_show, $is_active) {
 
 
 
 }
 
-function edit_general_quizz($quizz_name, $quizz_description) {
-
-
-
-}
 
 /* ------------------------- question inputs ------------------------- */
 

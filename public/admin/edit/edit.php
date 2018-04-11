@@ -1,24 +1,33 @@
 <?php
 /***********************************************************************
- * DESCRIPTION: 'public/admin/edit/edit.php' serves as the page
- * for editing or creating new quizzes
- *                             ----
- * @author: Eric J. Hachuel
- * Copyright 2018 University of Southern California. All rights reserved.
- * ----------------------------------------------------------------------
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ***********************************************************************/
+* DESCRIPTION: 'public/admin/edit/edit.php' serves as the page
+* for editing or creating new quizzes
+*                             ----
+* @author: Eric J. Hachuel
+* Copyright 2018 University of Southern California. All rights reserved.
+*
+* This software is experimental in nature and is provided on an AS-IS basis only.
+* The University SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
+* INCLUDING WITHOUT LIMITATION ANY WARRANTY AS TO MERCHANTIBILITY OR FITNESS
+* FOR A PARTICULAR PURPOSE.
+*
+* This software may be reproduced and used for non-commercial purposes only,
+* so long as this copyright notice is reproduced with each such copy made.
+*
+* ----------------------------------------------------------------------
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************/
 session_start();
 require_once('../../../private/initialize.php');
 ?>
@@ -63,20 +72,13 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 
 
 
-
-
-
-/* NOTE: Question choices shown through ajax call on question row click */
-
-
-
 ?>
 
 <!-- *********************************** PAGE HEADER *********************************** -->
 <?php require(SHARED_PATH . '/quizz_admin_header.php'); ?>
 
 <!-- *********************************** CONTENT START *********************************** -->
-<div id="edit_assessments_main_div" class="container-fluid main_content">
+<div id="edit_assessments_main_div" class="container-fluid main_content" data-assessment-id="<?php echo h($assessment_id); ?>">
     <div id="quizz_title_edit_div" class="page-header">
         <h2 id="quizz_title_txt" class="dash_title_txt"><?php echo h($assessment_name_edit); ?> &nbsp;&nbsp;<span id="edit_quizz_name_span" style="font-size:15px;" class="glyphicon glyphicon-pencil"></span><span id="edit_settings_span" style="font-size:25px; float:right;" class="glyphicon glyphicon-cog"></span></h2>
     </div>
@@ -105,15 +107,12 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
                   </thead>
                   <tbody>
 
-
-
-            <?php
+                <?php
                 while($question = mysqli_fetch_assoc($question_set_edit)) {
                     /* check if question is checkbox or radio type */
                     $question['question_multivalued'] == 1 ? $question_type = 'checkbox' : $question_type = 'radio';
                     $question_edit_id = $question['question_id'];
-
-            ?>
+                ?>
                     <tr class="question_edit_tbl_row" data-question-id="<?php echo h($question_edit_id); ?>">
                         <td style="text-align: left;"><?php echo h($question['question_text']); ?></td>
                         <td><?php echo h($question_type); ?></td>
@@ -128,16 +127,12 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
                             </button>
                         </td>
                     </tr>
-            <?php } ?>
+                <?php } ?>
                 </tbody>
             </table>
             <?php } else { ?>
-
             <p style="text-align:left; color: #bdbdbd;">No questions available for the given quizz.</p>
-
             <?php } ?>
-
-
         </div>
     </div>
 
@@ -187,14 +182,14 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
           <form id="quizz_general_details_edit_form">
               <div class="form-group">
                   <label for="quizz_name_text">Quizz Name:</label>
-                  <input type="text" class="form-control" id="quizz_name_text" value="<?php echo h($assessment_name_edit); ?>">
+                  <input name="quizz_name_text_in" type="text" class="form-control" id="quizz_name_text" value="<?php echo h($assessment_name_edit); ?>">
               </div>
               <div class="form-group">
                   <label for="quizz_descr_text_area">Quizz Description:</label>
-                  <textarea class="form-control" rows="3" id="quizz_descr_text_area"><?php echo h($assessment_description_txt); ?></textarea>
+                  <textarea name="quizz_descr_text_in" class="form-control" rows="3" id="quizz_descr_text_area"><?php echo h($assessment_description_txt); ?></textarea>
               </div>
               <div class="submit_to_db_btn_div">
-                  <button disabled id="submit_quizz_general_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
+                  <button id="submit_quizz_general_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
               </div>
           </form>
       </div>
@@ -315,6 +310,42 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ***************************** ALERT MODAL [ERROR] ***************************** -->
+<div id="editQuizzErrorModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+          <div class="alert alert-danger">
+              <p id="alert_edit_quizz_wrong"></p>
+          </div>
+      </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ***************************** SUCCESS EDIT MODAL ***************************** -->
+<div id="editQuizzSuccessModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+          <div class="alert alert-success">
+              <p id="alert_edit_quizz_success"></p>
+          </div>
+      </div>
+        <div class="modal-footer">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
       </div>
     </div>

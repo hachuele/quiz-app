@@ -1,23 +1,32 @@
 /***********************************************************************
- * DESCRIPTION: admin-script.js contains javascript code for the
- * set of admin pages
- *                            ---
- * @author: Eric J. Hachuel
- * Copyright 2018 University of Southern California. All rights reserved.
- * ----------------------------------------------------------------------
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ***********************************************************************/
+* DESCRIPTION: admin-script.js contains javascript code for the
+* set of admin pages
+*                            ---
+* @author: Eric J. Hachuel
+* Copyright 2018 University of Southern California. All rights reserved.
+*
+* This software is experimental in nature and is provided on an AS-IS basis only.
+* The University SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
+* INCLUDING WITHOUT LIMITATION ANY WARRANTY AS TO MERCHANTIBILITY OR FITNESS
+* FOR A PARTICULAR PURPOSE.
+*
+* This software may be reproduced and used for non-commercial purposes only,
+* so long as this copyright notice is reproduced with each such copy made.
+*
+* ----------------------------------------------------------------------
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************/
 
 /******************code runs once DOM ready******************/
 
@@ -192,6 +201,9 @@ $(document).ready(function(){
     * CREATE NEW QUIZZ
     *******************************************************/
     $("#submit_new_quizz_details").click(function(){
+        /* request type for ajax call */
+        var requestTypeCreate = 'new_quizz';
+
         /* error check the input */
         if($("#quizz_name_text").val() == 0 && $("#quizz_descr_text_area").val() == 0){
             $("#quizz_name_text").hide().attr('Placeholder', 'Please enter the name of the quizz...').fadeIn(500).focus();
@@ -201,6 +213,7 @@ $(document).ready(function(){
         } else if($("#quizz_descr_text_area").val() == 0){
             $("#quizz_descr_text_area").hide().attr('Placeholder', 'Please enter a short description for the quizz...').fadeIn(500).focus();
         }
+
         else{
 
             /* Serialize for data for ajax request */
@@ -210,7 +223,7 @@ $(document).ready(function(){
                 $.ajax({
                     type     : 'POST',
                     url      : '../../private/create_new_quizz.php',
-                    data     : formDataNewQuizz,
+                    data     : formDataNewQuizz + '&request_type=' + requestTypeCreate,
                     dataType : 'json',
                     encode   : true
                 }).done(function(data){
@@ -247,12 +260,54 @@ $(document).ready(function(){
 
 
 
+                   }).fail(function(data) {
+                    console.log(data);
+                    alert("The was an error. Please try again later or contact your HPC POC.");
+                    });
 
 
 
 
+        }
 
 
+
+
+    });
+
+
+
+    /******************************************************
+    * EDIT QUIZZ GENERAL SETTINGS
+    *******************************************************/
+    $("#submit_quizz_general_details").click(function(){
+        /* request type for ajax call */
+        var requestTypeEdit = 'edit_quizz';
+
+        /* error check the input */
+        if($("#quizz_name_text").val() == 0 && $("#quizz_descr_text_area").val() == 0){
+            $("#quizz_name_text").hide().attr('Placeholder', 'Please enter the name of the quizz...').fadeIn(500).focus();
+            $("#quizz_descr_text_area").hide().attr('Placeholder', 'Please enter a short description for the quizz...').fadeIn(500);
+        } else if($("#quizz_name_text").val() == 0){
+            $("#quizz_name_text").hide().attr('Placeholder', 'Please enter the name of the quizz...').fadeIn(500).focus();
+        } else if($("#quizz_descr_text_area").val() == 0){
+            $("#quizz_descr_text_area").hide().attr('Placeholder', 'Please enter a short description for the quizz...').fadeIn(500).focus();
+        }
+
+        else{
+
+            /* Serialize form data for ajax request */
+            var formDataEditQuizz = $("#quizz_general_details_edit_form").serialize();
+            var assessmentEditID = $("#edit_assessments_main_div").attr('data-question-id');
+
+            /* ------ AJAX CALL TO CREATE NEW QUIZZ ------ */
+                $.ajax({
+                    type     : 'POST',
+                    url      : '../../private/edit_quizz_general.php',
+                    data     : formDataEditQuizz + '&assessment_id=' + assessmentEditID + '&request_type=' + requestTypeEdit,
+                    dataType : 'json',
+                    encode   : true
+                }).done(function(data){
 
 
 
