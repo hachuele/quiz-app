@@ -37,50 +37,49 @@ $(document).ready(function(){
     /* --------------------- CLICK EVENTS --------------------- */
 
     /******************************************************
-    * SELECT A QUIZZ TO EDIT
+    * QUIZZ EDIT CAROUSEL NEXT
     *******************************************************/
     $("#admin_edit_quizz_btn").click(function(){
         $("#myCarousel").carousel("next");
     });
 
-
     /******************************************************
-    * X
+    * QUIZZ EDIT CAROUSEL PREV
     *******************************************************/
     $("#admin_edit_return_btn").click(function(){
         $("#myCarousel").carousel("prev");
     });
 
     /******************************************************
-    * X
+    * CREATE NEW QUIZZ MODAL
     *******************************************************/
     $("#create_new_quizz_btn").click(function(){
         $("#NewQuizzNameModal").modal("toggle");
     });
 
     /******************************************************
-    * X
+    * EDIT QUIZZ NAME MODAL
     *******************************************************/
     $("#edit_quizz_name_span").click(function(){
         $("#QuizzNameModal").modal("toggle");
     });
 
     /******************************************************
-    * X
+    * ADD NEW QUESTION
     *******************************************************/
     $("#add_new_question_btn").click(function(){
         $("#QuizzQuestionEditModal").modal("toggle");
     });
 
     /******************************************************
-    * X
+    * ADD NEW CHOICE
     *******************************************************/
     $("#add_new_q_choice_btn").click(function(){
         $("#QuizzQuestionChoiceModal").modal("toggle");
     });
 
     /******************************************************
-    * X
+    * EDIT QUIZZ SETTINGS (GEAR)
     *******************************************************/
     $("#edit_settings_span").click(function(){
         $("#QuizzSettingsModal").modal("toggle");
@@ -95,7 +94,7 @@ $(document).ready(function(){
     });
 
     /******************************************************
-    * X
+    * EDIT QUESTION
     *******************************************************/
     $(".edit_question_pencil_btn").click(function(event) {
          /* disable row click event */
@@ -104,7 +103,7 @@ $(document).ready(function(){
     });
 
     /******************************************************
-    * X
+    * DELETE QUESTION
     *******************************************************/
      $(".delete_question_trash_btn").click(function(event) {
          /* disable row click event */
@@ -266,12 +265,11 @@ $(document).ready(function(){
 
 
     /******************************************************
-    * EDIT QUIZZ GENERAL SETTINGS
+    * EDIT QUIZZ GENERAL DETAILS (NAME, DESCR)
     *******************************************************/
     $("#submit_quizz_general_details").click(function(){
         /* request type for ajax call */
         var requestTypeEdit = 'edit_quizz';
-
         /* error check the input */
         if($("#quizz_name_text").val() == 0 && $("#quizz_descr_text_area").val() == 0){
             $("#quizz_name_text").hide().attr('Placeholder', 'Please enter the name of the quizz...').fadeIn(500).focus();
@@ -281,7 +279,6 @@ $(document).ready(function(){
         } else if($("#quizz_descr_text_area").val() == 0){
             $("#quizz_descr_text_area").hide().attr('Placeholder', 'Please enter a short description for the quizz...').fadeIn(500).focus();
         }
-
         else{
             /* Serialize form data for ajax request */
             var formDataEditQuizz = $("#quizz_general_details_edit_form").serialize();
@@ -295,7 +292,7 @@ $(document).ready(function(){
                     dataType : 'json',
                     encode   : true
                 }).done(function(data){
-
+                    /* successful response */
                     if(data['error'] == 0){
                         $("#alert_edit_quizz_success").text("Successfully updated quizz!");
                         $("#editQuizzSuccessModal").modal("toggle");
@@ -305,28 +302,54 @@ $(document).ready(function(){
                         $("#alert_edit_quizz_wrong").text(data['error']);
                         $("#editQuizzErrorModal").modal("toggle");
                     }
-
-
-
-
-
-
-
                    }).fail(function(data) {
                     console.log(data);
                     alert("The was an error. Please try again later or contact your HPC POC.");
                     });
-
-
-
-
         }
-
-
-
-
     });
 
+
+
+    /******************************************************
+    * EDIT QUIZZ SETTINGS
+    *******************************************************/
+    $("#submit_settings_btn").click(function(){
+        /* request type for ajax call */
+        var requestTypeEdit = 'edit_settings';
+
+        /* Serialize form data for ajax request */
+        var formDataSettingsQuizz = $("#quizz_settings_edit_form").serialize();
+        var assessmentSettingsID = $("#edit_assessments_main_div").attr('data-assessment-id');
+
+        /* ------ AJAX CALL TO CREATE NEW QUIZZ ------ */
+            $.ajax({
+                type     : 'POST',
+                url      : '/assessment_site_hpc/private/edit_quizz_settings.php',
+                data     : formDataSettingsQuizz + '&assessment_id=' + assessmentSettingsID,
+                dataType : 'json',
+                encode   : true
+            }).done(function(data){
+
+                console.log(data);
+
+                /* successful response */
+                if(data['error'] == 0){
+                    $("#alert_edit_quizz_success").text("Successfully updated quizz settings!");
+                    $("#editQuizzSuccessModal").modal("toggle");
+                }
+                else{
+                    /* display error */
+                    $("#alert_edit_quizz_wrong").text(data['error']);
+                    $("#editQuizzErrorModal").modal("toggle");
+                }
+
+               }).fail(function(data) {
+                console.log(data);
+                alert("The was an error. Please try again later or contact your HPC POC.");
+                });
+
+    });
 
 
 

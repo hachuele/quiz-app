@@ -382,14 +382,26 @@ function edit_general_quizz($assessment_id, $quizz_name, $quizz_description) {
         db_disconnect($db);
         exit;
     }
-
 }
 
 
-function edit_advanced_quizz($num_quest_show, $is_active) {
-
-
-
+function edit_settings_quizz($assessment_id, $num_quest_show, $is_active) {
+    global $db;
+    $sql_edit_settings_quizz = "UPDATE assessments ";
+    $sql_edit_settings_quizz .= "SET assessment_num_q_to_show='" . db_escape($db, $num_quest_show) . "', ";
+    $sql_edit_settings_quizz .= " assessment_visible='" . db_escape($db, $is_active) . "' ";
+    $sql_edit_settings_quizz .= " WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $result = mysqli_query($db, $sql_edit_settings_quizz);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
 }
 
 

@@ -200,6 +200,46 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
   </div>
 </div>
 
+
+<!-- ***************************** QUIZZ SETTINGS (MODAL) ***************************** -->
+<div id="QuizzSettingsModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="text-align: center;">QUIZZ SETTINGS</h4>
+      </div>
+      <div class="modal-body">
+          <form id="quizz_settings_edit_form">
+              <div class="form-group">
+                  <label for="select_num_questions_show">Select the number of questions to show:</label>
+                  <select name ="num_quest_show_sel" class="form-control" id="select_num_questions_show">
+                  <?php for($i = 1; $i <= $num_questions_edit; $i++){ ?>
+                    <option><?php echo $i; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+              <div class="checkbox">
+                  <label class="question_label"><input name="is_quizz_active_check" id="quizz_is_visible" type="checkbox"> &nbsp;&nbsp;Quizz Active to Users</label>
+              </div>
+              <div class="submit_to_db_btn_div">
+                  <button id="submit_settings_btn" class="btn btn-primary btn-sm" type="button">UPDATE</button>
+              </div>
+          </form>
+          <hr>
+          <div class="submit_to_db_btn_div">
+            <button id="delete_quizz_btn" class="btn-red-delete btn btn-sm" type="button">DELETE QUIZZ</button>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ***************************** QUESTION EDIT (MODAL) ***************************** -->
 <div id="QuizzQuestionEditModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -276,47 +316,6 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 </div>
 
 
-<!-- ***************************** QUIZZ SETTINGS (MODAL) ***************************** -->
-<div id="QuizzSettingsModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Help Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="text-align: center;">QUIZZ SETTINGS</h4>
-      </div>
-      <div class="modal-body">
-          <form id="quizz_settings_edit_form">
-              <div class="form-group">
-                  <label for="select_num_questions_show">Select the number of questions to show:</label>
-                  <select class="form-control" id="select_num_questions_show">
-                  <?php for($i = 1; $i <= $num_questions_edit; $i++){ ?>
-                    <option><?php echo $i; ?></option>
-                  <?php } ?>
-
-                  </select>
-                </div>
-              <div class="checkbox">
-                  <label class="question_label"><input id="question_is_visible" type="checkbox"> &nbsp;&nbsp;Quizz Active to Users</label>
-              </div>
-              <div class="submit_to_db_btn_div">
-                  <button disabled id="submit_settings_btn" class="btn btn-primary btn-sm" type="button">UPDATE</button>
-              </div>
-          </form>
-          <hr>
-          <div class="submit_to_db_btn_div">
-            <button disabled id="delete_quizz_btn" class="btn-red-delete btn btn-sm" type="button">DELETE QUIZZ</button>
-          </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <!-- ***************************** ALERT MODAL [ERROR] ***************************** -->
 <div id="editQuizzErrorModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -358,7 +357,7 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-body">
-
+<!--BUTTON TO REDIRECT TO FRONT PAGE AFTER DELETE -->
 
 
       </div>

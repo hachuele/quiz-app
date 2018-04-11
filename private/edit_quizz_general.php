@@ -1,7 +1,7 @@
 <?php require_once('initialize.php'); ?>
 <?php
 /*************************************************************************
-* DESCRIPTION: "create_new_quizz.php" creates a new admin generated quizz
+* DESCRIPTION: "edit_quizz_general.php" creates a new admin generated quizz
 * or edits an existing one
 *                                   ---
 * @author: Eric J. Hachuel
@@ -38,7 +38,7 @@ $quizz_descr_text_area = $_POST['quizz_descr_text_in'];
 /* instantiate output array */
 $output_edit_quizz = array();
 $output_edit_quizz['error'] = 0;
-
+/* check if request is to create new quizz or edit an existing one */
 if($_POST['request_type'] == 'new_quizz'){
     /* check if quizz name already in use */
     if(is_name_used($quizz_name_txt)){
