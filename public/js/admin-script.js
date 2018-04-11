@@ -112,6 +112,14 @@ $(document).ready(function(){
          event.stopPropagation();
     });
 
+    /******************************************************
+    * RELOAD PAGE ON SUCCESSFUL EDIT OF DATA
+    *******************************************************/
+    $("#success_edit_close_btn").click(function(){
+        location.reload();
+    });
+
+
 
     /******************************************************
     * GET CHOICES ON QUESTION CLICK (AJAX)
@@ -186,15 +194,10 @@ $(document).ready(function(){
                    scrollTop: $("#questions_choices_edit_div").offset().top}, 2000);
 
            }).fail(function(data) {
-
             console.log(data);
             alert("The was an error. Please try again later or contact your HPC POC.");
             });
-
-
-
     });
-
 
 
     /******************************************************
@@ -213,23 +216,21 @@ $(document).ready(function(){
         } else if($("#quizz_descr_text_area").val() == 0){
             $("#quizz_descr_text_area").hide().attr('Placeholder', 'Please enter a short description for the quizz...').fadeIn(500).focus();
         }
-
         else{
-
             /* Serialize for data for ajax request */
             var formDataNewQuizz = $("#quizz_create_new_form").serialize();
 
             /* ------ AJAX CALL TO CREATE NEW QUIZZ ------ */
                 $.ajax({
                     type     : 'POST',
-                    url      : '../../private/create_new_quizz.php',
+                    url      : '/assessment_site_hpc/private/edit_quizz_general.php',
                     data     : formDataNewQuizz + '&request_type=' + requestTypeCreate,
                     dataType : 'json',
                     encode   : true
                 }).done(function(data){
-
+                   /* store the new assessment ID for editing */
                    $('#edit_new_quizz_btn').attr('data-new-assessment-id', data['new_assessment_id']);
-
+                    /* successful response */
                     if(data['error'] == 0){
                         $("#input_error_span").hide();
                         $("#input_name_success_span").hide().removeClass('hidden').fadeIn(500);
@@ -255,24 +256,11 @@ $(document).ready(function(){
                         $("#alert_new_quizz").text(data['error']);
                         $("#NewQuizzAlertModal").modal("toggle");
                     }
-
-
-
-
-
                    }).fail(function(data) {
                     console.log(data);
                     alert("The was an error. Please try again later or contact your HPC POC.");
                     });
-
-
-
-
         }
-
-
-
-
     });
 
 
@@ -295,19 +283,30 @@ $(document).ready(function(){
         }
 
         else{
-
             /* Serialize form data for ajax request */
             var formDataEditQuizz = $("#quizz_general_details_edit_form").serialize();
-            var assessmentEditID = $("#edit_assessments_main_div").attr('data-question-id');
+            var assessmentEditID = $("#edit_assessments_main_div").attr('data-assessment-id');
 
             /* ------ AJAX CALL TO CREATE NEW QUIZZ ------ */
                 $.ajax({
                     type     : 'POST',
-                    url      : '../../private/edit_quizz_general.php',
+                    url      : '/assessment_site_hpc/private/edit_quizz_general.php',
                     data     : formDataEditQuizz + '&assessment_id=' + assessmentEditID + '&request_type=' + requestTypeEdit,
                     dataType : 'json',
                     encode   : true
                 }).done(function(data){
+
+                    if(data['error'] == 0){
+                        $("#alert_edit_quizz_success").text("Successfully updated quizz!");
+                        $("#editQuizzSuccessModal").modal("toggle");
+                    }
+                    else{
+                        /* display error */
+                        $("#alert_edit_quizz_wrong").text(data['error']);
+                        $("#editQuizzErrorModal").modal("toggle");
+                    }
+
+
 
 
 

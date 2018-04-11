@@ -36,32 +36,52 @@ session_start();
 $quizz_name_txt = $_POST['quizz_name_text_in'];
 $quizz_descr_text_area = $_POST['quizz_descr_text_in'];
 /* instantiate output array */
-$output_new_quizz = array();
-$output_new_quizz['error'] = 0;
+$output_edit_quizz = array();
+$output_edit_quizz['error'] = 0;
 
 if($_POST['request_type'] == 'new_quizz'){
     /* check if quizz name already in use */
     if(is_name_used($quizz_name_txt)){
-        $output_new_quizz['error'] = "Error! The given quizz name already exists in the database.";
+        $output_edit_quizz['error'] = "Error! The given quizz name already exists in the database.";
     }
     else {
+        /* attempt to create the given quizz */
         $result_new_quizz = create_new_quizz($quizz_name_txt, $quizz_descr_text_area);
 
         if($result_new_quizz === true) {
             $new_quizz_id = mysqli_insert_id($db);
-            $output_new_quizz['new_assessment_id'] = $new_quizz_id;
+            $output_edit_quizz['new_assessment_id'] = $new_quizz_id;
         }
         else {
-            $output_new_quizz['error'] = $result;
+            $output_edit_quizz['error'] = $result_new_quizz;
         }
     }
 } else if($_POST['request_type'] == 'edit_quizz'){
-
-
-
+    /* get the assessment to edit */
+    $assessment_edit_id = $_POST['assessment_id'];
+    $assessment_edit_description = get_assessment_descr($assessment_edit_id);
+    /* check if quizz name already in use */
+    if(is_name_used($quizz_name_txt)){
+        if($assessment_edit_description == $quizz_descr_text_area){
+            $output_edit_quizz['error'] = "Oops! Please make sure you have made changes to the name or the description.";
+        } else{
+            /* attempt to edit the given quizz */
+            $result_edit_quizz = edit_general_quizz($assessment_edit_id, $quizz_name_txt, $quizz_descr_text_area);
+            if($result_edit_quizz != true) {
+                $output_edit_quizz['error'] = $result_edit_quizz;
+            }
+        }
+    }
+    else {
+        /* attempt to edit the given quizz */
+        $result_edit_quizz = edit_general_quizz($assessment_edit_id, $quizz_name_txt, $quizz_descr_text_area);
+        if($result_edit_quizz != true) {
+            $output_edit_quizz['error'] = $result_edit_quizz;
+        }
+    }
 }
 
 
-echo json_encode($output_new_quizz);
+echo json_encode($output_edit_quizz);
 
 ?>

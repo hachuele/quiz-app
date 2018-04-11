@@ -228,6 +228,18 @@ function is_name_used($assessment_name){
 
 }
 
+/* function to get assessment description */
+function get_assessment_descr($assessment_id){
+    global $db;
+    $sql_assessment_descr = "SELECT assessment_description FROM assessments ";
+    $sql_assessment_descr .= "WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $result_assessment_descr_set = mysqli_query($db, $sql_assessment_descr);
+    confirm_result_set($result_assessment_descr_set);
+    $assessment_descr = mysqli_fetch_assoc($result_assessment_descr_set);
+    return $assessment_descr['assessment_description'];
+
+}
+
 
 
 
@@ -357,8 +369,8 @@ function edit_general_quizz($assessment_id, $quizz_name, $quizz_description) {
     global $db;
     $sql_edit_general_quizz = "UPDATE assessments ";
     $sql_edit_general_quizz .= "SET assessment_name='" . db_escape($db, $quizz_name) . "', ";
-    $sql_edit_general_quizz .= " assessment_description='" . db_escape($db, $quizz_description) . "', ";
-    $sql_edit_general_quizz .= "WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $sql_edit_general_quizz .= " assessment_description='" . db_escape($db, $quizz_description) . "' ";
+    $sql_edit_general_quizz .= " WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
     $result = mysqli_query($db, $sql_edit_general_quizz);
     /* check if insert is successfull */
     if($result){

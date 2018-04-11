@@ -346,6 +346,23 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
           </div>
       </div>
         <div class="modal-footer">
+        <button id="success_edit_close_btn" type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ***************************** CONFIRM DELETE MODAL ***************************** -->
+<div id="confirmDeleteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+
+
+
+      </div>
+        <div class="modal-footer">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
       </div>
     </div>
