@@ -29,7 +29,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ***********************************************************************/
 
-/** example usage: <img id="page_title_icon_img" src="<?php echo url_for('images/quizz_logo_1.png')?>"> **/
+/** example usage: <img id="page_title_icon_img" src="<?php echo url_for('images/quiz_logo_1.png')?>"> **/
 function url_for($script_path) {
   /* add the leading '/' if not present */
   if($script_path[0] != '/') {

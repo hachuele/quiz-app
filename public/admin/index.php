@@ -39,7 +39,7 @@ require_once('../../private/initialize.php');
 $site_title = 'HPC Assessments Admin Site';
 $page_title = 'HPC ASSESSMENTS ADMIN';
 $help_modal_title = 'HPC ASSESSMENTS ADMIN HELP';
-$help_modal_txt = 'Create a new quizz...';
+$help_modal_txt = 'Create a new quiz...';
 
 /* ----------------------------------------------------------------------------------------- */
 /* -------------------------------------- Get User ID -------------------------------------- */
@@ -59,7 +59,7 @@ $course_set = find_all_courses();
 ?>
 
 <!-- *********************************** PAGE HEADER *********************************** -->
-<?php require(SHARED_PATH . '/quizz_admin_header.php'); ?>
+<?php require(SHARED_PATH . '/quiz_admin_header.php'); ?>
 
 <!-- *********************************** CONTENT START *********************************** -->
 <div id="assessments_main_dash_div" class="container-fluid main_content">
@@ -77,15 +77,15 @@ $course_set = find_all_courses();
                                 <hr>
                             </div>
                             <div class="available_options_list">
-                                <button id="create_new_quizz_btn" style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm">
-                                    <span class="pull-left">CREATE NEW QUIZZ</span>
+                                <button id="create_new_quiz_btn" style="text-align:left;" type="button" class="quiz_list_btn btn btn-primary btn-block btn-sm">
+                                    <span class="pull-left">CREATE NEW QUIZ</span>
                                     <span style="float:right;" class="pull-right glyphicon glyphicon-plus-sign"></span>
                                 </button>
-                                <button id="admin_edit_quizz_btn" style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm">
-                                    <span class="pull-left">EDIT EXISTING QUIZZ</span>
+                                <button id="admin_edit_quiz_btn" style="text-align:left;" type="button" class="quiz_list_btn btn btn-primary btn-block btn-sm">
+                                    <span class="pull-left">EDIT EXISTING QUIZ</span>
                                     <span style="float:right;" class="pull-right glyphicon glyphicon-pencil"></span>
                                 </button>
-                                <button style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm">
+                                <button style="text-align:left;" type="button" class="quiz_list_btn btn btn-primary btn-block btn-sm">
                                     <span class="pull-left">STATISTICS DASHBOARD</span>
                                     <span style="float:right;" class="pull-right glyphicon glyphicon-stats"></span>
                                 </button>
@@ -95,18 +95,18 @@ $course_set = find_all_courses();
                     <div class="item">
                         <div class="dashboard_element_card">
                             <div class="dash_card_title_div">
-                                <h4 class="dash_card_title_txt"> SELECT A QUIZZ </h4>
+                                <h4 class="dash_card_title_txt"> SELECT A QUIZ </h4>
                                 <hr>
                             </div>
                             <div class="available_options_list">
                                 <?php
                                 /* loop through all avaliable courses in the course set */
                                 while($available_course = mysqli_fetch_assoc($course_set)) { ?>
-                                <button style="text-align:left;" type="button" class="quizz_list_btn btn btn-primary btn-block btn-sm" onclick="location.href='<?php echo url_for('admin/edit/edit.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'">
+                                <button style="text-align:left;" type="button" class="quiz_list_btn btn btn-primary btn-block btn-sm" onclick="location.href='<?php echo url_for('admin/edit/edit.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'">
                                     <span class="pull-left"><?php echo h($available_course['assessment_name']) ?></span>
                                 </button>
                                 <?php } ?>
-                                <button id="admin_edit_return_btn" type="button" style="margin-top: 15px;" class="quizz_list_btn btn btn-grey-lighten btn-block btn-sm" >
+                                <button id="admin_edit_return_btn" type="button" style="margin-top: 15px;" class="quiz_list_btn btn btn-grey-lighten btn-block btn-sm" >
                                 <span class="glyphicon glyphicon-triangle-left"></span>
                             </button>
                             </div>
@@ -122,31 +122,31 @@ $course_set = find_all_courses();
 </div>
 
 
-<!-- ***************************** CREATE NEW QUIZZ (MODAL) ***************************** -->
-<div id="NewQuizzNameModal" class="modal fade" role="dialog">
+<!-- ***************************** CREATE NEW quiz (MODAL) ***************************** -->
+<div id="NewquizNameModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="text-align: center;">NEW QUIZZ DETAILS</h4>
+          <h4 class="modal-title" style="text-align: center;">NEW QUIZ DETAILS</h4>
       </div>
       <div class="modal-body">
-          <form id="quizz_create_new_form">
-              <div id="quizz_name_form_group" class="form-group">
-                  <label for="quizz_name_text">Quizz Name:</label>
-                  <input name="quizz_name_text_in" type="text" class="form-control" id="quizz_name_text">
+          <form id="quiz_create_new_form">
+              <div id="quiz_name_form_group" class="form-group">
+                  <label for="quiz_name_text">Quiz Name:</label>
+                  <input name="quiz_name_text_in" type="text" class="form-control" id="quiz_name_text">
                   <span id="input_error_span" class="hidden glyphicon glyphicon-remove form-control-feedback"></span>
                   <span id="input_name_success_span" class="hidden glyphicon glyphicon-ok form-control-feedback"></span>
               </div>
-              <div id="quizz_descr_form_group" class="form-group">
-                  <label for="quizz_descr_text_area">Quizz Description:</label>
-                  <textarea name="quizz_descr_text_in" class="form-control" rows="3" id="quizz_descr_text_area"></textarea>
+              <div id="quiz_descr_form_group" class="form-group">
+                  <label for="quiz_descr_text_area">Quiz Description:</label>
+                  <textarea name="quiz_descr_text_in" class="form-control" rows="3" id="quiz_descr_text_area"></textarea>
                   <span id="input_descr_success_span" class="hidden glyphicon glyphicon-ok form-control-feedback"></span>
               </div>
-              <div id="submit_new_quizz_div" class="submit_to_db_btn_div">
-                  <button id="submit_new_quizz_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
-                  <button id="edit_new_quizz_btn" class="hidden btn btn-success btn-sm" type="button">EDIT QUIZZ</button>
+              <div id="submit_new_quiz_div" class="submit_to_db_btn_div">
+                  <button id="submit_new_quiz_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
+                  <button id="edit_new_quiz_btn" class="hidden btn btn-success btn-sm" type="button">EDIT QUIZ</button>
               </div>
           </form>
       </div>
@@ -159,13 +159,13 @@ $course_set = find_all_courses();
 
 
 <!-- ***************************** ALERT MODAL ***************************** -->
-<div id="NewQuizzAlertModal" class="modal fade" role="dialog">
+<div id="NewquizAlertModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-body">
           <div class="alert alert-danger">
-              <p id="alert_new_quizz"></p>
+              <p id="alert_new_quiz"></p>
           </div>
       </div>
         <div class="modal-footer">
@@ -182,6 +182,6 @@ $course_set = find_all_courses();
 <script src="<?php echo url_for('js/admin-script.js');?>"></script>
 
 <!-- *********************************** PAGE FOOTER *********************************** -->
-<?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>
+<?php require(SHARED_PATH .  '/quiz_page_footer.php'); ?>
 
 

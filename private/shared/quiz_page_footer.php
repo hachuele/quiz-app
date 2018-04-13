@@ -1,6 +1,6 @@
 <?php
 /***********************************************************************
- * DESCRIPTION: quizz_page_footer.php serves as a modular footer
+ * DESCRIPTION: quiz_page_footer.php serves as a modular footer
  * to use accross multiple pages in the site. Also serves as the
  * exit point for the database
  *                             ----

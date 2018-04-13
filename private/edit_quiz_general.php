@@ -1,7 +1,7 @@
 <?php require_once('initialize.php'); ?>
 <?php
 /*************************************************************************
-* DESCRIPTION: "edit_quizz_general.php" creates a new admin generated quizz
+* DESCRIPTION: "edit_quiz_general.php" creates a new admin generated quiz
 * or edits an existing one
 *                                   ---
 * @author: Eric J. Hachuel
@@ -33,55 +33,55 @@ session_start();
 
 /* --------------------------------- DATA RETRIEVAL --------------------------------- */
 
-$quizz_name_txt = $_POST['quizz_name_text_in'];
-$quizz_descr_text_area = $_POST['quizz_descr_text_in'];
+$quiz_name_txt = $_POST['quiz_name_text_in'];
+$quiz_descr_text_area = $_POST['quiz_descr_text_in'];
 /* instantiate output array */
-$output_edit_quizz = array();
-$output_edit_quizz['error'] = 0;
-/* check if request is to create new quizz or edit an existing one */
-if($_POST['request_type'] == 'new_quizz'){
-    /* check if quizz name already in use */
-    if(is_name_used($quizz_name_txt)){
-        $output_edit_quizz['error'] = "Error! The given quizz name already exists in the database.";
+$output_edit_quiz = array();
+$output_edit_quiz['error'] = 0;
+/* check if request is to create new quiz or edit an existing one */
+if($_POST['request_type'] == 'new_quiz'){
+    /* check if quiz name already in use */
+    if(is_name_used($quiz_name_txt)){
+        $output_edit_quiz['error'] = "Error! The given quiz name already exists in the database.";
     }
     else {
-        /* attempt to create the given quizz */
-        $result_new_quizz = create_new_quizz($quizz_name_txt, $quizz_descr_text_area);
+        /* attempt to create the given quiz */
+        $result_new_quiz = create_new_quiz($quiz_name_txt, $quiz_descr_text_area);
 
-        if($result_new_quizz === true) {
-            $new_quizz_id = mysqli_insert_id($db);
-            $output_edit_quizz['new_assessment_id'] = $new_quizz_id;
+        if($result_new_quiz === true) {
+            $new_quiz_id = mysqli_insert_id($db);
+            $output_edit_quiz['new_assessment_id'] = $new_quiz_id;
         }
         else {
-            $output_edit_quizz['error'] = $result_new_quizz;
+            $output_edit_quiz['error'] = $result_new_quiz;
         }
     }
-} else if($_POST['request_type'] == 'edit_quizz'){
+} else if($_POST['request_type'] == 'edit_quiz'){
     /* get the assessment to edit */
     $assessment_edit_id = $_POST['assessment_id'];
     $assessment_edit_description = get_assessment_descr($assessment_edit_id);
-    /* check if quizz name already in use */
-    if(is_name_used($quizz_name_txt)){
-        if($assessment_edit_description == $quizz_descr_text_area){
-            $output_edit_quizz['error'] = "Oops! Please make sure you have made changes to the name or the description.";
+    /* check if quiz name already in use */
+    if(is_name_used($quiz_name_txt)){
+        if($assessment_edit_description == $quiz_descr_text_area){
+            $output_edit_quiz['error'] = "Oops! Please make sure you have made changes to the name or the description.";
         } else{
-            /* attempt to edit the given quizz */
-            $result_edit_quizz = edit_general_quizz($assessment_edit_id, $quizz_name_txt, $quizz_descr_text_area);
-            if($result_edit_quizz != true) {
-                $output_edit_quizz['error'] = $result_edit_quizz;
+            /* attempt to edit the given quiz */
+            $result_edit_quiz = edit_general_quiz($assessment_edit_id, $quiz_name_txt, $quiz_descr_text_area);
+            if($result_edit_quiz != true) {
+                $output_edit_quiz['error'] = $result_edit_quiz;
             }
         }
     }
     else {
-        /* attempt to edit the given quizz */
-        $result_edit_quizz = edit_general_quizz($assessment_edit_id, $quizz_name_txt, $quizz_descr_text_area);
-        if($result_edit_quizz != true) {
-            $output_edit_quizz['error'] = $result_edit_quizz;
+        /* attempt to edit the given quiz */
+        $result_edit_quiz = edit_general_quiz($assessment_edit_id, $quiz_name_txt, $quiz_descr_text_area);
+        if($result_edit_quiz != true) {
+            $output_edit_quiz['error'] = $result_edit_quiz;
         }
     }
 }
 
 
-echo json_encode($output_edit_quizz);
+echo json_encode($output_edit_quiz);
 
 ?>

@@ -299,13 +299,13 @@ body, html {
     font-size: 12px;
 }
 
-.compl_quizz_dash_score_low{
+.compl_quiz_dash_score_low{
     text-align: center;
     color: #d9534f;
 
 }
 
-.compl_quizz_dash_score_high{
+.compl_quiz_dash_score_high{
     text-align: center;
     color: #5cb85c;
 
@@ -318,7 +318,7 @@ body, html {
 
 
 /* ------------------------------------------------------------------------------------------ */
-/* ------------------------------------ QUIZZ SITE STYLES ----------------------------------- */
+/* ------------------------------------ QUIZ SITE STYLES ----------------------------------- */
 /* ------------------------------------------------------------------------------------------ */
 
 
@@ -330,7 +330,7 @@ body, html {
 }
 
 
-#quizz_statistics_card{
+#quiz_statistics_card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-top: 20px;
     max-height: 100%;
@@ -338,7 +338,7 @@ body, html {
 }
 
 
-.quizz_question_div{
+.quiz_question_div{
     max-width: 700px;
 
 }
@@ -411,16 +411,16 @@ body, html {
 }
 
 
-#quizz_statistics_page_header{
+#quiz_statistics_page_header{
     text-align: center;
 }
 
-#end_of_quizz_navigation{
+#end_of_quiz_navigation{
     width: 100%;
     text-align: center;
 }
 
-#previous_question_btn_end_quizz{
+#previous_question_btn_end_quiz{
     text-align: left;
 }
 
@@ -470,15 +470,15 @@ body, html {
     color: #6c757d;
 }
 
-#quizz_results_summary_div{
+#quiz_results_summary_div{
     margin-bottom: 20px;
 }
 
-#retry_quizz_btn{
+#retry_quiz_btn{
     float: right;
 }
 
-#end_of_quizz_nav_bar{
+#end_of_quiz_nav_bar{
     margin-bottom: 20px;
 }
 
@@ -488,7 +488,7 @@ body, html {
 /* ------------------------------------------------------------------------------------------ */
 
 
-#quizz_title_txt{
+#quiz_title_txt{
     text-align: left;
     font-weight: 550;
 }
@@ -528,7 +528,7 @@ body, html {
     color: #9d2235;
 }
 
-#edit_quizz_name_span:hover{
+#edit_quiz_name_span:hover{
     color: #1976d2;
 }
 
@@ -579,7 +579,7 @@ body, html {
         font-size: 15px;
     }
 
-    .quizz_list_btn{
+    .quiz_list_btn{
         max-width: 220px;
         margin: auto;
     }

@@ -1,6 +1,6 @@
 /***********************************************************************
- * DESCRIPTION: quizz-script.js contains javascript code for the
- * public/quizz/index.php page
+ * DESCRIPTION: quiz-script.js contains javascript code for the
+ * public/quiz/index.php page
  *                            ---
  * @author: Eric J. Hachuel
  * Copyright 2018 University of Southern California. All rights reserved.
@@ -116,7 +116,7 @@ $(document).ready(function(){
                        scrollTop: $("#answer_explanations_div_" + questionNumber).offset().top}, 2000);
 
                 disableFormInput(questionNumber);
-                /* Enable Quizz Navigation Buttons */
+                /* Enable quiz Navigation Buttons */
                 enableNext(questionNumber);
                 enablePrevious(questionNumber);
                 animateProgressBar();
@@ -130,7 +130,7 @@ $(document).ready(function(){
 
     /******************************************************
     * ENABLE NEXT CHECKS ENABLES MOVING TO THE NEXT QUESTION
-    * OR ENDING THE QUIZZ IF ALL QUESTIONS ANSWERED
+    * OR ENDING THE quiz IF ALL QUESTIONS ANSWERED
     *******************************************************/
     function enableNext(questionNumber){
         //Enable the next question (if any)
@@ -154,7 +154,7 @@ $(document).ready(function(){
                 activateQuestionCard(++questionNumber);
                 footerUpdate();
             }
-            /* Show quizz results! */
+            /* Show quiz results! */
             else{
                 var userAssessmentID = $('#assessment_title_row_div').attr('data-user-assessment-id');
 
@@ -177,7 +177,7 @@ $(document).ready(function(){
                     $('#num_correct_digit').html(numCorrect);
                     $("#num_incorrect_digit").html(numIncorrect);
 
-                    showEndQuizzDetails(questionNumber);
+                    showEndquizDetails(questionNumber);
 
                    }).fail(function(data) {
                     console.log(data);
@@ -211,11 +211,11 @@ $(document).ready(function(){
     }
 
     /******************************************************
-    * LOAD LAST SHOWS THE LAST QUESTION OF THE QUIZZ
-    * FROM CURRENT END OF QUIZZ SCREEN
+    * LOAD LAST SHOWS THE LAST QUESTION OF THE quiz
+    * FROM CURRENT END OF quiz SCREEN
     *******************************************************/
     function loadLast(){
-        hideEndQuizzDetails();
+        hideEndquizDetails();
         footerUpdate();
     }
 
@@ -234,21 +234,21 @@ $(document).ready(function(){
     }
 
     /********************************************************
-    * SHOW END OF QUIZZ DETAILS 'PAGE'
+    * SHOW END OF quiz DETAILS 'PAGE'
     *********************************************************/
-    function showEndQuizzDetails(questionNumber){
+    function showEndquizDetails(questionNumber){
         $('#question_card_' + questionNumber).removeClass('active');
-        $('#quizz_progress_bar_div').addClass('hidden');
-        $('#quizz_statistics_card').addClass('active');
-        $("#end_of_quizz_navigation").addClass('active');
+        $('#quiz_progress_bar_div').addClass('hidden');
+        $('#quiz_statistics_card').addClass('active');
+        $("#end_of_quiz_navigation").addClass('active');
     }
 
     /********************************************************
-    * HIDE END OF QUIZZ DETAILS 'PAGE' (SHOW LAST QUESTION)
+    * HIDE END OF quiz DETAILS 'PAGE' (SHOW LAST QUESTION)
     *********************************************************/
-    function hideEndQuizzDetails(){
-        $('#quizz_statistics_card').removeClass('active');
-        $('#quizz_progress_bar_div').addClass('active');
+    function hideEndquizDetails(){
+        $('#quiz_statistics_card').removeClass('active');
+        $('#quiz_progress_bar_div').addClass('active');
         $('#question_card_' + numQuestions).addClass('active');
     }
 
@@ -292,7 +292,7 @@ $(document).ready(function(){
     }
 
     /*********************************************************
-    * GETS THE PERCENTAGE COMPLETION OF QUIZZ
+    * GETS THE PERCENTAGE COMPLETION OF quiz
     **********************************************************/
     function getPercentComplete(){
         var questionNum = currentQuestionNum();
@@ -306,13 +306,13 @@ $(document).ready(function(){
         var percentComplete = getPercentComplete();
         var widthComplete = percentComplete + '%';
 
-        $("#quizz_progress_bar").attr('aria-valuenow', percentComplete);
+        $("#quiz_progress_bar").attr('aria-valuenow', percentComplete);
 
-        $("#quizz_progress_bar").animate({
+        $("#quiz_progress_bar").animate({
             width: widthComplete
         }, 1000);
 
-        $("#quizz_progress_bar").text(widthComplete);
+        $("#quiz_progress_bar").text(widthComplete);
 
     }
 
@@ -376,7 +376,7 @@ $(document).ready(function(){
     });
 
     /******************************************************
-    * END OF QUIZZ: LOAD LAST QUESTION
+    * END OF quiz: LOAD LAST QUESTION
     *******************************************************/
     $('#end_previous_question_btn').click(function () {
         loadLast();

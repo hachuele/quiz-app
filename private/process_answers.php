@@ -108,7 +108,7 @@ $insert = '';
 $is_complete = 0;
 $end_stamp = NULL;
 
-/* if this is the first completed question of the quizz, insert new row into user_assessments */
+/* if this is the first completed question of the quiz, insert new row into user_assessments */
 if($question_index == 'first'){
     $num_incorrect = 0;
     $num_correct = 0;

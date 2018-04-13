@@ -37,7 +37,7 @@ require_once('../../../private/initialize.php');
 $site_title = 'HPC Assessments Admin Site';
 $page_title = 'HPC ASSESSMENTS ADMIN: EDIT';
 $help_modal_title = 'HPC ASSESSMENTS ADMIN HELP';
-$help_modal_txt = 'Create a new quizz or edit an existing one...';
+$help_modal_txt = 'Create a new quiz or edit an existing one...';
 
 /* ----------------------------------------------------------------------------------------- */
 /* -------------------------------------- Get User ID -------------------------------------- */
@@ -56,7 +56,7 @@ $assessment_id = $_GET['assessment_id'];
 /* -------- get the name of this assessment for display -------- */
 $assessment_data_row = get_assessment_row($assessment_id);
 
-/* if the quizz for the given id does not exist, redirect to main page */
+/* if the quiz for the given id does not exist, redirect to main page */
 
 if($assessment_data_row == FALSE){
     echo 'false';
@@ -75,16 +75,16 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 ?>
 
 <!-- *********************************** PAGE HEADER *********************************** -->
-<?php require(SHARED_PATH . '/quizz_admin_header.php'); ?>
+<?php require(SHARED_PATH . '/quiz_admin_header.php'); ?>
 
 <!-- *********************************** CONTENT START *********************************** -->
 <div id="edit_assessments_main_div" class="container-fluid main_content" data-assessment-id="<?php echo h($assessment_id); ?>">
-    <div id="quizz_title_edit_div" class="page-header">
-        <h2 id="quizz_title_txt" class="dash_title_txt"><?php echo h($assessment_name_edit); ?> &nbsp;&nbsp;<span id="edit_quizz_name_span" style="font-size:15px;" class="glyphicon glyphicon-pencil"></span><span id="edit_settings_span" style="font-size:25px; float:right;" class="glyphicon glyphicon-cog"></span></h2>
+    <div id="quiz_title_edit_div" class="page-header">
+        <h2 id="quiz_title_txt" class="dash_title_txt"><?php echo h($assessment_name_edit); ?> &nbsp;&nbsp;<span id="back_admin_home_span" style="font-size:22px; float:left; margin-right: 15px;" class="glyphicon glyphicon-home"></span><span id="edit_quiz_name_span" style="font-size:15px;" class="glyphicon glyphicon-pencil"></span><span id="edit_settings_span" style="font-size:25px; float:right;" class="glyphicon glyphicon-cog"></span></h2>
     </div>
     <div class="row dash_subsection_div">
         <div class="col-xs-9">
-            <h3 style="color: #9e9e9e;">Quizz Questions</h3>
+            <h3 style="color: #9e9e9e;">Quiz Questions</h3>
         </div>
         <div class="col-xs-3">
             <button id="add_new_question_btn" type="button" class="add_new_item_btn btn btn-success btn-sm">
@@ -93,7 +93,7 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
         </div>
     </div>
     <hr>
-    <div id="quizz_questions_edit_div" class="row dash_content_row_div">
+    <div id="quiz_questions_edit_div" class="row dash_content_row_div">
         <div class="col-sm-12">
             <?php if($num_questions_edit > 0){ ?>
             <table class="admin_dash_tbl_card question_choice_tbl table table-hover">
@@ -112,17 +112,19 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
                     /* check if question is checkbox or radio type */
                     $question['question_multivalued'] == 1 ? $question_type = 'checkbox' : $question_type = 'radio';
                     $question_edit_id = $question['question_id'];
+                    $question_is_multi = $question['question_multivalued'];
+                    $question_is_req = $question['question_is_required'];
                 ?>
-                    <tr class="question_edit_tbl_row" data-question-id="<?php echo h($question_edit_id); ?>">
-                        <td style="text-align: left;"><?php echo h($question['question_text']); ?></td>
+                    <tr class="question_edit_tbl_row" data-question-id="<?php echo h($question_edit_id); ?>" data-question-is-multi="<?php echo h($question_is_multi); ?>" data-question-is-req="<?php echo h($question_is_req); ?>">
+                        <td class="question_text_td" style="text-align: left;"><?php echo h($question['question_text']); ?></td>
                         <td><?php echo h($question_type); ?></td>
                         <td>
-                            <button type="button" class="edit_question_pencil_btn btn btn-grey-lighten btn-sm">
+                            <button type="button" class="edit_question_pencil_btn btn btn-grey-lighten btn-sm" data-question-id="<?php echo h($question_edit_id); ?>">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                         </td>
                         <td>
-                            <button type="button" class="delete_question_trash_btn btn btn-grey-lighten btn-sm">
+                            <button type="button" class="delete_question_trash_btn btn btn-grey-lighten btn-sm" data-question-id="<?php echo h($question_edit_id); ?>">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </td>
@@ -131,7 +133,7 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
                 </tbody>
             </table>
             <?php } else { ?>
-            <p style="text-align:left; color: #bdbdbd;">No questions available for the given quizz.</p>
+            <p style="text-align:left; color: #bdbdbd;">No questions available for the given quiz.</p>
             <?php } ?>
         </div>
     </div>
@@ -150,7 +152,6 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
     <div id="questions_choices_edit_div" class="row dash_content_row_div">
         <div class="col-sm-12">
             <p id="no_choice_text" style="text-align:left; color: #bdbdbd;">Please select a question to view or add choices.</p>
-
             <table hidden id="selec_q_choices_tbl" class="admin_dash_tbl_card question_choice_tbl table table-hover">
                   <thead style="background-color:#e0f2f1;">
                         <tr>
@@ -169,27 +170,27 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
     <br>
 </div>
 
-<!-- ***************************** QUIZZ NAME EDIT (MODAL) ***************************** -->
-<div id="QuizzNameModal" class="modal fade" role="dialog">
+<!-- ***************************** QUIZ NAME EDIT (MODAL) ***************************** -->
+<div id="quizNameModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="text-align: center;">QUIZZ DETAILS</h4>
+          <h4 class="modal-title" style="text-align: center;">QUIZ DETAILS</h4>
       </div>
       <div class="modal-body">
-          <form id="quizz_general_details_edit_form">
+          <form id="quiz_general_details_edit_form">
               <div class="form-group">
-                  <label for="quizz_name_text">Quizz Name:</label>
-                  <input name="quizz_name_text_in" type="text" class="form-control" id="quizz_name_text" value="<?php echo h($assessment_name_edit); ?>">
+                  <label for="quiz_name_text">Quiz Name:</label>
+                  <input name="quiz_name_text_in" type="text" class="form-control" id="quiz_name_text" value="<?php echo h($assessment_name_edit); ?>">
               </div>
               <div class="form-group">
-                  <label for="quizz_descr_text_area">Quizz Description:</label>
-                  <textarea name="quizz_descr_text_in" class="form-control" rows="3" id="quizz_descr_text_area"><?php echo h($assessment_description_txt); ?></textarea>
+                  <label for="quiz_descr_text_area">Quiz Description:</label>
+                  <textarea name="quiz_descr_text_in" class="form-control" rows="3" id="quiz_descr_text_area"><?php echo h($assessment_description_txt); ?></textarea>
               </div>
               <div class="submit_to_db_btn_div">
-                  <button id="submit_quizz_general_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
+                  <button id="submit_quiz_general_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
               </div>
           </form>
       </div>
@@ -201,17 +202,17 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 </div>
 
 
-<!-- ***************************** QUIZZ SETTINGS (MODAL) ***************************** -->
-<div id="QuizzSettingsModal" class="modal fade" role="dialog">
+<!-- ***************************** QUIZ SETTINGS (MODAL) ***************************** -->
+<div id="quizSettingsModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="text-align: center;">QUIZZ SETTINGS</h4>
+          <h4 class="modal-title" style="text-align: center;">QUIZ SETTINGS</h4>
       </div>
       <div class="modal-body">
-          <form id="quizz_settings_edit_form">
+          <form id="quiz_settings_edit_form">
               <div class="form-group">
                   <label for="select_num_questions_show">Select the number of questions to show:</label>
                   <select name ="num_quest_show_sel" class="form-control" id="select_num_questions_show">
@@ -221,7 +222,7 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
                   </select>
                 </div>
               <div class="checkbox">
-                  <label class="question_label"><input name="is_quizz_active_check" id="quizz_is_visible" type="checkbox"> &nbsp;&nbsp;Quizz Active to Users</label>
+                  <label class="question_label"><input name="is_quiz_active_check" id="quiz_is_visible" type="checkbox"> &nbsp;&nbsp;Quiz Active to Users</label>
               </div>
               <div class="submit_to_db_btn_div">
                   <button id="submit_settings_btn" class="btn btn-primary btn-sm" type="button">UPDATE</button>
@@ -229,9 +230,8 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
           </form>
           <hr>
           <div class="submit_to_db_btn_div">
-            <button id="delete_quizz_btn" class="btn-red-delete btn btn-sm" type="button">DELETE QUIZZ</button>
+            <button id="delete_quiz_btn" class="btn-red-delete btn btn-sm" type="button">DELETE QUIZZ</button>
           </div>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
@@ -241,29 +241,29 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 </div>
 
 <!-- ***************************** QUESTION EDIT (MODAL) ***************************** -->
-<div id="QuizzQuestionEditModal" class="modal fade" role="dialog">
+<div id="quizQuestionEditModal" class="modal fade" role="dialog" data-question-edit-mode="" data-selec-quest-id="">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="text-align: center;">QUIZZ QUESTION</h4>
+          <h4 class="modal-title" style="text-align: center;">QUIZ QUESTION</h4>
       </div>
       <div class="modal-body">
-          <form id="quizz_question_edit_form">
+          <form id="quiz_question_edit_form">
               <div class="form-group">
-                  <label for="quizz_question_text">Question Text:</label>
-                  <input type="text" class="form-control" id="quizz_question_text">
+                  <label for="quiz_question_text">Question Text:</label>
+                  <input name="quiz_question_text_in" type="text" class="form-control" id="quiz_question_text">
               </div>
               <hr>
               <div class="checkbox">
-                  <label class="question_label"><input id="question_is_multi_check" type="checkbox"> &nbsp;&nbsp;Multivalued Question</label>
+                  <label class="question_label"><input name="is_quest_multi_check" id="question_is_multi_check" type="checkbox"> &nbsp;&nbsp;Multivalued Question</label>
               </div>
               <div class="checkbox">
-                  <label class="question_label"><input id="question_is_required_check" type="checkbox"> &nbsp;&nbsp;Required Question</label>
+                  <label class="question_label"><input name="is_quest_req_check" id="question_is_required_check" type="checkbox"> &nbsp;&nbsp;Required Question</label>
               </div>
               <div class="submit_to_db_btn_div">
-                  <button disabled id="submit_question_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
+                  <button id="submit_question_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
               </div>
           </form>
 
@@ -277,7 +277,7 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 </div>
 
 <!-- ***************************** QUESTION CHOICE EDIT (MODAL) ***************************** -->
-<div id="QuizzQuestionChoiceModal" class="modal fade" role="dialog">
+<div id="quizQuestionChoiceModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
@@ -286,10 +286,10 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
           <h4 class="modal-title" style="text-align: center;">QUESTION CHOICE</h4>
       </div>
       <div class="modal-body">
-          <form id="quizz_question_choice_edit_form">
+          <form id="quiz_question_choice_edit_form">
               <div class="form-group">
-                  <label for="quizz_choice_text">Choice Text:</label>
-                  <input type="text" class="form-control" id="quizz_choice_text">
+                  <label for="quiz_choice_text">Choice Text:</label>
+                  <input type="text" class="form-control" id="quiz_choice_text">
               </div>
               <hr>
               <div class="checkbox">
@@ -305,8 +305,6 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
                   <button disabled id="submit_question_choice_details" class="btn btn-primary btn-sm" type="button">SUBMIT</button>
               </div>
           </form>
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
@@ -317,13 +315,13 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 
 
 <!-- ***************************** ALERT MODAL [ERROR] ***************************** -->
-<div id="editQuizzErrorModal" class="modal fade" role="dialog">
+<div id="editquizErrorModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-body">
           <div class="alert alert-danger">
-              <p id="alert_edit_quizz_wrong"></p>
+              <p id="alert_edit_quiz_wrong"></p>
           </div>
       </div>
         <div class="modal-footer">
@@ -335,13 +333,13 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 
 
 <!-- ***************************** SUCCESS EDIT MODAL ***************************** -->
-<div id="editQuizzSuccessModal" class="modal fade" role="dialog">
+<div id="editquizSuccessModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
       <div class="modal-body">
           <div class="alert alert-success">
-              <p id="alert_edit_quizz_success"></p>
+              <p id="alert_edit_quiz_success"></p>
           </div>
       </div>
         <div class="modal-footer">
@@ -356,10 +354,18 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
   <div class="modal-dialog">
     <!-- Help Modal content-->
     <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="text-align: center;">CONFIRM DELETE</h4>
+            <p style="text-align:center; margin-top:10px; color: #9e9e9e;"><strong id="item_to_delete_text"></strong></p>
+        </div>
       <div class="modal-body">
-<!--BUTTON TO REDIRECT TO FRONT PAGE AFTER DELETE -->
+          <div>
+            <button id="delete_item_btn" class="btn-red-delete btn-block btn btn-lg" type="button">
+                <span class="glyphicon glyphicon-trash"></span>
 
-
+            </button>
+          </div>
       </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
@@ -375,4 +381,4 @@ $num_questions_edit = mysqli_num_rows($question_set_edit);
 <script src="<?php echo url_for('js/admin-script.js');?>"></script>
 
 <!-- *********************************** PAGE FOOTER *********************************** -->
-<?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>
+<?php require(SHARED_PATH .  '/quiz_page_footer.php'); ?>

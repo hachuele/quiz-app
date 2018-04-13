@@ -2,7 +2,7 @@
 <?php
 /***********************************************************************
  * DESCRIPTION: load_stats.php retrieves and displays results of
- * the completed quizz.
+ * the completed quiz.
  *
  * --------------------------------------------------------------
  * @author: Eric J. Hachuel

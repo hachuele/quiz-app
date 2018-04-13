@@ -1,8 +1,8 @@
 <?php require_once('initialize.php'); ?>
 <?php
 /*************************************************************************
-* DESCRIPTION: "edit_quizz_settings.php" allows the admin user to update
-* general settings such as whether the quizz should be active for the
+* DESCRIPTION: "edit_quiz_settings.php" allows the admin user to update
+* general settings such as whether the quiz should be active for the
 * users, or the number of questions to show
 *                                   ---
 * @author: Eric J. Hachuel
@@ -35,32 +35,32 @@ session_start();
 /* --------------------------------- DATA RETRIEVAL --------------------------------- */
 
 /* instantiate output array */
-$output_settings_quizz = array();
-$output_settings_quizz['error'] = 0;
+$output_settings_quiz = array();
+$output_settings_quiz['error'] = 0;
 
 /* get the assessment to edit */
 $assessment_settings_id = $_POST['assessment_id'];
 
 /* get form data */
 $num_quest_to_show = $_POST['num_quest_show_sel'];
-$is_quizz_active = $_POST['is_quizz_active_check'];
-$set_quizz_active = 0;
+$is_quiz_active = $_POST['is_quiz_active_check'];
+$set_quiz_active = 0;
 
 if($num_quest_to_show == null){
-    $output_settings_quizz['error'] = "Error! Please add questions to the quizz.";
+    $output_settings_quiz['error'] = "Error! Please add questions to the quiz.";
 }
 else {
     /* check form values */
-    if($is_quizz_active != null){
-        $set_quizz_active = 1;
+    if($is_quiz_active != null){
+        $set_quiz_active = 1;
     }
-    /* attempt to edit the given quizz */
-    $result_settings_quizz = edit_settings_quizz($assessment_settings_id, $num_quest_to_show, $set_quizz_active);
-    if($result_settings_quizz != true) {
-        $output_settings_quizz['error'] = $result_settings_quizz;
+    /* attempt to edit the given quiz */
+    $result_settings_quiz = edit_settings_quiz($assessment_settings_id, $num_quest_to_show, $set_quiz_active);
+    if($result_settings_quiz != true) {
+        $output_settings_quiz['error'] = $result_settings_quiz;
     }
 }
 
-echo json_encode($output_settings_quizz);
+echo json_encode($output_settings_quiz);
 
 ?>

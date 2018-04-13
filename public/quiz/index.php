@@ -1,8 +1,8 @@
 <?php
 /**************************************************************************
- * DESCRIPTION: 'public/quizz/index.php' serves as the main page for
- * the actual quizz and all of its questions. These are shown one
- * at a time. If the selected quizz is in progress, the page displays
+ * DESCRIPTION: 'public/quiz/index.php' serves as the main page for
+ * the actual quiz and all of its questions. These are shown one
+ * at a time. If the selected quiz is in progress, the page displays
  * all previously provided answers
  *                             ----
  * @author: Eric J. Hachuel
@@ -38,8 +38,8 @@ require_once('../../private/initialize.php');
 /* ---------------- Dynamic Naming Variables ---------------- */
 $site_title = 'HPC Assessments Site';
 $page_title = 'HPC ASSESSMENTS';
-$help_modal_title = 'HPC QUIZZ HELP';
-$help_modal_txt = 'Please complete the selected Quizz...';
+$help_modal_title = 'HPC quiz HELP';
+$help_modal_txt = 'Please complete the selected quiz...';
 
 /* ----------------------------------------------------------------------------------------- */
 /* -------------------------------------- Get User ID -------------------------------------- */
@@ -58,7 +58,7 @@ $_SESSION["assessment_id"] = $assessment_id;
 
 /* -------- get the name of this assessment for display -------- */
 $assessment_name = get_assessment_name($assessment_id);
-/* if the quizz for the given id does not exist, redirect to main page */
+/* if the quiz for the given id does not exist, redirect to main page */
 if($assessment_name == FALSE){
     redirect_to('../index.php');
 }
@@ -76,7 +76,7 @@ if(mysqli_num_rows($user_assessments_set)){
 }
 
 $user_assessment_id = '';
-/* if the current quizz is in progress, instantiate variables to update user profile */
+/* if the current quiz is in progress, instantiate variables to update user profile */
 $latest_quest_seq = 0;
 if($is_in_progress){
     /* fecth the completed information (response information and status) */
@@ -87,7 +87,7 @@ if($is_in_progress){
 ?>
 
 <!-- *********************************** PAGE HEADER *********************************** -->
-<?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
+<?php require(SHARED_PATH . '/quiz_page_header.php'); ?>
 
 <!-- *********************************** CONTENT START *********************************** -->
 <div class="container-fluid assessment_title_main centering_div">
@@ -107,7 +107,7 @@ if($is_in_progress){
 <div class="container main_content">
     <?php
     $question_num = 1;
-    /* loop through quizz questions */
+    /* loop through quiz questions */
     while($question = mysqli_fetch_assoc($question_set)) {
 
         /* get choice set to for given question id */
@@ -129,7 +129,7 @@ if($is_in_progress){
         $enabled_completed = 'disabled';
 
         /* check if the current question is prior to the latest completed */
-        /* NOTE: latest question is 0 if quizz is not in progress */
+        /* NOTE: latest question is 0 if quiz is not in progress */
         if($question_num <= $latest_quest_seq){
             $is_completed_question = 1;
             $hidden_incomplete ='';
@@ -162,7 +162,7 @@ if($is_in_progress){
             $choice_name = 'radio';
         }
     ?>
-    <div id="question_card_<?php echo $question_num; ?>" class="hidden <?php echo $question_active_class; ?> quizz_question_div container question_card" data-questionid="<?php echo h($question['question_id']); ?>" data-questiontype="<?php echo $question_type_class; ?>">
+    <div id="question_card_<?php echo $question_num; ?>" class="hidden <?php echo $question_active_class; ?> quiz_question_div container question_card" data-questionid="<?php echo h($question['question_id']); ?>" data-questiontype="<?php echo $question_type_class; ?>">
         <div class="page-header">
             <h4><strong>QUESTION <?php echo $question_num; ?>:</strong> <?php echo h($question['question_text']); ?></h4>
         </div>
@@ -276,17 +276,17 @@ if($is_in_progress){
     <?php $question_num++; ?>
     <?php } ?>
 
-    <div id="quizz_statistics_card" class=" hidden container">
+    <div id="quiz_statistics_card" class=" hidden container">
         <div class="page-header">
-            <h3 style="text-align: center; margin-bottom: 25px;">Quizz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>
+            <h3 style="text-align: center; margin-bottom: 25px;">quiz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>
         </div>
-        <div id="quizz_statistics_data_table">
+        <div id="quiz_statistics_data_table">
             <div id="total_score_display">
                 <p id="final_score_percent"></p>
                 <p id="final_score_txt">FINAL SCORE</p>
             </div>
             <hr>
-            <div id="quizz_results_summary_div" class="row">
+            <div id="quiz_results_summary_div" class="row">
                 <div id="num_correct_div" class ="col-xs-6">
                     <p id="num_correct_digit"></p>
                     <p id="num_correct_txt">CORRECT</p>
@@ -297,7 +297,7 @@ if($is_in_progress){
                 </div>
             </div>
         </div>
-        <div id="end_of_quizz_nav_bar">
+        <div id="end_of_quiz_nav_bar">
             <div class="row">
                 <div class="col-xs-6">
                     <button id="end_previous_question_btn" type="button" class="btn btn-default btn-sm previous_button">
@@ -305,8 +305,8 @@ if($is_in_progress){
                     </button>
                 </div>
                 <div class="col-xs-6">
-                    <button id="retry_quizz_btn" type="button" class="btn btn-default btn-sm previous_button" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h($assessment_id)); ?>'">
-                        <span class="glyphicon glyphicon-repeat" style="margin-right:10px;"></span>RETRY QUIZZ
+                    <button id="retry_quiz_btn" type="button" class="btn btn-default btn-sm previous_button" onclick="location.href='<?php echo url_for('quiz/index.php?assessment_id=' . h($assessment_id)); ?>'">
+                        <span class="glyphicon glyphicon-repeat" style="margin-right:10px;"></span>RETRY quiz
                     </button>
                 </div>
             </div>
@@ -315,15 +315,15 @@ if($is_in_progress){
     <hr>
     <?php
     $aria_value_now = 0;
-    /* if quizz is in progress - calculate percent complete and display */
+    /* if quiz is in progress - calculate percent complete and display */
     if($is_in_progress){
         $percent_complete_ip = round(($latest_quest_seq / $num_questions) * 100);
         $aria_value_now = $percent_complete_ip;
     }
     ?>
-    <div style="max-width: 700px; margin: auto;" id="quizz_progress_bar_div">
+    <div style="max-width: 700px; margin: auto;" id="quiz_progress_bar_div">
         <div class="progress">
-          <div id="quizz_progress_bar" class="progress-bar progress-bar-grey" style="width:<?php echo $aria_value_now; ?>%" role="progressbar" aria-valuenow="<?php echo h($aria_value_now); ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $aria_value_now; ?>%</div>
+          <div id="quiz_progress_bar" class="progress-bar progress-bar-grey" style="width:<?php echo $aria_value_now; ?>%" role="progressbar" aria-valuenow="<?php echo h($aria_value_now); ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $aria_value_now; ?>%</div>
         </div>
     </div>
 
@@ -332,8 +332,8 @@ if($is_in_progress){
 
 <!--load personal scripts-->
 <script src="<?php echo url_for('js/main-script.js');?>"></script>
-<script src="<?php echo url_for('js/quizz-script.js');?>"></script>
+<script src="<?php echo url_for('js/quiz-script.js');?>"></script>
 
 <!-- *********************************** PAGE FOOTER *********************************** -->
-<?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>
+<?php require(SHARED_PATH .  '/quiz_page_footer.php'); ?>
 

@@ -1,6 +1,6 @@
 <?php
 /***********************************************************************
- * DESCRIPTION: quizz_admin_header.php serves as a modular header
+ * DESCRIPTION: quiz_admin_header.php serves as a modular header
  * to use accross multiple admin pages in the site.
  *                             ----
  * @author: Eric J. Hachuel
@@ -48,7 +48,7 @@
                 <div id="page_title_left_div" class="col-sm-6">
                     <div class="row">
                         <div id="page_title_icon_left_div" class="col-sm-2">
-                            <img id="page_title_icon_img" src="<?php echo url_for('images/quizz_logo_1.png'); ?>">
+                            <img id="page_title_icon_img" src="<?php echo url_for('images/quiz_logo_1.png'); ?>">
                         </div>
                         <div id="page_title_txt_left_div" class="col-sm-10">
                             <h2 id="page_title_txt"><?php echo h($page_title); ?></h2>

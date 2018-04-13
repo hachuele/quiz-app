@@ -37,8 +37,8 @@ require_once('../private/initialize.php');
 /* ---------------- Dynamic Naming Variables ---------------- */
 $site_title = 'HPC Assessments Site';
 $page_title = 'HPC ASSESSMENTS';
-$help_modal_title = 'HPC QUIZZ HELP';
-$help_modal_txt = 'Please complete the selected Quizz...';
+$help_modal_title = 'HPC QUIZ HELP';
+$help_modal_txt = 'Please complete the selected Quiz...';
 
 /* ----------------------------------------------------------------------------------------- */
 /* -------------------------------------- Get User ID -------------------------------------- */
@@ -53,39 +53,39 @@ $_SESSION["user_id"] = $user_id;
 
 /* get set of all available quizzes */
 $course_set = find_all_visible_courses();
-/* declare array to store all completed quizz information for the current user */
-$completed_quizz_array = array();
-/* declare array to store unique completed quizz information for the current user */
-$completed_quizz_unique_array = array();
-/* get all completed quizz data from given user */
+/* declare array to store all completed quiz information for the current user */
+$completed_quiz_array = array();
+/* declare array to store unique completed quiz information for the current user */
+$completed_quiz_unique_array = array();
+/* get all completed quiz data from given user */
 $completed_by_user_set = find_completed_quizzes_by_user($user_id);
 $num_completed_quizzes = mysqli_num_rows($completed_by_user_set);
 /* declare array to track quizzes that have been checked (to find unique quizzes) */
 $quizzes_checked = array();
 
-while($complete_quizz = mysqli_fetch_array($completed_by_user_set, MYSQLI_BOTH)){
-    array_push($completed_quizz_array, $complete_quizz);
+while($complete_quiz = mysqli_fetch_array($completed_by_user_set, MYSQLI_BOTH)){
+    array_push($completed_quiz_array, $complete_quiz);
     /* if current assessment ID has not yet been seen add to unique list */
-    if(!in_array($complete_quizz['assessment_id'], $quizzes_checked)){
-        array_push($quizzes_checked, $complete_quizz['assessment_id']);
-        array_push($completed_quizz_unique_array, $complete_quizz);
+    if(!in_array($complete_quiz['assessment_id'], $quizzes_checked)){
+        array_push($quizzes_checked, $complete_quiz['assessment_id']);
+        array_push($completed_quiz_unique_array, $complete_quiz);
     }
 }
 
 /* get set of all in-progress quizzes for given user */
-$in_progress_quizz_array = array();
+$in_progress_quiz_array = array();
 $in_progress_by_user_set = find_in_progress_quizzes_by_user($user_id);
 $num_in_progress_quizzes = mysqli_num_rows($in_progress_by_user_set);
 
 /* fill array with in progress quizzes for user */
-while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
-    array_push($in_progress_quizz_array, $ip_quizz);
+while($ip_quiz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
+    array_push($in_progress_quiz_array, $ip_quiz);
 }
 
 ?>
 
 <!-- *********************************** PAGE HEADER *********************************** -->
-<?php require(SHARED_PATH . '/quizz_page_header.php'); ?>
+<?php require(SHARED_PATH . '/quiz_page_header.php'); ?>
 
 <!-- *********************************** CONTENT START *********************************** -->
 <div id="assessments_main_dash_div" class="container-fluid main_content">
@@ -118,7 +118,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                         <tbody>
                             <?php
                             $num_unique_shown = 0;
-                            foreach($completed_quizz_unique_array as $completed_quizz){
+                            foreach($completed_quiz_unique_array as $completed_quiz){
                                 /* show a maximum number of unique, completed quizzes on the dashboard */
                                 if(++$num_unique_shown > 3){
                                     break;
@@ -127,24 +127,24 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                             <tr>
                                 <?php
                                 /* format the SQL timestamp to show (MM-DD-YYYY) */
-                                $time = strtotime(h($completed_quizz['user_assessment_end_stamp']));
+                                $time = strtotime(h($completed_quiz['user_assessment_end_stamp']));
                                 $time_formated = date("m-d-Y", $time);
                                 ?>
                                 <td><?php echo h($time_formated); ?></td>
                                 <?php
                                 /* get the assessment name with the given ID */
-                                $assessment_name = get_assessment_name($completed_quizz['assessment_id']);
+                                $assessment_name = get_assessment_name($completed_quiz['assessment_id']);
                                 ?>
                                 <td><?php echo h($assessment_name); ?></td>
                                 <?php
-                                /* calculate the final score for the given completed quizz */
-                                $final_score = round(((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
-                                        + h($completed_quizz['user_assessment_num_incorrect']))) * 100) ."%";
+                                /* calculate the final score for the given completed quiz */
+                                $final_score = round(((h($completed_quiz['user_assessment_num_correct'])) / (h($completed_quiz['user_assessment_num_correct'])
+                                        + h($completed_quiz['user_assessment_num_incorrect']))) * 100) ."%";
                                 ?>
                                 <?php if ($final_score <= 75.0) { ?>
-                                <td class="compl_quizz_dash_score_low"><strong><?php echo h($final_score); ?></strong></td>
+                                <td class="compl_quiz_dash_score_low"><strong><?php echo h($final_score); ?></strong></td>
                                 <?php } else { ?>
-                                <td class="compl_quizz_dash_score_high"><strong><?php echo h($final_score); ?></strong></td>
+                                <td class="compl_quiz_dash_score_high"><strong><?php echo h($final_score); ?></strong></td>
                                 <?php } ?>
                             </tr>
                             <?php } ?>
@@ -170,14 +170,14 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                         $is_in_progress = 0;
                         $perc_compl = '';
                         /* check if the available course is currently in progress*/
-                        /* NOTE: can only have one quizz in progress with the same ID */
-                        foreach($in_progress_quizz_array as $ip_quizz){
-                            if($ip_quizz['assessment_id'] == $available_course['assessment_id']){
+                        /* NOTE: can only have one quiz in progress with the same ID */
+                        foreach($in_progress_quiz_array as $ip_quiz){
+                            if($ip_quiz['assessment_id'] == $available_course['assessment_id']){
                                 $is_in_progress = 1;
-                                /* get the number of questions for the in progress quizz */
-                                $num_questions = get_num_question_by_assessment_id($ip_quizz['assessment_id']);
-                                /* calculate the final score for the given completed quizz */
-                                $perc_compl = '(' . round((h($ip_quizz['latest_quest_sequential_num']) / h($num_questions)) * 100) ."%)";
+                                /* get the number of questions for the in progress quiz */
+                                $num_questions = get_num_question_by_assessment_id($ip_quiz['assessment_id']);
+                                /* calculate the final score for the given completed quiz */
+                                $perc_compl = '(' . round((h($ip_quiz['latest_quest_sequential_num']) / h($num_questions)) * 100) ."%)";
                             }
                         }
 
@@ -191,7 +191,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                             $button_class = "btn-primary";
                         }
                     ?>
-                    <button style="text-align:left;" type="button" class="quizz_list_btn btn <?php echo h($button_class); ?> btn-block btn-sm" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'">
+                    <button style="text-align:left;" type="button" class="quiz_list_btn btn <?php echo h($button_class); ?> btn-block btn-sm" onclick="location.href='<?php echo url_for('quiz/index.php?assessment_id=' . h(u($available_course['assessment_id']))); ?>'">
                         <span class="pull-left"><?php echo h($available_course['assessment_name']) . " " . $perc_compl; ?></span>
                         <span style="float:right;" class="pull-right <?php echo h($button_glyphicon); ?>"></span>
                     </button>
@@ -211,7 +211,7 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="text-align: center;">USER QUIZZ HISTORY</h4>
+          <h4 class="modal-title" style="text-align: center;">USER QUIZ HISTORY</h4>
           <p class="blue_darken_2" style="text-align: center;"><strong><?php echo h($user_id); ?></strong></p>
       </div>
       <div class="modal-body">
@@ -232,28 +232,28 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                     </tr>
                   </thead>
                   <tbody>
-                        <?php foreach($in_progress_quizz_array as $ip_quizz){ ?>
+                        <?php foreach($in_progress_quiz_array as $ip_quiz){ ?>
                         <tr>
                             <?php
                             /* format the SQL timestamp to show (MM-DD-YYYY) */
-                            $time = strtotime(h($ip_quizz['user_assessment_start_stamp']));
+                            $time = strtotime(h($ip_quiz['user_assessment_start_stamp']));
                             $time_formated = date("m-d-Y", $time);
                             ?>
                             <td><?php echo h($time_formated); ?></td>
                             <?php
                             /* get the assessment name with the given ID */
-                            $assessment_name = get_assessment_name($ip_quizz['assessment_id']);
+                            $assessment_name = get_assessment_name($ip_quiz['assessment_id']);
                             ?>
                             <td><?php echo h($assessment_name); ?></td>
                             <?php
-                            /* get the number of questions for the quizz */
-                            $num_questions = get_num_question_by_assessment_id($ip_quizz['assessment_id']);
-                            /* calculate the final score for the given completed quizz */
-                            $perc_compl = round((h($ip_quizz['latest_quest_sequential_num']) / h($num_questions)) * 100) ."%";
+                            /* get the number of questions for the quiz */
+                            $num_questions = get_num_question_by_assessment_id($ip_quiz['assessment_id']);
+                            /* calculate the final score for the given completed quiz */
+                            $perc_compl = round((h($ip_quiz['latest_quest_sequential_num']) / h($num_questions)) * 100) ."%";
                             ?>
-                            <td class="compl_quizz_dash_score_high"><strong><?php echo h($perc_compl); ?></strong></td>
+                            <td class="compl_quiz_dash_score_high"><strong><?php echo h($perc_compl); ?></strong></td>
                             <td style="text-align: center;">
-                                <button type="button" class="btn btn-grey-lighten btn-xs" onclick="location.href='<?php echo url_for('quizz/index.php?assessment_id=' . h(u($ip_quizz['assessment_id']))); ?>'">
+                                <button type="button" class="btn btn-grey-lighten btn-xs" onclick="location.href='<?php echo url_for('quiz/index.php?assessment_id=' . h(u($ip_quiz['assessment_id']))); ?>'">
                                     <span class="glyphicon glyphicon-menu-right"></span>
                                 </button>
                             </td>
@@ -284,30 +284,30 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                         </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($completed_quizz_array as $completed_quizz){ ?>
+                    <?php foreach($completed_quiz_array as $completed_quiz){ ?>
                     <tr>
                         <?php
                         /* format the SQL timestamp to show (MM-DD-YYYY) */
-                        $time = strtotime(h($completed_quizz['user_assessment_end_stamp']));
+                        $time = strtotime(h($completed_quiz['user_assessment_end_stamp']));
                         $time_formated = date("m-d-Y", $time);
                         ?>
                         <td><?php echo h($time_formated); ?></td>
                         <?php
                         /* get the assessment name with the given ID */
-                        $assessment_name = get_assessment_name($completed_quizz['assessment_id']);
+                        $assessment_name = get_assessment_name($completed_quiz['assessment_id']);
                         ?>
                         <td><?php echo h($assessment_name) ?></td>
-                        <td class="compl_quizz_dash_score_high"><?php echo h($completed_quizz['user_assessment_num_correct']); ?></td>
-                        <td class="compl_quizz_dash_score_low"><?php echo h($completed_quizz['user_assessment_num_incorrect']); ?></td>
+                        <td class="compl_quiz_dash_score_high"><?php echo h($completed_quiz['user_assessment_num_correct']); ?></td>
+                        <td class="compl_quiz_dash_score_low"><?php echo h($completed_quiz['user_assessment_num_incorrect']); ?></td>
                         <?php
-                        /* calculate the final score for the given completed quizz */
-                        $final_score = round(((h($completed_quizz['user_assessment_num_correct'])) / (h($completed_quizz['user_assessment_num_correct'])
-                                + h($completed_quizz['user_assessment_num_incorrect']))) * 100) ."%";
+                        /* calculate the final score for the given completed quiz */
+                        $final_score = round(((h($completed_quiz['user_assessment_num_correct'])) / (h($completed_quiz['user_assessment_num_correct'])
+                                + h($completed_quiz['user_assessment_num_incorrect']))) * 100) ."%";
                         ?>
                         <?php if ($final_score <= 75.0) { ?>
-                        <td class="compl_quizz_dash_score_low"><strong><?php echo h($final_score); ?></strong></td>
+                        <td class="compl_quiz_dash_score_low"><strong><?php echo h($final_score); ?></strong></td>
                         <?php } else { ?>
-                        <td class="compl_quizz_dash_score_high"><strong><?php echo h($final_score); ?></strong></td>
+                        <td class="compl_quiz_dash_score_high"><strong><?php echo h($final_score); ?></strong></td>
                         <?php } ?>
                     </tr>
                     <?php } ?>
@@ -327,5 +327,5 @@ while($ip_quizz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
 <script src="<?php echo url_for('js/main-script.js');?>"></script>
 
 <!-- *********************************** PAGE FOOTER *********************************** -->
-<?php require(SHARED_PATH .  '/quizz_page_footer.php'); ?>
+<?php require(SHARED_PATH .  '/quiz_page_footer.php'); ?>
 

@@ -145,8 +145,8 @@ function find_completed_quizzes_by_user($user_id){
     return $result_completed_set;
 }
 
-/* retrieve the user completed quizz IDs for a given user ID */
-function find_completed_quizz_ids_by_user($user_id){
+/* retrieve the user completed quiz IDs for a given user ID */
+function find_completed_quiz_ids_by_user($user_id){
     global $db;
     $sql_completed = "SELECT assessment_id FROM user_assessments ";
     $sql_completed .= "WHERE user_id='" . db_escape($db, $user_id) . "'";
@@ -212,7 +212,7 @@ function get_user_assessment_by_ua_id($user_assessment_id){
     return $result_user_assessment_set;
 }
 
-/* function to check if quizz name already used */
+/* function to check if quiz name already used */
 function is_name_used($assessment_name){
     global $db;
     $sql_assessment_name = "SELECT assessment_name FROM assessments ";
@@ -240,7 +240,38 @@ function get_assessment_descr($assessment_id){
 
 }
 
+/* function to check if quiz name already used */
+function is_question_text_used($assessment_id, $question_text){
+    global $db;
+    $sql_question_text = "SELECT question_text FROM questions ";
+    $sql_question_text .= "WHERE assessment_id='" . db_escape($db, $assessment_id) . "' ";
+    $sql_question_text .= " AND question_text='" . db_escape($db, $question_text) . "'";
+    $result_question_text_set = mysqli_query($db, $sql_question_text);
+    confirm_result_set($result_question_text_set);
+    $num_question_text = mysqli_num_rows($result_question_text_set);
+    if($num_question_text != 0){
+        return true;
+    } else{
+        return false;
+    }
+}
 
+/* function to check if quiz name already used (in different question) */
+function is_question_text_used_diff($assessment_id, $question_id, $question_text){
+    global $db;
+    $sql_question_text = "SELECT question_text FROM questions ";
+    $sql_question_text .= "WHERE assessment_id='" . db_escape($db, $assessment_id) . "' ";
+    $sql_question_text .= " AND question_text='" . db_escape($db, $question_text) . "'";
+    $sql_question_text .= " AND NOT question_id='" . db_escape($db, $question_id) . "'";
+    $result_question_text_set = mysqli_query($db, $sql_question_text);
+    confirm_result_set($result_question_text_set);
+    $num_question_text = mysqli_num_rows($result_question_text_set);
+    if($num_question_text != 0){
+        return true;
+    } else{
+        return false;
+    }
+}
 
 
 /* ------------------------------------------------------------------------------------------ */
@@ -331,9 +362,9 @@ function insert_user_answer($user_assessment_id, $assessment_id, $question_id, $
 /* -------------------------------- ADMIN INPUTS -------------------------------- */
 
 
-/* ------------------------- general quizz ------------------------- */
+/* ------------------------- general quiz ------------------------- */
 
-function validate_quizz_general($quizz_name, $quizz_description) {
+function validate_quiz_general($quiz_name, $quiz_description) {
     $errors = array();
 
 
@@ -342,15 +373,15 @@ function validate_quizz_general($quizz_name, $quizz_description) {
 }
 
 
-function create_new_quizz($quizz_name, $quizz_description) {
+function create_new_quiz($quiz_name, $quiz_description) {
     global $db;
-    $sql_insert_new_quizz = "INSERT INTO assessments ";
-    $sql_insert_new_quizz .= "(assessment_name, assessment_description) ";
-    $sql_insert_new_quizz .= "VALUES (";
-    $sql_insert_new_quizz .= "'" . db_escape($db, $quizz_name) . "',";
-    $sql_insert_new_quizz .= "'" . db_escape($db, $quizz_description) . "'";
-    $sql_insert_new_quizz .= ")";
-    $result = mysqli_query($db, $sql_insert_new_quizz);
+    $sql_insert_new_quiz = "INSERT INTO assessments ";
+    $sql_insert_new_quiz .= "(assessment_name, assessment_description) ";
+    $sql_insert_new_quiz .= "VALUES (";
+    $sql_insert_new_quiz .= "'" . db_escape($db, $quiz_name) . "',";
+    $sql_insert_new_quiz .= "'" . db_escape($db, $quiz_description) . "'";
+    $sql_insert_new_quiz .= ")";
+    $result = mysqli_query($db, $sql_insert_new_quiz);
     /* check if insert is successfull */
     if($result){
         return true;
@@ -365,13 +396,13 @@ function create_new_quizz($quizz_name, $quizz_description) {
 
 
 
-function edit_general_quizz($assessment_id, $quizz_name, $quizz_description) {
+function edit_general_quiz($assessment_id, $quiz_name, $quiz_description) {
     global $db;
-    $sql_edit_general_quizz = "UPDATE assessments ";
-    $sql_edit_general_quizz .= "SET assessment_name='" . db_escape($db, $quizz_name) . "', ";
-    $sql_edit_general_quizz .= " assessment_description='" . db_escape($db, $quizz_description) . "' ";
-    $sql_edit_general_quizz .= " WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
-    $result = mysqli_query($db, $sql_edit_general_quizz);
+    $sql_edit_general_quiz = "UPDATE assessments ";
+    $sql_edit_general_quiz .= "SET assessment_name='" . db_escape($db, $quiz_name) . "', ";
+    $sql_edit_general_quiz .= " assessment_description='" . db_escape($db, $quiz_description) . "' ";
+    $sql_edit_general_quiz .= " WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $result = mysqli_query($db, $sql_edit_general_quiz);
     /* check if insert is successfull */
     if($result){
         return true;
@@ -385,13 +416,13 @@ function edit_general_quizz($assessment_id, $quizz_name, $quizz_description) {
 }
 
 
-function edit_settings_quizz($assessment_id, $num_quest_show, $is_active) {
+function edit_settings_quiz($assessment_id, $num_quest_show, $is_active) {
     global $db;
-    $sql_edit_settings_quizz = "UPDATE assessments ";
-    $sql_edit_settings_quizz .= "SET assessment_num_q_to_show='" . db_escape($db, $num_quest_show) . "', ";
-    $sql_edit_settings_quizz .= " assessment_visible='" . db_escape($db, $is_active) . "' ";
-    $sql_edit_settings_quizz .= " WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
-    $result = mysqli_query($db, $sql_edit_settings_quizz);
+    $sql_edit_settings_quiz = "UPDATE assessments ";
+    $sql_edit_settings_quiz .= "SET assessment_num_q_to_show='" . db_escape($db, $num_quest_show) . "', ";
+    $sql_edit_settings_quiz .= " assessment_visible='" . db_escape($db, $is_active) . "' ";
+    $sql_edit_settings_quiz .= " WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $result = mysqli_query($db, $sql_edit_settings_quiz);
     /* check if insert is successfull */
     if($result){
         return true;
@@ -407,42 +438,87 @@ function edit_settings_quizz($assessment_id, $num_quest_show, $is_active) {
 
 /* ------------------------- question inputs ------------------------- */
 
-function validate_quizz_question($q_text, $is_multivalued, $is_required) {
+function validate_quiz_question($q_text, $is_multivalued, $is_required) {
     $errors = array();
 
 
 }
 
 
-function add_new_quizz_question($q_text, $is_multivalued, $is_required) {
+function add_new_quiz_question($assessment_id, $question_text, $is_multivalued, $is_required) {
+    global $db;
+    $sql_insert_new_quiz = "INSERT INTO questions ";
+    $sql_insert_new_quiz .= "(assessment_id, question_text, question_multivalued, question_is_required) ";
+    $sql_insert_new_quiz .= "VALUES (";
+    $sql_insert_new_quiz .= "'" . db_escape($db, $assessment_id) . "',";
+    $sql_insert_new_quiz .= "'" . db_escape($db, $question_text) . "',";
+    $sql_insert_new_quiz .= "'" . db_escape($db, $is_multivalued) . "',";
+    $sql_insert_new_quiz .= "'" . db_escape($db, $is_required) . "'";
+    $sql_insert_new_quiz .= ")";
+    $result = mysqli_query($db, $sql_insert_new_quiz);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+
+function edit_quiz_question($question_id, $question_text, $is_multivalued, $is_required) {
+    global $db;
+    $sql_edit_question = "UPDATE questions ";
+    $sql_edit_question .= "SET question_text='" . db_escape($db, $question_text) . "', ";
+    $sql_edit_question .= " question_multivalued='" . db_escape($db, $is_multivalued) . "', ";
+    $sql_edit_question .= " question_is_required='" . db_escape($db, $is_required) . "' ";
+    $sql_edit_question .= " WHERE question_id='" . db_escape($db, $question_id) . "'";
+    $result = mysqli_query($db, $sql_edit_question);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+
+function delete_quiz_question($question_id) {
 
 
 }
 
-
-function edit_quizz_question($q_id, $q_text, $is_multivalued, $is_required) {
-
-
-}
 
 
 /* ------------------------- question choice inputs ------------------------- */
 
 
-function validate_quizz_choice($c_text, $c_details) {
+function validate_quiz_choice($choice_text, $c_details) {
     $errors = array();
 
 
 }
 
 
-function add_new_quizz_choice($q_id, $c_text, $is_correct, $c_details) {
+function add_new_quiz_choice($question_id, $choice_text, $is_correct, $choice_details) {
 
 
 }
 
 
-function edit_quizz_choice($c_id, $c_text, $is_correct, $c_details) {
+function edit_quiz_choice($choice_id, $choice_text, $is_correct, $choice_details) {
+
+
+}
+
+function delete_quiz_choice($choice_id) {
 
 
 }
