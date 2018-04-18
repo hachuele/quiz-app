@@ -95,7 +95,7 @@ if($is_in_progress){
         <div class="col-sm-12">
             <div class="row">
                 <h3 id="assessment_title_txt">
-                    <button id="back_home_btn" type="button" class="btn btn-default btn-sm">
+                    <button id="back_home_btn" type="button" class="back_home_btn btn btn-primary btn-sm">
                         <span class="glyphicon glyphicon-home"></span>
                     </button>
                     <?php echo h($assessment_name); ?>
@@ -171,46 +171,43 @@ if($is_in_progress){
                 <?php
                 $choice_num = 1;
                 $radio_value = 1;
-
                 /* loop over current question's choices */
                 foreach($choices_array as $choice){
-
                     /* declare variables for dynamic classes */
                     $input_checked = '';
                     $choice_glyph_class = '';
-                    $span_choice_mark_class = '';
-
+                    /* check if choice is selected */
+                    $answer_found = 0;
                     /* check if question is complete, then compare choice against user answer */
                     if($is_completed_question){
-                        /* check if choice is selected */
-                        $answer_found = 0;
                         foreach($user_answers_array as $answer){
                             /* if answer selected current choice and choice is correct answer (correct selected): */
                             if((($choice['question_choice_id'] == $answer['question_choice_id']) &&  $choice['question_choice_correct'] == 1) && !($answer_found)){
                                 $answer_found = 1;
                                 $input_checked = 'checked';
                                 $choice_glyph_class = 'choice_mark glyphicon glyphicon-ok-circle solution_glyphicon_correct';
-                                $span_choice_mark_class = 'choice_mark';
                             }
                             /* if answer selected current choice and choice is incorrect answer (incorrect selected): */
                             else if((($choice['question_choice_id'] == $answer['question_choice_id']) &&  $choice['question_choice_correct'] == 0) && !($answer_found)){
-                                $answer_found = 1;
+                                if($question_type_class != 'checkbox'){
+                                    $answer_found = 1;
+                                }
                                 $input_checked = 'checked';
                                 $choice_glyph_class = 'choice_mark glyphicon glyphicon-remove-circle solution_glyphicon_incorrect';
-                                $span_choice_mark_class = 'choice_mark';
                             }
                             /* if answer did NOT select current choice and choice is correct answer(correct not selected): */
                             else if(((($choice['question_choice_id'] != $answer['question_choice_id']) &&  $choice['question_choice_correct'] == 1) && ($question_type_class == 'checkbox')) && !($answer_found)){
-                                $answer_found = 1;
+                                if($question_type_class != 'checkbox'){
+                                    $answer_found = 1;
+                                }
                                 $choice_glyph_class = 'choice_mark glyphicon glyphicon-remove-circle solution_glyphicon_correct_not_selected';
-                                $span_choice_mark_class = 'choice_mark';
                             }
                         }
                     }
                 ?>
                 <div class="question_item_div center">
                     <div class="<?php echo $question_type_class; ?> question_item">
-                        <span id="question_choice_id_<?php echo h($choice['question_choice_id']); ?>" class="<?php echo $choice_glyph_class; ?>" data-choiceid="<?php echo h($choice['question_choice_id']); ?>" ></span><label class="question_label"><input <?php echo $input_checked; ?> <?php echo $disabled_complete; ?> class="<?php echo $question_type_class; ?>_item_<?php echo $question_num; ?>" type="<?php echo $question_type_class; ?>" name="<?php echo $choice_name; ?>_<?php echo $choice_num; ?>" value="<?php echo $radio_value; ?>"><?php echo h($choice['question_choice_text']); ?></label>
+                        <span id="question_choice_id_<?php echo h($choice['question_choice_id']); ?>" class="<?php echo $choice_glyph_class; ?>" data-choiceid="<?php echo h($choice['question_choice_id']); ?>" ></span><label class="question_label"><input <?php echo h($input_checked); ?> <?php echo $disabled_complete; ?> class="<?php echo $question_type_class; ?>_item_<?php echo $question_num; ?>" type="<?php echo $question_type_class; ?>" name="<?php echo $choice_name; ?>_<?php echo $choice_num; ?>" value="<?php echo $radio_value; ?>"><?php echo h($choice['question_choice_text']); ?></label>
                     </div>
                 </div>
                 <?php
@@ -306,7 +303,7 @@ if($is_in_progress){
                 </div>
                 <div class="col-xs-6">
                     <button id="retry_quiz_btn" type="button" class="btn btn-default btn-sm previous_button" onclick="location.href='<?php echo url_for('quiz/index.php?assessment_id=' . h($assessment_id)); ?>'">
-                        <span class="glyphicon glyphicon-repeat" style="margin-right:10px;"></span>RETRY quiz
+                        <span class="glyphicon glyphicon-repeat" style="margin-right:10px;"></span>RETRY QUIZ
                     </button>
                 </div>
             </div>
