@@ -57,7 +57,7 @@ if($quiz_question_is_req != null){
 if($_POST['request_type'] == 'new_question'){
     /* check if question text already used */
     if(is_question_text_used($assessment_settings_id, $quiz_question_text)){
-        $output_edit_quest_quiz['error'] = "Error! The given quiz text already exists in the current quiz.";
+        $output_edit_quest_quiz['error'] = "Error! The given question text already exists in a different question of the current quiz.";
     }
     else{
         /* attempt to add a new question */
@@ -68,17 +68,16 @@ if($_POST['request_type'] == 'new_question'){
     }
 }
 else if($_POST['request_type'] == 'edit_question'){
-
     $question_edit_id = $_POST['question_id'];
-
-    /* TODO: MAKE SURE IF CHANGE QUESTION TEXT, IT IS DIFFERENT FROM THAT OF ALL OTHER QUESTIONS! (EXCEPT CURRENT) - i.e. question already exists */
-
     /* check if question text already used (in different question) */
     if(is_question_text_used_diff($assessment_settings_id, $question_edit_id, $quiz_question_text)){
-        $output_edit_quest_quiz['error'] = "Error! The given quiz text already exists in a different question of the current quiz.";
+        $output_edit_quest_quiz['error'] = "Error! The given question text already exists in a different question of the current quiz.";
+    }
+    /* check if changing to radio and alread more than one correct choice */
+    else if($set_question_multi == 0 && is_mult_corr_choice_set($question_edit_id)){
+        $output_edit_quest_quiz['error'] = "Error! You are attempting to change question to single-valued (radio), however, there are already multiple correct choices set. Please modify your choices so there is a single correct answer before changing the question type.";
     }
     else{
-        $output_edit_quest_quiz['q_text'] = $quiz_question_text;
         /* attempt to edit question */
         $result_edit_question = edit_quiz_question($question_edit_id, $quiz_question_text, $set_question_multi, $set_question_req);
         if($result_edit_question != true) {

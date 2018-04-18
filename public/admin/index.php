@@ -85,7 +85,7 @@ $course_set = find_all_courses();
                                     <span class="pull-left">EDIT EXISTING QUIZ</span>
                                     <span style="float:right;" class="pull-right glyphicon glyphicon-pencil"></span>
                                 </button>
-                                <button style="text-align:left;" type="button" class="quiz_list_btn btn btn-primary btn-block btn-sm">
+                                <button disabled style="text-align:left;" type="button" class="quiz_list_btn btn btn-primary btn-block btn-sm">
                                     <span class="pull-left">STATISTICS DASHBOARD</span>
                                     <span style="float:right;" class="pull-right glyphicon glyphicon-stats"></span>
                                 </button>

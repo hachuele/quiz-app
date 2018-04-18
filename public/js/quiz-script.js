@@ -252,7 +252,7 @@ $(document).ready(function(){
         $('#question_card_' + numQuestions).addClass('active');
     }
 
-    //TODO: WILL FOR LOOP ON ENTRY OVER COMPLETED QUESTIONS TO DISABLE
+
     /******************************************************
     * THE DISABLE FORM INPUT FUNCTION DISABLES ALL INPUTS
     *******************************************************/

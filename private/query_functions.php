@@ -39,6 +39,7 @@ function find_all_visible_courses(){
     global $db;
     $sql_assessments = "SELECT * FROM assessments "; //whitespace after assessments required
     $sql_assessments .= "WHERE assessment_visible='1' ";
+    $sql_completed .= " AND assessment_virtual_delete= '0' ";
     $sql_assessments .= "ORDER BY assessment_id ASC";
     $result_course_set = mysqli_query($db, $sql_assessments);
     confirm_result_set($result_course_set);
@@ -225,7 +226,6 @@ function is_name_used($assessment_name){
     } else{
         return false;
     }
-
 }
 
 /* function to get assessment description */
@@ -240,7 +240,7 @@ function get_assessment_descr($assessment_id){
 
 }
 
-/* function to check if quiz name already used */
+/* function to check if quiz question text already used */
 function is_question_text_used($assessment_id, $question_text){
     global $db;
     $sql_question_text = "SELECT question_text FROM questions ";
@@ -256,7 +256,7 @@ function is_question_text_used($assessment_id, $question_text){
     }
 }
 
-/* function to check if quiz name already used (in different question) */
+/* function to check if quiz question text already used (in different question) */
 function is_question_text_used_diff($assessment_id, $question_id, $question_text){
     global $db;
     $sql_question_text = "SELECT question_text FROM questions ";
@@ -267,6 +267,75 @@ function is_question_text_used_diff($assessment_id, $question_id, $question_text
     confirm_result_set($result_question_text_set);
     $num_question_text = mysqli_num_rows($result_question_text_set);
     if($num_question_text != 0){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+
+
+/* function to check if question is single valued and already has a correct choice set */
+function is_corr_choice_set($question_id){
+    global $db;
+    $sql_is_corr_set = "SELECT question_choice_correct FROM question_choices ";
+    $sql_is_corr_set .= "WHERE question_choice_correct='1' ";
+    $sql_is_corr_set .= " AND question_id='" . db_escape($db, $question_id) . "'";
+    $result_is_corr_set = mysqli_query($db, $sql_is_corr_set);
+    confirm_result_set($result_is_corr_set);
+    $num_corr = mysqli_num_rows($result_is_corr_set);
+    if($num_corr != 0){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+
+/* function to check if question has multiple correct answers set */
+function is_mult_corr_choice_set($question_id){
+    global $db;
+    $sql_is_corr_set = "SELECT question_choice_correct FROM question_choices ";
+    $sql_is_corr_set .= "WHERE question_choice_correct='1' ";
+    $sql_is_corr_set .= " AND question_id='" . db_escape($db, $question_id) . "'";
+    $result_is_corr_set = mysqli_query($db, $sql_is_corr_set);
+    confirm_result_set($result_is_corr_set);
+    $num_corr = mysqli_num_rows($result_is_corr_set);
+    if($num_corr > 1){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+
+/* function to check if choice text already used */
+function is_choice_text_used($question_id, $choice_text){
+    global $db;
+    $sql_choice_text = "SELECT question_choice_text FROM question_choices ";
+    $sql_choice_text .= "WHERE question_id='" . db_escape($db, $question_id) . "' ";
+    $sql_choice_text .= " AND question_choice_text='" . db_escape($db, $choice_text) . "'";
+    $result_choice_text_set = mysqli_query($db, $sql_choice_text);
+    confirm_result_set($result_choice_text_set);
+    $num_choice_text = mysqli_num_rows($result_choice_text_set);
+    if($num_choice_text != 0){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+/* function to check if choice text already used (in different choice) */
+function is_choice_text_used_diff($question_id, $choice_id, $choice_text){
+    global $db;
+    $sql_choice_text = "SELECT question_choice_text FROM question_choices ";
+    $sql_choice_text .= "WHERE question_id='" . db_escape($db, $question_id) . "' ";
+    $sql_choice_text .= " AND question_choice_text='" . db_escape($db, $choice_text) . "'";
+    $sql_choice_text .= " AND NOT question_choice_id='" . db_escape($db, $choice_id) . "'";
+    $result_choice_text_set = mysqli_query($db, $sql_choice_text);
+    confirm_result_set($result_choice_text_set);
+    $num_choice_text = mysqli_num_rows($result_choice_text_set);
+    if($num_choice_text != 0){
         return true;
     } else{
         return false;
@@ -364,15 +433,6 @@ function insert_user_answer($user_assessment_id, $assessment_id, $question_id, $
 
 /* ------------------------- general quiz ------------------------- */
 
-function validate_quiz_general($quiz_name, $quiz_description) {
-    $errors = array();
-
-
-
-
-}
-
-
 function create_new_quiz($quiz_name, $quiz_description) {
     global $db;
     $sql_insert_new_quiz = "INSERT INTO assessments ";
@@ -436,14 +496,25 @@ function edit_settings_quiz($assessment_id, $num_quest_show, $is_active) {
 }
 
 
-/* ------------------------- question inputs ------------------------- */
+function delete_quiz($assessment_id) {
+    /* delete all question choices associated with the quiz */
 
-function validate_quiz_question($q_text, $is_multivalued, $is_required) {
-    $errors = array();
+
+
+    /* delete all questions in the given quiz*/
 
 
 }
 
+
+function virtual_delete_quiz($assessment_id) {
+
+
+
+}
+
+
+/* ------------------------- question inputs ------------------------- */
 
 function add_new_quiz_question($assessment_id, $question_text, $is_multivalued, $is_required) {
     global $db;
@@ -496,27 +567,62 @@ function delete_quiz_question($question_id) {
 }
 
 
+function virtual_delete_quiz_question($question_id) {
+
+
+}
+
+
 
 /* ------------------------- question choice inputs ------------------------- */
 
 
-function validate_quiz_choice($choice_text, $c_details) {
-    $errors = array();
-
-
-}
-
-
 function add_new_quiz_choice($question_id, $choice_text, $is_correct, $choice_details) {
-
-
+    global $db;
+    $sql_insert_new_choice = "INSERT INTO question_choices ";
+    $sql_insert_new_choice .= "(question_id, question_choice_text, question_choice_correct, question_choice_reason) ";
+    $sql_insert_new_choice .= "VALUES (";
+    $sql_insert_new_choice .= "'" . db_escape($db, $question_id) . "',";
+    $sql_insert_new_choice .= "'" . db_escape($db, $choice_text) . "',";
+    $sql_insert_new_choice .= "'" . db_escape($db, $is_correct) . "',";
+    $sql_insert_new_choice .= "'" . db_escape($db, $choice_details) . "'";
+    $sql_insert_new_choice .= ")";
+    $result = mysqli_query($db, $sql_insert_new_choice);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
 }
 
 
 function edit_quiz_choice($choice_id, $choice_text, $is_correct, $choice_details) {
+    global $db;
+    $sql_edit_choice = "UPDATE question_choices ";
+    $sql_edit_choice .= "SET question_choice_text='" . db_escape($db, $choice_text) . "', ";
+    $sql_edit_choice .= " question_choice_correct='" . db_escape($db, $is_correct) . "', ";
+    $sql_edit_choice .= " question_choice_reason='" . db_escape($db, $choice_details) . "' ";
+    $sql_edit_choice .= " WHERE question_choice_id='" . db_escape($db, $choice_id) . "'";
+    $result = mysqli_query($db, $sql_edit_choice);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
 
 
 }
+
 
 function delete_quiz_choice($choice_id) {
 

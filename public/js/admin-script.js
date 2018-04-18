@@ -39,6 +39,13 @@ $(document).ready(function(){
     /* --------------------- CLICK EVENTS --------------------- */
 
     /******************************************************
+    * BACK HOME CLICK EVENT
+    *******************************************************/
+    $("#back_home_admin_btn").click(function(){
+        window.location.href = "../index.php";
+    });
+
+    /******************************************************
     * QUIZ EDIT CAROUSEL NEXT
     *******************************************************/
     $("#admin_edit_quiz_btn").click(function(){
@@ -147,7 +154,6 @@ $(document).ready(function(){
     });
 
 
-
     /* -------------------------------------------------------------------------------------------------- */
     /* ---------------------------------------------- EDIT ---------------------------------------------- */
     /* -------------------------------------------------------------------------------------------------- */
@@ -177,17 +183,19 @@ $(document).ready(function(){
     $(".edit_question_pencil_btn").click(function(event) {
         /* disable row click event */
         event.stopPropagation();
-        /* set modal attribute to new question */
+        /* reset form */
+        $("#quiz_question_edit_form")[0].reset();
+        /* set modal attribute to edit question */
         $('#quizQuestionEditModal').attr('data-question-edit-mode', "edit_question");
         var questionEditID = $(this).attr('data-question-id');
         $('#quizQuestionEditModal').attr('data-selec-quest-id', questionEditID);
         /* retrieve and populate existing data */
         var questionMultiSet = 0;
         var questionReqSet = 0;
-        var thisQuestionText = $(this).closest('.question_edit_tbl_row').find('.question_text_td').text();
-        var thisQuestionMulti = $(this).closest('.question_edit_tbl_row').attr('data-question-is-multi');
-        var thisQuestionReq = $(this).closest('.question_edit_tbl_row').attr('data-question-is-req');
-
+        var thisQuestionText = $('#question_edit_tbl_row_' + questionEditID).find('.question_text_td').text();
+        var thisQuestionMulti = $('#question_edit_tbl_row_' + questionEditID).attr('data-question-is-multi');
+        var thisQuestionReq = $('#question_edit_tbl_row_' + questionEditID).attr('data-question-is-req');
+        /* check if question is multi-select (checkbox) or not and whether it is required */
         if(thisQuestionMulti != 0){
             questionMultiSet = 1;
         }
@@ -208,9 +216,12 @@ $(document).ready(function(){
          /* disable row click event */
          event.stopPropagation();
          var questionDeleteID = $(this).attr('data-question-id');
-         var questionDeleteString = $(this).closest('tr').find('.question_text_td').text();
+         var questionDeleteString = $('#question_edit_tbl_row_' + questionDeleteID).find('.question_text_td').text();
          /* set item to delete text*/
          $("#item_to_delete_text").text(questionDeleteString);
+
+
+
 
          $("#confirmDeleteModal").modal("toggle");
 
@@ -218,16 +229,16 @@ $(document).ready(function(){
     });
 
 
-
     /******************************************************
     * ADD NEW CHOICE
     *******************************************************/
     $("#add_new_q_choice_btn").click(function(){
-        /* reset form */
+        /* reset form (clear old values if any) */
         $("#quiz_question_choice_edit_form")[0].reset();
+        /* remove content from choice id (not needed for new choice) */
+        $('#quizQuestionChoiceModal').attr('data-selec-choice-id', "");
         /* set modal attribute to new choice */
-
-
+        $('#quizQuestionChoiceModal').attr('data-choice-edit-mode', "new_choice");
         $("#quizQuestionChoiceModal").modal("toggle");
     });
 
@@ -238,9 +249,28 @@ $(document).ready(function(){
     $(document.body).on("click", ".edit_choice_pencil_btn", function(event) {
         /* disable row click event */
         event.stopPropagation();
+        /* reset form (clear old values if any) */
+        $("#quiz_question_choice_edit_form")[0].reset();
+        /* set modal attribute to edit choice */
+        $('#quizQuestionChoiceModal').attr('data-choice-edit-mode', "edit_choice");
         var choiceEditID = $(this).attr('data-q-choice-id');
-
-
+        $('#quizQuestionChoiceModal').attr('data-selec-choice-id', choiceEditID);
+        /* retrieve and populate existing data (stored in attributes of table row) */
+        var choiceCorrectSet = 0;
+        var thisChoiceText = $('#choice_edit_tbl_row_' + choiceEditID).find('.choice_text_td').text();
+        var thisChoiceCorr = $('#choice_edit_tbl_row_' + choiceEditID).attr('data-q-choice-corr');
+        var thisChoiceReason = $('#choice_edit_tbl_row_' + choiceEditID).attr('data-q-choice-reason');
+        var choiceCorrSet = 0;
+        /* check if current choice is correct */
+        if(thisChoiceCorr != 0){
+            choiceCorrSet = 1;
+        }
+        /* populate form with existing values */
+        $("#quiz_choice_text").val(thisChoiceText);
+        $("#choice_descr_text_area").val(decodeURI(thisChoiceReason));
+        $("#choice_is_correct_check").prop('checked', choiceCorrSet);
+        /* show the choice edit display modal */
+        $("#quizQuestionChoiceModal").modal("toggle");
     });
 
     /******************************************************
@@ -250,7 +280,7 @@ $(document).ready(function(){
          /* disable row click event */
          event.stopPropagation();
          var choiceDeleteID = $(this).attr('data-q-choice-id');
-         var choiceDeleteString = $(this).closest('tr').find('td').text();
+         var choiceDeleteString = $('#choice_edit_tbl_row_' + choiceDeleteID).find('.choice_text_td').text();
          /* set item to delete text*/
          $("#item_to_delete_text").text(choiceDeleteString);
 
@@ -266,6 +296,10 @@ $(document).ready(function(){
     *******************************************************/
     $(".question_edit_tbl_row").click(function(){
         var questionEditID = $(this).attr('data-question-id');
+        var questionMulti = $(this).attr('data-question-is-multi');
+        /* add question ID and type (multi-single) to choice modal for later retrieval */
+        $('#quizQuestionChoiceModal').attr('data-selec-quest-id', questionEditID);
+        $('#quizQuestionChoiceModal').attr('data-question-is-multi', questionMulti);
 
         /* ------ AJAX CALL TO GET QUESTION CHOICES ------ */
         $.ajax({
@@ -296,11 +330,12 @@ $(document).ready(function(){
                     var choiceEditID = data['choices_edit_array'][i]['question_choice_id'];
                     var choiceEditTxt = data['choices_edit_array'][i]['question_choice_text'];
                     var choiceEditCorrect = data['choices_edit_array'][i]['question_choice_correct'];
+                    var choiceEditReason = data['choices_edit_array'][i]['question_choice_reason'];
 
-                    $("#selec_q_choices_tbl_body").append("<tr id=\"choice_edit_tbl_row_" + choiceEditID + "\" data-q-choice-id=" +
-                                                           choiceEditID + "></tr>");
+                    $("#selec_q_choices_tbl_body").append("<tr class=\"choice_edit_tbl_row\" id=\"choice_edit_tbl_row_" + choiceEditID + "\" data-q-choice-id=" +
+                                                           choiceEditID + " data-q-choice-corr=" + choiceEditCorrect + " data-q-choice-reason=" + encodeURI(choiceEditReason) + "></tr>");
                     /* get the text of the choice */
-                    $("#choice_edit_tbl_row_" + choiceEditID).append("<td style=\"text-align: left;\">" + choiceEditTxt + "</td>");
+                    $("#choice_edit_tbl_row_" + choiceEditID).append("<td class=\"choice_text_td\" style=\"text-align: left;\">" + choiceEditTxt + "</td>");
                     /* check if given choice is set to correct or incorrect answer */
                     if(choiceEditCorrect == 1){
                         $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span style=\"font-size: 20px;\" class=\"glyphicon glyphicon-ok-circle solution_glyphicon_correct\"></span></td>");
@@ -447,7 +482,7 @@ $(document).ready(function(){
             $("#quiz_question_text").hide().attr('Placeholder', 'Please enter some text for the question...').fadeIn(500).focus();
         }
         else{
-            /* ------ AJAX CALL TO CREATE NEW quiz ------ */
+            /* ------ AJAX CALL TO CREATE NEW QUIZ ------ */
             $.ajax({
                 type     : 'POST',
                 url      : '/assessment_site_hpc/private/edit_quiz_questions.php',
@@ -455,12 +490,9 @@ $(document).ready(function(){
                 dataType : 'json',
                 encode   : true
             }).done(function(data){
-
-                console.log(data);
-
                 /* successful response */
                 if(data['error'] == 0){
-                    $("#alert_edit_quiz_success").text("Successfully created quiz question!");
+                    $("#alert_edit_quiz_success").text("Successfully created/edited quiz question!");
                     $("#editquizSuccessModal").modal("toggle");
                 }
                 else{
@@ -469,16 +501,67 @@ $(document).ready(function(){
                     $("#editquizErrorModal").modal("toggle");
                 }
 
+               }).fail(function(data) {
+                console.log(data);
+                alert("The was an error. Please try again later or contact your HPC POC.");
+                });
+        }
+    });
+
+
+
+
+
+    /******************************************************
+    * CREATE/EDIT QUIZ CHOICE
+    *******************************************************/
+    $("#submit_question_choice_details").click(function(){
+        /* request type for ajax call */
+        var requestTypeChoiceEdit = $('#quizQuestionChoiceModal').attr('data-choice-edit-mode');
+
+        /* Serialize form data for ajax request */
+        var formDataChoice = $("#quiz_question_choice_edit_form").serialize();
+        var questionIDEditChoice = $("#quizQuestionChoiceModal").attr('data-selec-quest-id');
+        var choiceIDEditChoice = $("#quizQuestionChoiceModal").attr('data-selec-choice-id');
+        var questionMultiEditChoice = $("#quizQuestionChoiceModal").attr('data-question-is-multi');
+
+        /* error check the input */
+        if($("#quiz_choice_text").val() == 0 && $("#choice_descr_text_area").val() == 0){
+            $("#quiz_choice_text").hide().attr('Placeholder', 'Please enter some text for the question choice...').fadeIn(500).focus();
+            $("#choice_descr_text_area").hide().attr('Placeholder', 'Please explain why or why not this answer is correct/incorrect...').fadeIn(500);
+        } else if($("#quiz_choice_text").val() == 0){
+            $("#quiz_choice_text").hide().attr('Placeholder', 'Please enter some text for the question choice...').fadeIn(500).focus();
+        } else if($("#choice_descr_text_area").val() == 0){
+            $("#choice_descr_text_area").hide().attr('Placeholder', 'Please explain why or why not this answer is correct/incorrect...').fadeIn(500).focus();
+        }
+        else{
+            /* ------ AJAX CALL TO CREATE NEW QUIZ ------ */
+            $.ajax({
+                type     : 'POST',
+                url      : '/assessment_site_hpc/private/edit_quiz_choices.php',
+                data     : formDataChoice + '&question_id=' + questionIDEditChoice + '&choice_id=' + choiceIDEditChoice +'&is_multi=' + questionMultiEditChoice + '&request_type=' + requestTypeChoiceEdit,
+                dataType : 'json',
+                encode   : true
+            }).done(function(data){
+
+                console.log(data);
+
+                /* successful response */
+                if(data['error'] == 0){
+                    $("#alert_edit_quiz_success").text("Successfully created/edited quiz choice!");
+                    $("#editquizSuccessModal").modal("toggle");
+                }
+                else{
+                    /* display error */
+                    $("#alert_edit_quiz_wrong").text(data['error']);
+                    $("#editquizErrorModal").modal("toggle");
+                }
 
                }).fail(function(data) {
                 console.log(data);
                 alert("The was an error. Please try again later or contact your HPC POC.");
                 });
-
-
         }
-
-
     });
 
 

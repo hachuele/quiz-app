@@ -140,7 +140,7 @@ else{
     }
     /* if last question, add timestamp and complete signal */
     if($question_index == 'last'){
-        $end_stamp = date('Y-m-d G:i:s'); //TODO: NOT WORKING
+        $end_stamp = date('Y-m-d G:i:s');
         $is_complete = 1;
     }
     $insert = update_user_assessment($user_assessment_id, $latest_q_seq, $num_correct, $num_incorrect, $end_time, $is_complete);
