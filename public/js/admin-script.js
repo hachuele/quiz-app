@@ -1,32 +1,18 @@
-/***********************************************************************
+/***************************************************************************
 * DESCRIPTION: admin-script.js contains javascript code for the
 * set of admin pages
 *                            ---
 * @author: Eric J. Hachuel
 * Copyright 2018 University of Southern California. All rights reserved.
 *
-* This software is experimental in nature and is provided on an AS-IS basis only.
-* The University SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
-* INCLUDING WITHOUT LIMITATION ANY WARRANTY AS TO MERCHANTIBILITY OR FITNESS
-* FOR A PARTICULAR PURPOSE.
-*
-* This software may be reproduced and used for non-commercial purposes only,
-* so long as this copyright notice is reproduced with each such copy made.
-*
-* ----------------------------------------------------------------------
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************/
+* DISCLAIMER.  USC MAKES NO EXPRESS OR IMPLIED WARRANTIES, EITHER IN FACT OR
+* BY OPERATION OF LAW, BY STATUTE OR OTHERWISE, AND USC SPECIFICALLY AND
+* EXPRESSLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF MERCHANTABILITY OR
+* FITNESS FOR A PARTICULAR PURPOSE, VALIDITY OF THE SOFTWARE OR ANY OTHER
+* INTELLECTUAL PROPERTY RIGHTS OR NON-INFRINGEMENT OF THE INTELLECTUAL
+* PROPERTY OR OTHER RIGHTS OF ANY THIRD PARTY. SOFTWARE IS MADE AVAILABLE
+* AS-IS.
+****************************************************************************/
 
 /******************code runs once DOM ready******************/
 
@@ -81,7 +67,6 @@ $(document).ready(function(){
         $("#quizSettingsModal").modal("toggle");
     });
 
-
     /******************************************************
     * EDIT QUIZ REDIRECT
     *******************************************************/
@@ -89,7 +74,6 @@ $(document).ready(function(){
         var newAssessmentID = $('#edit_new_quiz_btn').attr('data-new-assessment-id');
         window.location.replace("edit/edit.php?assessment_id=" + newAssessmentID);
     });
-
 
     /******************************************************
     * CREATE NEW QUIZ
@@ -174,7 +158,6 @@ $(document).ready(function(){
         location.reload();
     });
 
-
     /******************************************************
     * LOAD/APPEND CHOICES ONTO TABLE
     *******************************************************/
@@ -207,9 +190,6 @@ $(document).ready(function(){
                     $("#choice_edit_tbl_row_" + choiceEditID).append(choiceEditBtn);
                     $("#choice_edit_tbl_row_" + choiceEditID).append(choiceDeleteBtn);
     }
-
-
-
 
     /******************************************************
     * ADD NEW QUESTION
@@ -255,9 +235,6 @@ $(document).ready(function(){
         $("#quizQuestionEditModal").modal("toggle");
     });
 
-
-
-
     /******************************************************
     * ADD NEW CHOICE
     *******************************************************/
@@ -270,7 +247,6 @@ $(document).ready(function(){
         $('#quizQuestionChoiceModal').attr('data-choice-edit-mode', "new_choice");
         $("#quizQuestionChoiceModal").modal("toggle");
     });
-
 
     /******************************************************
     * EDIT CHOICE (must delegate using .on since dynamic)
@@ -367,8 +343,6 @@ $(document).ready(function(){
             });
     });
 
-
-
     /******************************************************
     * EDIT QUIZ GENERAL DETAILS (NAME, DESCR)
     *******************************************************/
@@ -414,8 +388,6 @@ $(document).ready(function(){
         }
     });
 
-
-
     /******************************************************
     * EDIT QUIZ SETTINGS
     *******************************************************/
@@ -448,7 +420,6 @@ $(document).ready(function(){
                 alert("The was an error. Please try again later or contact your HPC POC.");
                 });
     });
-
 
     /******************************************************
     * CREATE/EDIT QUIZ QUESTION
@@ -492,7 +463,6 @@ $(document).ready(function(){
                 });
         }
     });
-
 
     /******************************************************
     * CREATE/EDIT QUIZ CHOICE
@@ -547,12 +517,9 @@ $(document).ready(function(){
     });
 
 
-
 /* ------------------------------------------------------------------------------------------ */
 /* --------------------------------------- Data Delete -------------------------------------- */
 /* ------------------------------------------------------------------------------------------ */
-
-
 
     /******************************************************
     * CONFIRM DELETE REQUEST
@@ -577,24 +544,10 @@ $(document).ready(function(){
                     if(data['info'] != 0){
                         $("#alert_info_quiz").text(data['info']);
                         $("#editquizInfoModal").modal("toggle");
-
-//                        /* redirect if assessment deleted */
-//                        if(deleteRequestType == 'delete_quiz'){
-//                            //TODO: REDIRECT
-//                            alert('deleted quiz, redirect!');
-//
-//                        }
                     }
                     else{
                         $("#alert_edit_quiz_success").text("Successfully deleted item!");
                         $("#editquizSuccessModal").modal("toggle");
-
-//                        /* redirect if assessment deleted */
-//                        if(deleteRequestType == 'delete_quiz'){
-//                            //TODO: REDIRECT
-//                            alert('deleted quiz, redirect!');
-//
-//                        }
                     }
                 }
                 else{
@@ -607,12 +560,7 @@ $(document).ready(function(){
                 console.log(data);
                 alert("The was an error. Please try again later or contact your HPC POC.");
                 });
-
-
-
-
     });
-
 
     /******************************************************
     * DELETE ENTIRE ASSESSMENT
@@ -625,7 +573,6 @@ $(document).ready(function(){
         $('#confirmDeleteModal').attr('data-delete-id', assessmentDeleteID);
         $("#confirmDeleteModal").modal("toggle");
     });
-
 
     /******************************************************
     * DELETE QUESTION
@@ -642,7 +589,6 @@ $(document).ready(function(){
          $("#confirmDeleteModal").modal("toggle");
     });
 
-
     /******************************************************
     * DELETE CHOICE (must delegate using .on since dynamic)
     *******************************************************/
@@ -657,15 +603,6 @@ $(document).ready(function(){
          $('#confirmDeleteModal').attr('data-delete-id', choiceDeleteID);
          $("#confirmDeleteModal").modal("toggle");
     });
-
-
-
-
-
-
-
-
-
 
 
 

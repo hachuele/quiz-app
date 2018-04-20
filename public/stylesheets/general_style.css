@@ -1,37 +1,22 @@
-/***********************************************************************
+/****************************************************************************
 * DESCRIPTION: general_style.css defines the style accross the
 * Assessments Site.
 *                             ----
 * @author: Eric J. Hachuel
 * Copyright 2018 University of Southern California. All rights reserved.
 *
-* This software is experimental in nature and is provided on an AS-IS basis only.
-* The University SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
-* INCLUDING WITHOUT LIMITATION ANY WARRANTY AS TO MERCHANTIBILITY OR FITNESS
-* FOR A PARTICULAR PURPOSE.
-*
-* This software may be reproduced and used for non-commercial purposes only,
-* so long as this copyright notice is reproduced with each such copy made.
-*
-* ----------------------------------------------------------------------
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************/
+* DISCLAIMER.  USC MAKES NO EXPRESS OR IMPLIED WARRANTIES, EITHER IN FACT OR
+* BY OPERATION OF LAW, BY STATUTE OR OTHERWISE, AND USC SPECIFICALLY AND
+* EXPRESSLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF MERCHANTABILITY OR
+* FITNESS FOR A PARTICULAR PURPOSE, VALIDITY OF THE SOFTWARE OR ANY OTHER
+* INTELLECTUAL PROPERTY RIGHTS OR NON-INFRINGEMENT OF THE INTELLECTUAL
+* PROPERTY OR OTHER RIGHTS OF ANY THIRD PARTY. SOFTWARE IS MADE AVAILABLE
+* AS-IS.
+****************************************************************************/
 
 /* ------------------------------------------------------------------------------------------ */
 /* -------------------------------------- GENERAL STYLES ------------------------------------ */
 /* ------------------------------------------------------------------------------------------ */
-
 
 body, html {
     margin: 0;
@@ -148,7 +133,6 @@ body, html {
 }
 
 
-
 /* ------------------------------------------------------------------------------------------ */
 /* -------------------------------------- HEADER STYLES ------------------------------------- */
 /* ------------------------------------------------------------------------------------------ */
@@ -176,7 +160,6 @@ body, html {
 
 #page_title_icon_img{
     max-height: 65px;
-
 }
 
 #page_title_txt_left_div{
@@ -233,7 +216,6 @@ body, html {
     margin-top: 10px;
 }
 
-
 /* ------------------------------------------------------------------------------------------ */
 /* ------------------------------------- DASHBOARD STYLES ----------------------------------- */
 /* ------------------------------------------------------------------------------------------ */
@@ -253,7 +235,6 @@ body, html {
     margin: auto;
 }
 
-
 .dashboard_element_card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     max-width: 400px;
@@ -262,12 +243,10 @@ body, html {
     overflow: auto;
 }
 
-
 .dash_card_title_div{
     padding-top: 5px;
     background-color: #efefef;
 }
-
 
 .available_options_list{
     margin: auto;
@@ -294,7 +273,6 @@ body, html {
     color: dimgray;
 }
 
-
 .compl_quizzes_tbl{
     font-size: 12px;
 }
@@ -308,7 +286,6 @@ body, html {
 .compl_quiz_dash_score_high{
     text-align: center;
     color: #5cb85c;
-
 }
 
 #view_compl_quizzes_button{
@@ -316,11 +293,9 @@ body, html {
 }
 
 
-
 /* ------------------------------------------------------------------------------------------ */
 /* ------------------------------------ QUIZ SITE STYLES ----------------------------------- */
 /* ------------------------------------------------------------------------------------------ */
-
 
 .question_card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -329,7 +304,6 @@ body, html {
     max-height: 100%;
 }
 
-
 #quiz_statistics_card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-top: 20px;
@@ -337,12 +311,10 @@ body, html {
     max-width: 700px;
 }
 
-
 .quiz_question_div{
     max-width: 700px;
 
 }
-
 
 .question_item_div{
     margin-top: 2px;
@@ -350,14 +322,12 @@ body, html {
     border-radius: 10px;
 }
 
-
 .question_label{
     font-size: 15px;
     vertical-align: middle;
     margin-left: 10px;
     padding-left: 40px!important;
 }
-
 
 .solution_glyphicon_correct{
     color: #5cb85c;
@@ -376,11 +346,9 @@ body, html {
     border-color: #e0e0e0;
 }
 
-
 .view_answers_btn_div{
     text-align: center;
 }
-
 
 .bottom_button_set{
     width: 100%;
@@ -390,7 +358,6 @@ body, html {
 
 .previous_question_btn_div{
     text-align: left;
-
 }
 
 
@@ -398,18 +365,15 @@ body, html {
     text-align:right;
 }
 
-
 .choice_mark{
     position: absolute;
     font-size: 20px;
     transition-duration: 2s;
 }
 
-
 .progress-bar-grey{
     background-color: #9e9e9e;
 }
-
 
 #quiz_statistics_page_header{
     text-align: center;
@@ -424,12 +388,10 @@ body, html {
     text-align: left;
 }
 
-
 .back_home_btn{
     float: left;
     margin-bottom: 15px;
 }
-
 
 #final_score_percent{
     font-family: futura;
@@ -493,7 +455,6 @@ body, html {
     font-weight: bold;
 }
 
-
 .dash_subsection_div{
     text-align: left;
     width: 100%;
@@ -535,7 +496,6 @@ body, html {
 #edit_settings_span:hover{
     color: #1976d2;
 }
-
 
 
 /* ------------------------------------------------------------------------------------------ */

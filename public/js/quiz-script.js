@@ -1,32 +1,18 @@
-/***********************************************************************
- * DESCRIPTION: quiz-script.js contains javascript code for the
- * public/quiz/index.php page
- *                            ---
- * @author: Eric J. Hachuel
- * Copyright 2018 University of Southern California. All rights reserved.
- *
- * This software is experimental in nature and is provided on an AS-IS basis only.
- * The University SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
- * INCLUDING WITHOUT LIMITATION ANY WARRANTY AS TO MERCHANTIBILITY OR FITNESS
- * FOR A PARTICULAR PURPOSE.
- *
- * This software may be reproduced and used for non-commercial purposes only,
- * so long as this copyright notice is reproduced with each such copy made.
- *
- * ----------------------------------------------------------------------
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ***********************************************************************/
+/****************************************************************************
+* DESCRIPTION: quiz-script.js contains javascript code for the
+* public/quiz/index.php page
+*                            ---
+* @author: Eric J. Hachuel
+* Copyright 2018 University of Southern California. All rights reserved.
+*
+* DISCLAIMER.  USC MAKES NO EXPRESS OR IMPLIED WARRANTIES, EITHER IN FACT OR
+* BY OPERATION OF LAW, BY STATUTE OR OTHERWISE, AND USC SPECIFICALLY AND
+* EXPRESSLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF MERCHANTABILITY OR
+* FITNESS FOR A PARTICULAR PURPOSE, VALIDITY OF THE SOFTWARE OR ANY OTHER
+* INTELLECTUAL PROPERTY RIGHTS OR NON-INFRINGEMENT OF THE INTELLECTUAL
+* PROPERTY OR OTHER RIGHTS OF ANY THIRD PARTY. SOFTWARE IS MADE AVAILABLE
+* AS-IS.
+****************************************************************************/
 
 /******************code runs once DOM ready******************/
 $(document).ready(function(){
@@ -109,15 +95,15 @@ $(document).ready(function(){
                         $("#answer_explanations_div_" + questionNumber).append("<div class=\"alert alert-incorrect\"><strong>Choice " + (i + 1) + ": </strong>" + data['reponse_details'][i] + "</div>");
                     }
                 }
-                // update footer
+                /* update footer */
                 $("#footer_row").removeClass("footer_adjust_abs").addClass("footer_adjust_rel");
                 $("#answer_explanations_div_" + questionNumber).show(1100, function(){
                     footerUpdate();
                 });
-                // animate show of question answers
+                /* animate show of question answers */
                 $('html, body').animate({
                        scrollTop: $("#answer_explanations_div_" + questionNumber).offset().top}, 2000);
-
+                /* disable form inputs for submitted question */
                 disableFormInput(questionNumber);
                 /* Enable quiz Navigation Buttons */
                 enableNext(questionNumber);

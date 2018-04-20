@@ -1,33 +1,19 @@
 <?php
-/***********************************************************************
- * DESCRIPTION: database.php contains all the functions required
- * to connect and (safely) interact with the MySQL database
- *                             ----
- * @author: Eric J. Hachuel
- * Copyright 2018 University of Southern California. All rights reserved.
- *
- * This software is experimental in nature and is provided on an AS-IS basis only.
- * The University SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
- * INCLUDING WITHOUT LIMITATION ANY WARRANTY AS TO MERCHANTIBILITY OR FITNESS
- * FOR A PARTICULAR PURPOSE.
- *
- * This software may be reproduced and used for non-commercial purposes only,
- * so long as this copyright notice is reproduced with each such copy made.
- *
- * ----------------------------------------------------------------------
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ***********************************************************************/
+/****************************************************************************
+* DESCRIPTION: database.php contains all the functions required
+* to connect and (safely) interact with the MySQL database
+*                             ----
+* @author: Eric J. Hachuel
+* Copyright 2018 University of Southern California. All rights reserved.
+*
+* DISCLAIMER.  USC MAKES NO EXPRESS OR IMPLIED WARRANTIES, EITHER IN FACT OR
+* BY OPERATION OF LAW, BY STATUTE OR OTHERWISE, AND USC SPECIFICALLY AND
+* EXPRESSLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF MERCHANTABILITY OR
+* FITNESS FOR A PARTICULAR PURPOSE, VALIDITY OF THE SOFTWARE OR ANY OTHER
+* INTELLECTUAL PROPERTY RIGHTS OR NON-INFRINGEMENT OF THE INTELLECTUAL
+* PROPERTY OR OTHER RIGHTS OF ANY THIRD PARTY. SOFTWARE IS MADE AVAILABLE
+* AS-IS.
+****************************************************************************/
 
 require_once('db_credentials.php');
 
