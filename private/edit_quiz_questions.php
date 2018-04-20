@@ -85,17 +85,6 @@ else if($_POST['request_type'] == 'edit_question'){
         }
     }
 }
-/* if delete a question, need to ensure it has not been used by active users */
-else if($_POST['request_type'] == 'delete_question'){
-
-
-
-
-
-
-
-
-}
 
 
 echo json_encode($output_edit_quest_quiz);

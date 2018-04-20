@@ -46,6 +46,13 @@ $help_modal_txt = 'Create a new quiz or edit an existing one...';
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
+/* -------- check if user is an admin, redirect otherwise -------- */
+$user_admin = is_user_admin($user_id);
+if($user_admin == FALSE){
+    echo "User not authorized";
+    exit();
+}
+
 /* -------- get the assessment id from url (if not found, set to one) -------- */
 $assessment_id = $_GET['assessment_id'];
 
@@ -59,7 +66,6 @@ $assessment_data_row = get_assessment_row($assessment_id);
 /* if the quiz for the given id does not exist, redirect to main page */
 
 if($assessment_data_row == FALSE){
-    echo 'false';
     redirect_to('../index.php');
 }
 
@@ -326,6 +332,31 @@ if($assessment_num_quest > $num_questions_edit){
 </div>
 
 
+<!-- ***************************** CONFIRM DELETE MODAL ***************************** -->
+<div id="confirmDeleteModal" class="modal fade" role="dialog" data-delete-type="" data-delete-id="">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="text-align: center;">CONFIRM DELETE</h4>
+            <p style="text-align:center; margin-top:10px; color: #9e9e9e;"><strong id="item_to_delete_text"></strong></p>
+        </div>
+      <div class="modal-body">
+          <div>
+            <button id="delete_item_btn" class="btn-red-delete btn-block btn btn-lg" type="button">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </div>
+      </div>
+        <div class="modal-footer">
+        <button id="confirm_delete_close_btn" type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ***************************** ALERT MODAL [ERROR] ***************************** -->
 <div id="editquizErrorModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -345,6 +376,23 @@ if($assessment_num_quest > $num_questions_edit){
 
 
 <!-- ***************************** SUCCESS EDIT MODAL ***************************** -->
+<div id="editquizInfoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Help Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+          <div class="alert alert-info">
+              <p id="alert_info_quiz"></p>
+          </div>
+      </div>
+        <div class="modal-footer">
+        <button id="alert_info_close_btn" type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ***************************** SUCCESS EDIT MODAL ***************************** -->
 <div id="editquizSuccessModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Help Modal content-->
@@ -356,30 +404,6 @@ if($assessment_num_quest > $num_questions_edit){
       </div>
         <div class="modal-footer">
         <button id="success_edit_close_btn" type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ***************************** CONFIRM DELETE MODAL ***************************** -->
-<div id="confirmDeleteModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Help Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" style="text-align: center;">CONFIRM DELETE</h4>
-            <p style="text-align:center; margin-top:10px; color: #9e9e9e;"><strong id="item_to_delete_text"></strong></p>
-        </div>
-      <div class="modal-body">
-          <div>
-            <button id="delete_item_btn" class="btn-red-delete btn-block btn btn-lg" type="button">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-          </div>
-      </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
       </div>
     </div>
   </div>

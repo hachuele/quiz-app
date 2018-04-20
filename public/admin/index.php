@@ -45,8 +45,16 @@ $help_modal_txt = 'Create a new quiz...';
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
+//TODO: GET USER ID FROM USC DATABASE
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
+
+/* -------- check if user is an admin, redirect otherwise -------- */
+$user_admin = is_user_admin($user_id);
+if($user_admin == FALSE){
+    echo "User not authorized";
+    exit();
+}
 
 /* ----------------------------------------------------------------------------------------- */
 /* ------------------------------------ Retrieve from DB ----------------------------------- */
@@ -54,7 +62,6 @@ $_SESSION["user_id"] = $user_id;
 
 /* get set of all quizzes (for edit purposes) */
 $course_set = find_all_courses();
-
 
 ?>
 

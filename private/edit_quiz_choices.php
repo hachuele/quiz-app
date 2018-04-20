@@ -87,18 +87,6 @@ else if(($_POST['request_type'] == 'edit_choice') && ($error_found == 0)){
         }
     }
 }
-//TODO: MOVE DELETE TO FIRST OPTION, ELSE DO REST
-else if($_POST['request_type'] == 'delete_choice'){
-
-
-
-
-
-
-
-
-}
-
 
 echo json_encode($output_edit_choice_quiz);
 

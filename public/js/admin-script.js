@@ -161,9 +161,55 @@ $(document).ready(function(){
     /******************************************************
     * RELOAD PAGE ON SUCCESSFUL EDIT OF DATA
     *******************************************************/
-    $("#success_edit_close_btn").click(function(){
+    $("#editquizSuccessModal").on('hidden.bs.modal', function(){
+        /* reload after sucess message */
         location.reload();
     });
+
+    /******************************************************
+    * RELOAD PAGE ON SUCCESSFUL EDIT OF DATA
+    *******************************************************/
+    $("#editquizInfoModal").on('hidden.bs.modal', function(){
+        /* reload after sucess message */
+        location.reload();
+    });
+
+
+    /******************************************************
+    * LOAD/APPEND CHOICES ONTO TABLE
+    *******************************************************/
+    function loadChoiceItem(choiceEditID, choiceEditTxt, choiceEditCorrect, choiceEditReason){
+        $("#selec_q_choices_tbl_body").append("<tr class=\"choice_edit_tbl_row\" id=\"choice_edit_tbl_row_" + choiceEditID + "\" data-q-choice-id=" +
+                                                           choiceEditID + " data-q-choice-corr=" + choiceEditCorrect + " data-q-choice-reason=" + encodeURI(choiceEditReason) + "></tr>");
+                    /* get the text of the choice */
+                    $("#choice_edit_tbl_row_" + choiceEditID).append("<td class=\"choice_text_td\" style=\"text-align: left;\">" + choiceEditTxt + "</td>");
+                    /* check if given choice is set to correct or incorrect answer */
+                    if(choiceEditCorrect == 1){
+                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span style=\"font-size: 20px;\" class=\"glyphicon glyphicon-ok-circle solution_glyphicon_correct\"></span></td>");
+                    } else {
+                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span style=\"font-size: 20px;\" class=\"glyphicon glyphicon-remove-circle solution_glyphicon_incorrect\"></span></td>");
+                    }
+                    /* append buttons */
+                    var choiceEditBtn = "<td>\
+                                            <button type=\"button\" class=\"edit_choice_pencil_btn btn btn-grey-lighten btn-sm\" data-q-choice-id=" +
+                                                           choiceEditID + ">\
+                                                <span class=\"glyphicon glyphicon-pencil\"></span>\
+                                            </button>\
+                                        </td>";
+
+                    var choiceDeleteBtn = "<td>\
+                                            <button type=\"button\" class=\" delete_choice_trash_btn btn btn-grey-lighten btn-sm\" data-q-choice-id=" +
+                                                           choiceEditID + ">\
+                                                <span class=\"glyphicon glyphicon-trash\"></span>\
+                                            </button>\
+                                        </td>";
+                    /* append buttons */
+                    $("#choice_edit_tbl_row_" + choiceEditID).append(choiceEditBtn);
+                    $("#choice_edit_tbl_row_" + choiceEditID).append(choiceDeleteBtn);
+    }
+
+
+
 
     /******************************************************
     * ADD NEW QUESTION
@@ -209,24 +255,7 @@ $(document).ready(function(){
         $("#quizQuestionEditModal").modal("toggle");
     });
 
-    /******************************************************
-    * DELETE QUESTION
-    *******************************************************/
-     $(".delete_question_trash_btn").click(function(event) {
-         /* disable row click event */
-         event.stopPropagation();
-         var questionDeleteID = $(this).attr('data-question-id');
-         var questionDeleteString = $('#question_edit_tbl_row_' + questionDeleteID).find('.question_text_td').text();
-         /* set item to delete text*/
-         $("#item_to_delete_text").text(questionDeleteString);
 
-
-
-
-         $("#confirmDeleteModal").modal("toggle");
-
-
-    });
 
 
     /******************************************************
@@ -273,23 +302,6 @@ $(document).ready(function(){
         $("#quizQuestionChoiceModal").modal("toggle");
     });
 
-    /******************************************************
-    * DELETE CHOICE (must delegate using .on since dynamic)
-    *******************************************************/
-     $(document.body).on("click", ".delete_choice_trash_btn", function(event) {
-         /* disable row click event */
-         event.stopPropagation();
-         var choiceDeleteID = $(this).attr('data-q-choice-id');
-         var choiceDeleteString = $('#choice_edit_tbl_row_' + choiceDeleteID).find('.choice_text_td').text();
-         /* set item to delete text*/
-         $("#item_to_delete_text").text(choiceDeleteString);
-
-         $("#confirmDeleteModal").modal("toggle");
-
-
-    });
-
-
 
     /******************************************************
     * GET CHOICES ON QUESTION CLICK (AJAX)
@@ -331,54 +343,29 @@ $(document).ready(function(){
                     var choiceEditTxt = data['choices_edit_array'][i]['question_choice_text'];
                     var choiceEditCorrect = data['choices_edit_array'][i]['question_choice_correct'];
                     var choiceEditReason = data['choices_edit_array'][i]['question_choice_reason'];
-
-                    $("#selec_q_choices_tbl_body").append("<tr class=\"choice_edit_tbl_row\" id=\"choice_edit_tbl_row_" + choiceEditID + "\" data-q-choice-id=" +
-                                                           choiceEditID + " data-q-choice-corr=" + choiceEditCorrect + " data-q-choice-reason=" + encodeURI(choiceEditReason) + "></tr>");
-                    /* get the text of the choice */
-                    $("#choice_edit_tbl_row_" + choiceEditID).append("<td class=\"choice_text_td\" style=\"text-align: left;\">" + choiceEditTxt + "</td>");
-                    /* check if given choice is set to correct or incorrect answer */
-                    if(choiceEditCorrect == 1){
-                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span style=\"font-size: 20px;\" class=\"glyphicon glyphicon-ok-circle solution_glyphicon_correct\"></span></td>");
-                    } else {
-                        $("#choice_edit_tbl_row_" + choiceEditID).append("<td><span style=\"font-size: 20px;\" class=\"glyphicon glyphicon-remove-circle solution_glyphicon_incorrect\"></span></td>");
-                    }
-                    /* append buttons */
-                    var choiceEditBtn = "<td>\
-                                            <button type=\"button\" class=\"edit_choice_pencil_btn btn btn-grey-lighten btn-sm\" data-q-choice-id=" +
-                                                           choiceEditID + ">\
-                                                <span class=\"glyphicon glyphicon-pencil\"></span>\
-                                            </button>\
-                                        </td>";
-
-                    var choiceDeleteBtn = "<td>\
-                                            <button type=\"button\" class=\" delete_choice_trash_btn btn btn-grey-lighten btn-sm\" data-q-choice-id=" +
-                                                           choiceEditID + ">\
-                                                <span class=\"glyphicon glyphicon-trash\"></span>\
-                                            </button>\
-                                        </td>";
-                    /* append buttons */
-                    $("#choice_edit_tbl_row_" + choiceEditID).append(choiceEditBtn);
-                    $("#choice_edit_tbl_row_" + choiceEditID).append(choiceDeleteBtn);
+                    /* load/append table choices unto the choice table */
+                    loadChoiceItem(choiceEditID, choiceEditTxt, choiceEditCorrect, choiceEditReason);
                 }
                 /* show the choices table and the button to add new choices */
                 $("#selec_q_choices_tbl").hide().removeAttr("hidden").fadeIn(500);
             }
             /* show button to add new choice */
-            $("#add_new_q_choice_div").hide().removeAttr("hidden").fadeIn(500);
+            $("#add_new_q_choice_div").hide().removeAttr("hidden").fadeIn(500, function(){
+                /* update footer to fit size */
+            footerUpdate();
+
+            });
             /* update footer to fit size */
             footerUpdate();
             /* scroll to choices */
             $('html, body').animate({
-                   scrollTop: $("#questions_choices_edit_div").offset().top}, 2000);
+                   scrollTop: $("#questions_choices_edit_div").offset().top}, 2500);
 
            }).fail(function(data) {
             console.log(data);
             alert("The was an error. Please try again later or contact your HPC POC.");
             });
     });
-
-
-
 
 
 
@@ -463,8 +450,6 @@ $(document).ready(function(){
     });
 
 
-
-
     /******************************************************
     * CREATE/EDIT QUIZ QUESTION
     *******************************************************/
@@ -509,9 +494,6 @@ $(document).ready(function(){
     });
 
 
-
-
-
     /******************************************************
     * CREATE/EDIT QUIZ CHOICE
     *******************************************************/
@@ -535,7 +517,7 @@ $(document).ready(function(){
             $("#choice_descr_text_area").hide().attr('Placeholder', 'Please explain why or why not this answer is correct/incorrect...').fadeIn(500).focus();
         }
         else{
-            /* ------ AJAX CALL TO CREATE NEW QUIZ ------ */
+            /* ------ AJAX CALL TO CREATE/EDIT QUIZ CHOICE ------ */
             $.ajax({
                 type     : 'POST',
                 url      : '/assessment_site_hpc/private/edit_quiz_choices.php',
@@ -562,6 +544,118 @@ $(document).ready(function(){
                 alert("The was an error. Please try again later or contact your HPC POC.");
                 });
         }
+    });
+
+
+
+/* ------------------------------------------------------------------------------------------ */
+/* --------------------------------------- Data Delete -------------------------------------- */
+/* ------------------------------------------------------------------------------------------ */
+
+
+
+    /******************************************************
+    * CONFIRM DELETE REQUEST
+    *******************************************************/
+    $("#delete_item_btn").click(function(){
+
+        var deleteRequestType = $("#confirmDeleteModal").attr('data-delete-type');
+        var deleteID = $("#confirmDeleteModal").attr('data-delete-id');
+
+
+        /* ------ AJAX CALL TO DELETE QUIZ ITEM ------ */
+            $.ajax({
+                type     : 'POST',
+                url      : '/assessment_site_hpc/private/delete_quiz_item.php',
+                data     :  '&delete_type=' + deleteRequestType+ '&delete_id=' + deleteID,
+                dataType : 'json',
+                encode   : true
+            }).done(function(data){
+                /* successful response */
+                if(data['error'] == 0){
+                    /* if info field is not empty, item has been virtually deleted */
+                    if(data['info'] != 0){
+                        $("#alert_info_quiz").text(data['info']);
+                        $("#editquizInfoModal").modal("toggle");
+
+//                        /* redirect if assessment deleted */
+//                        if(deleteRequestType == 'delete_quiz'){
+//                            //TODO: REDIRECT
+//                            alert('deleted quiz, redirect!');
+//
+//                        }
+                    }
+                    else{
+                        $("#alert_edit_quiz_success").text("Successfully deleted item!");
+                        $("#editquizSuccessModal").modal("toggle");
+
+//                        /* redirect if assessment deleted */
+//                        if(deleteRequestType == 'delete_quiz'){
+//                            //TODO: REDIRECT
+//                            alert('deleted quiz, redirect!');
+//
+//                        }
+                    }
+                }
+                else{
+                    /* display error */
+                    $("#alert_edit_quiz_wrong").text(data['error']);
+                    $("#editquizErrorModal").modal("toggle");
+                }
+
+               }).fail(function(data) {
+                console.log(data);
+                alert("The was an error. Please try again later or contact your HPC POC.");
+                });
+
+
+
+
+    });
+
+
+    /******************************************************
+    * DELETE ENTIRE ASSESSMENT
+    *******************************************************/
+    $("#delete_quiz_btn").click(function(){
+        /* get assessment ID to delete */
+        var assessmentDeleteID = $("#edit_assessments_main_div").attr('data-assessment-id');
+        /* set delete type and ID  */
+        $('#confirmDeleteModal').attr('data-delete-type', "delete_quiz");
+        $('#confirmDeleteModal').attr('data-delete-id', assessmentDeleteID);
+        $("#confirmDeleteModal").modal("toggle");
+    });
+
+
+    /******************************************************
+    * DELETE QUESTION
+    *******************************************************/
+     $(".delete_question_trash_btn").click(function(event) {
+         /* disable row click event */
+         event.stopPropagation();
+         var questionDeleteID = $(this).attr('data-question-id');
+         var questionDeleteString = $('#question_edit_tbl_row_' + questionDeleteID).find('.question_text_td').text();
+         /* set item and ID to delete*/
+         $("#item_to_delete_text").text(questionDeleteString);
+         $("#confirmDeleteModal").attr('data-delete-type', 'delete_question');
+         $('#confirmDeleteModal').attr('data-delete-id', questionDeleteID);
+         $("#confirmDeleteModal").modal("toggle");
+    });
+
+
+    /******************************************************
+    * DELETE CHOICE (must delegate using .on since dynamic)
+    *******************************************************/
+     $(document.body).on("click", ".delete_choice_trash_btn", function(event) {
+         /* disable row click event */
+         event.stopPropagation();
+         var choiceDeleteID = $(this).attr('data-q-choice-id');
+         var choiceDeleteString = $('#choice_edit_tbl_row_' + choiceDeleteID).find('.choice_text_td').text();
+         /* set item to delete text*/
+         $("#item_to_delete_text").text(choiceDeleteString);
+         $("#confirmDeleteModal").attr('data-delete-type', 'delete_choice');
+         $('#confirmDeleteModal').attr('data-delete-id', choiceDeleteID);
+         $("#confirmDeleteModal").modal("toggle");
     });
 
 
