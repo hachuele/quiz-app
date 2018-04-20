@@ -595,9 +595,21 @@ function delete_quiz($assessment_id) {
 
 
 function virtual_delete_quiz($assessment_id) {
-
-
-
+    global $db;
+    $sql_virt_del_assess = "UPDATE assessments ";
+    $sql_virt_del_assess .= "SET assessment_virtual_delete='1' ";
+    $sql_virt_del_assess .= " WHERE assessment_id='" . db_escape($db, $assessment_id) . "'";
+    $result = mysqli_query($db, $sql_virt_del_assess);
+    /* check if insert is successfull */
+    if($result){
+        return true;
+    }
+    else {
+        // UPDATE failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
 }
 
 

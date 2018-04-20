@@ -44,10 +44,26 @@ $delete_id = $_POST['delete_id'];
 
 /* check what type of delete request we need to make */
 if($delete_type == 'delete_quiz'){
+    /* check if assessment has already been used by a user */
+    if(is_assessment_used_by_usr($delete_id)){
+        /* assessment is used, virtual delete instead */
+        $result_virt_del_assessment = virtual_delete_quiz($delete_id);
 
-
-
-
+        if($result_virt_del_assessment != true) {
+                $output_delete_quiz['error'] = $result_virt_del_assessment;
+        }
+        else{
+            $output_delete_quiz['info'] = "Assessment has already been submitted by a user. The assessment has been deleted 'virtually' to avoid data corruption.
+            Please delete directly through MySQL server to remove the question's row from the database.";
+        }
+    }
+    else{
+        /* attempt to delete question */
+        $result_delete_assessment = delete_quiz($delete_id);
+        if($result_delete_assessment != true) {
+                $output_delete_quiz['error'] = $result_delete_assessment;
+        }
+    }
 }
 else if($delete_type == 'delete_question'){
     /* check if question has already been used by a user */
@@ -96,8 +112,6 @@ else if($delete_type == 'delete_choice'){
 else{
     $output_delete_quiz['error'] = "Error in request. Please try again.";
 }
-
-
 
 
 echo json_encode($output_delete_quiz);

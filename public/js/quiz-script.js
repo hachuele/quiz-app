@@ -63,7 +63,6 @@ $(document).ready(function(){
             else{
                 questionIndex = 'other';
             }
-            alert(questionIndex);
             /* ------ AJAX CALL TO PROCESS ANSWERS ------ */
             $.ajax({
                 type     : 'POST',
