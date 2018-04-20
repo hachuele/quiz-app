@@ -51,7 +51,10 @@ $(document).ready(function(){
             var questionType = currentQuestionType();
             var questionIndex = '';
             /* use question index for database inserts */
-            if(questionNumber == 1){
+            if(questionNumber == 1 && numQuestions == 1){
+                questionIndex = 'first_last';
+            }
+            else if(questionNumber == 1){
                 questionIndex = 'first';
             }
             else if(questionNumber == numQuestions){
@@ -60,6 +63,7 @@ $(document).ready(function(){
             else{
                 questionIndex = 'other';
             }
+            alert(questionIndex);
             /* ------ AJAX CALL TO PROCESS ANSWERS ------ */
             $.ajax({
                 type     : 'POST',
