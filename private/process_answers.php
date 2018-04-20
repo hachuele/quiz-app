@@ -109,7 +109,7 @@ $is_complete = 0;
 $end_stamp = NULL;
 
 /* if this is the first completed question of the quiz, insert new row into user_assessments */
-if($question_index == 'first'){
+if($question_index == 'first'|| $question_index == 'first_last'){
     $num_incorrect = 0;
     $num_correct = 0;
     if($is_incorrect){
@@ -143,7 +143,7 @@ else{
         $end_stamp = date('Y-m-d G:i:s');
         $is_complete = 1;
     }
-    $insert = update_user_assessment($user_assessment_id, $latest_q_seq, $num_correct, $num_incorrect, $end_time, $is_complete);
+    $insert = update_user_assessment($user_assessment_id, $latest_q_seq, $num_correct, $num_incorrect, $end_stamp, $is_complete);
     $new_user_assessment_id = $user_assessment_id;
 }
 /* if insert is successfull, get newly created ID for further inserts into user_answers table */
@@ -167,6 +167,12 @@ if($insert == true){
                 break;
             }
         }
+    }
+    /* set quizz as complete if single question available */
+    if($question_index == 'first_last'){
+        $end_stamp = date('Y-m-d G:i:s');
+        $is_complete = 1;
+        $insert = update_user_assessment($new_user_assessment_id, 1, $num_correct, $num_incorrect, $end_stamp, $is_complete);
     }
 }
 

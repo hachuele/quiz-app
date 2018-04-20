@@ -275,7 +275,7 @@ if($is_in_progress){
 
     <div id="quiz_statistics_card" class=" hidden container">
         <div class="page-header">
-            <h3 style="text-align: center; margin-bottom: 25px;">quiz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>
+            <h3 style="text-align: center; margin-bottom: 25px;">Quiz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>
         </div>
         <div id="quiz_statistics_data_table">
             <div id="total_score_display">
