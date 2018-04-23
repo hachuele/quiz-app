@@ -97,7 +97,7 @@ $(document).ready(function(){
             /* ------ AJAX CALL TO CREATE NEW quiz ------ */
                 $.ajax({
                     type     : 'POST',
-                    url      : '../../../private/edit_quiz_general.php',
+                    url      : '../../private/edit_quiz_general.php',
                     data     : formDataNewquiz + '&request_type=' + requestTypeCreate,
                     dataType : 'json',
                     encode   : true
