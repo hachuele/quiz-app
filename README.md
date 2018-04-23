@@ -108,7 +108,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites: Local Server Environment
 
-The project was developed locally using [**MAMP (My Apache - MySQL, PHP)**](https://www.mamp.info/en/) for macOS. MAMP is also supported for windows. 
+The project was developed locally using [**MAMP (My Apache - MySQL, PHP)**](https://www.mamp.info/en/) for macOS. MAMP is also supported for windows. **Please ensure you are using MAMP 4.2 or higher.**
 
 **MAMP installs a free, local server environment on your local machine.** It also allows you to install Apache, PHP, and MySQL (the main components of the assessments site) without having to mess with any configuration files!
 
