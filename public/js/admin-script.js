@@ -97,7 +97,7 @@ $(document).ready(function(){
             /* ------ AJAX CALL TO CREATE NEW quiz ------ */
                 $.ajax({
                     type     : 'POST',
-                    url      : '/assessment_site_hpc/private/edit_quiz_general.php',
+                    url      : '../../../private/edit_quiz_general.php',
                     data     : formDataNewquiz + '&request_type=' + requestTypeCreate,
                     dataType : 'json',
                     encode   : true
@@ -366,7 +366,7 @@ $(document).ready(function(){
             /* ------ AJAX CALL TO CREATE NEW quiz ------ */
                 $.ajax({
                     type     : 'POST',
-                    url      : '/assessment_site_hpc/private/edit_quiz_general.php',
+                    url      : '../../../private/edit_quiz_general.php',
                     data     : formDataEditquiz + '&assessment_id=' + assessmentEditID + '&request_type=' + requestTypeEdit,
                     dataType : 'json',
                     encode   : true
@@ -399,7 +399,7 @@ $(document).ready(function(){
         /* ------ AJAX CALL TO CREATE NEW quiz ------ */
             $.ajax({
                 type     : 'POST',
-                url      : '/assessment_site_hpc/private/edit_quiz_settings.php',
+                url      : '../../../private/edit_quiz_settings.php',
                 data     : formDataSettingsquiz + '&assessment_id=' + assessmentSettingsID,
                 dataType : 'json',
                 encode   : true
@@ -441,7 +441,7 @@ $(document).ready(function(){
             /* ------ AJAX CALL TO CREATE NEW QUIZ ------ */
             $.ajax({
                 type     : 'POST',
-                url      : '/assessment_site_hpc/private/edit_quiz_questions.php',
+                url      : '../../../private/edit_quiz_questions.php',
                 data     : formDataNewQuestion + '&assessment_id=' + assessmentIDEditQuestion + '&question_id=' + questionIDEditQuestion + '&request_type=' + requestTypeQuestionEdit,
                 dataType : 'json',
                 encode   : true
@@ -490,7 +490,7 @@ $(document).ready(function(){
             /* ------ AJAX CALL TO CREATE/EDIT QUIZ CHOICE ------ */
             $.ajax({
                 type     : 'POST',
-                url      : '/assessment_site_hpc/private/edit_quiz_choices.php',
+                url      : '../../../private/edit_quiz_choices.php',
                 data     : formDataChoice + '&question_id=' + questionIDEditChoice + '&choice_id=' + choiceIDEditChoice +'&is_multi=' + questionMultiEditChoice + '&request_type=' + requestTypeChoiceEdit,
                 dataType : 'json',
                 encode   : true
@@ -532,7 +532,7 @@ $(document).ready(function(){
         /* ------ AJAX CALL TO DELETE QUIZ ITEM ------ */
             $.ajax({
                 type     : 'POST',
-                url      : '/assessment_site_hpc/private/delete_quiz_item.php',
+                url      : '../../../private/delete_quiz_item.php',
                 data     :  '&delete_type=' + deleteRequestType+ '&delete_id=' + deleteID,
                 dataType : 'json',
                 encode   : true
