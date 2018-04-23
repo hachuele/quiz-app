@@ -25,13 +25,13 @@ require_once('../../private/initialize.php');
 $site_title = 'HPC Assessments Admin Site';
 $page_title = 'HPC ASSESSMENTS ADMIN';
 $help_modal_title = 'HPC ASSESSMENTS ADMIN HELP';
-$help_modal_txt = 'Create a new quiz...';
+$help_modal_txt = '...';
 
 /* ----------------------------------------------------------------------------------------- */
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
-//TODO: GET USER ID FROM USC DATABASE
+// TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
@@ -114,7 +114,6 @@ $course_set = find_all_courses();
     <br>
 </div>
 
-
 <!-- ***************************** CREATE NEW quiz (MODAL) ***************************** -->
 <div id="NewquizNameModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -150,7 +149,6 @@ $course_set = find_all_courses();
   </div>
 </div>
 
-
 <!-- ***************************** ALERT MODAL ***************************** -->
 <div id="NewquizAlertModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -167,7 +165,6 @@ $course_set = find_all_courses();
     </div>
   </div>
 </div>
-
 
 <!-- *********************************** CONTENT END *********************************** -->
 

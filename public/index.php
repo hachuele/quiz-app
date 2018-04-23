@@ -24,12 +24,13 @@ require_once('../private/initialize.php');
 $site_title = 'HPC Assessments Site';
 $page_title = 'HPC ASSESSMENTS';
 $help_modal_title = 'HPC QUIZ HELP';
-$help_modal_txt = 'Please complete the selected Quiz...';
+$help_modal_txt = '...';
 
 /* ----------------------------------------------------------------------------------------- */
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
+// TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
@@ -57,7 +58,6 @@ while($complete_quiz = mysqli_fetch_array($completed_by_user_set, MYSQLI_BOTH)){
         array_push($completed_quiz_unique_array, $complete_quiz);
     }
 }
-
 /* get set of all in-progress quizzes for given user */
 $in_progress_quiz_array = array();
 $in_progress_by_user_set = find_in_progress_quizzes_by_user($user_id);
@@ -166,7 +166,6 @@ while($ip_quiz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                                 $perc_compl = '(' . round((h($ip_quiz['latest_quest_sequential_num']) / h($num_questions)) * 100) ."%)";
                             }
                         }
-
                         /* check if current course is in progress, display appropriate button */
                         $button_class = "btn-primary";
                         $button_glyphicon = "";
@@ -204,9 +203,7 @@ while($ip_quiz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
           <div class="page-header">
             <h4 style="text-align: center;">IN PROGRESS QUIZZES &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-edit blue_darken_2"></span></h4>
           </div>
-
           <?php if($num_in_progress_quizzes > 0){ ?>
-
           <div class="all_statistics_lists">
               <table class="table table-hover compl_quizzes_tbl">
                   <thead>
@@ -248,13 +245,9 @@ while($ip_quiz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                     </tbody>
               </table>
           </div>
-
           <?php } else { ?>
-
           <p style="text-align: center; color: #bdbdbd;">No quizzes currently in progress.</p>
-
           <?php } ?>
-
           <div class="page-header">
             <h4 style="text-align: center;">COMPLETED QUIZZES &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h4>
           </div>
@@ -300,7 +293,6 @@ while($ip_quiz = mysqli_fetch_array($in_progress_by_user_set, MYSQLI_BOTH)){
                 </tbody>
               </table>
           </div>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>

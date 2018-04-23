@@ -67,7 +67,6 @@ if($_POST['request_type'] == 'new_quiz'){
     }
 }
 
-
 echo json_encode($output_edit_quiz);
 
 ?>

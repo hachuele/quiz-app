@@ -31,6 +31,7 @@ $help_modal_txt = 'Please complete the selected quiz...';
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
+// TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
@@ -48,7 +49,6 @@ $assessment_name = get_assessment_name($assessment_id);
 if($assessment_name == FALSE){
     redirect_to('../index.php');
 }
-
 /* -------- get questions for selected assessment -------- */
 $question_set = find_questions_by_assessment_id($assessment_id);
 $num_questions = mysqli_num_rows($question_set);
@@ -95,17 +95,14 @@ if($is_in_progress){
     $question_num = 1;
     /* loop through quiz questions */
     while($question = mysqli_fetch_assoc($question_set)) {
-
         /* get choice set to for given question id */
         $choices_array = array();
         $choice_set = find_choices_by_question_id(h($question['question_id']));
         $num_choices = mysqli_num_rows($choice_set);
-
         /* push choice set into an array for later retrieval */
         while($choice = mysqli_fetch_array($choice_set, MYSQLI_BOTH)){
             array_push($choices_array, $choice);
         }
-
         /* declare variables for dynamic classes */
         $question_active_class = '';
         $is_completed_question = 0;
@@ -113,7 +110,6 @@ if($is_in_progress){
         /* use to disable form input */
         $disabled_complete = '';
         $enabled_completed = 'disabled';
-
         /* check if the current question is prior to the latest completed */
         /* NOTE: latest question is 0 if quiz is not in progress */
         if($question_num <= $latest_quest_seq){
@@ -122,17 +118,14 @@ if($is_in_progress){
             $disabled_complete = 'disabled';
             $enabled_completed = '';
             $user_answers_array = array();
-
             /* get the user submitted answers for the current question */
             $user_answers_set = get_user_answers_by_ua_q_id($user_assessment_id, $question['question_id']);
             $num_answers = mysqli_num_rows($user_answers_set);
-
             /* fill array with user answers */
             while($user_answer = mysqli_fetch_array($user_answers_set, MYSQLI_BOTH)){
                 array_push($user_answers_array, $user_answer);
             }
         }
-
         /* if in progress, show latest completed question, otherwise show question 1 */
         if($question_num == $latest_quest_seq || ($latest_quest_seq == 0 && $question_num == 1)){
             $question_active_class = 'active';
@@ -258,7 +251,6 @@ if($is_in_progress){
     </div>
     <?php $question_num++; ?>
     <?php } ?>
-
     <div id="quiz_statistics_card" class=" hidden container">
         <div class="page-header">
             <h3 style="text-align: center; margin-bottom: 25px;">Quiz Completed!  <span class="glyphicon glyphicon-ok-circle solution_glyphicon_correct"></span></h3>

@@ -23,12 +23,13 @@ require_once('../../../private/initialize.php');
 $site_title = 'HPC Assessments Admin Site';
 $page_title = 'HPC ASSESSMENTS ADMIN: EDIT';
 $help_modal_title = 'HPC ASSESSMENTS ADMIN HELP';
-$help_modal_txt = 'Create a new quiz or edit an existing one...';
+$help_modal_txt = '...';
 
 /* ----------------------------------------------------------------------------------------- */
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
+// TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
 $user_id = 'hachuelb';
 $_SESSION["user_id"] = $user_id;
 
@@ -50,7 +51,6 @@ $assessment_id = $_GET['assessment_id'];
 $assessment_data_row = get_assessment_row($assessment_id);
 
 /* if the quiz for the given id does not exist, redirect to main page */
-
 if($assessment_data_row == FALSE){
     redirect_to('../index.php');
 }
@@ -105,7 +105,6 @@ if($assessment_num_quest > $num_questions_edit){
                         </tr>
                   </thead>
                   <tbody>
-
                 <?php
                 while($question = mysqli_fetch_assoc($question_set_edit)) {
                     /* check if question is checkbox or radio type */
@@ -136,7 +135,6 @@ if($assessment_num_quest > $num_questions_edit){
             <?php } ?>
         </div>
     </div>
-
     <div style="padding-top: 50px;" class="row dash_subsection_div">
         <div class="col-xs-9">
             <h3 style="color: #9e9e9e;">Questions Choices<strong id="select_quest_edit_name" style="font-size: 17px;"></strong></h3>
@@ -199,7 +197,6 @@ if($assessment_num_quest > $num_questions_edit){
     </div>
   </div>
 </div>
-
 
 <!-- ***************************** QUIZ SETTINGS (MODAL) ***************************** -->
 <div id="quizSettingsModal" class="modal fade" role="dialog">
@@ -317,7 +314,6 @@ if($assessment_num_quest > $num_questions_edit){
   </div>
 </div>
 
-
 <!-- ***************************** CONFIRM DELETE MODAL ***************************** -->
 <div id="confirmDeleteModal" class="modal fade" role="dialog" data-delete-type="" data-delete-id="">
   <div class="modal-dialog">
@@ -342,7 +338,6 @@ if($assessment_num_quest > $num_questions_edit){
   </div>
 </div>
 
-
 <!-- ***************************** ALERT MODAL [ERROR] ***************************** -->
 <div id="editquizErrorModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -359,7 +354,6 @@ if($assessment_num_quest > $num_questions_edit){
     </div>
   </div>
 </div>
-
 
 <!-- ***************************** SUCCESS EDIT MODAL ***************************** -->
 <div id="editquizInfoModal" class="modal fade" role="dialog">
@@ -394,7 +388,6 @@ if($assessment_num_quest > $num_questions_edit){
     </div>
   </div>
 </div>
-
 
 <!-- *********************************** CONTENT END *********************************** -->
 

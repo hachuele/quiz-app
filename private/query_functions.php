@@ -492,13 +492,11 @@ function insert_user_answer($user_assessment_id, $assessment_id, $question_id, $
     }
 }
 
-
-
 /* -------------------------------- ADMIN INPUTS -------------------------------- */
-
 
 /* ------------------------- general quiz ------------------------- */
 
+/* function to insert a new assessment into the database */
 function create_new_quiz($quiz_name, $quiz_description) {
     global $db;
     $sql_insert_new_quiz = "INSERT INTO assessments ";
@@ -520,8 +518,7 @@ function create_new_quiz($quiz_name, $quiz_description) {
     }
 }
 
-
-
+/* functuon to edit a quiz (name and description) */
 function edit_general_quiz($assessment_id, $quiz_name, $quiz_description) {
     global $db;
     $sql_edit_general_quiz = "UPDATE assessments ";
@@ -561,7 +558,7 @@ function edit_settings_quiz($assessment_id, $num_quest_show, $is_active) {
     }
 }
 
-
+/* function to delete a quiz */
 function delete_quiz($assessment_id) {
     global $db;
     $sql_delete_quiz = "DELETE FROM assessments ";
@@ -767,13 +764,6 @@ function virtual_delete_quiz_choice($choice_id) {
         exit;
     }
 }
-
-
-
-
-
-
-
 
 
 

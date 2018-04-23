@@ -19,8 +19,6 @@ session_start();
 
 /* --------------------------------- DATA RETRIEVAL --------------------------------- */
 
-
-
 /* instantiate output array */
 $output_edit_choice_quiz = array();
 $output_edit_choice_quiz['error'] = 0;
