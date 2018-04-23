@@ -30,7 +30,7 @@ $help_modal_txt = '...';
 /* ----------------------------------------------------------------------------------------- */
 
 // TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
-$user_id = 'hachuelb';
+$user_id = 'admin';
 $_SESSION["user_id"] = $user_id;
 
 /* -------- check if user is an admin, redirect otherwise -------- */

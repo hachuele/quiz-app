@@ -32,7 +32,7 @@ $help_modal_txt = 'Please complete the selected quiz...';
 /* ----------------------------------------------------------------------------------------- */
 
 // TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
-$user_id = 'hachuelb';
+$user_id = 'admin';
 $_SESSION["user_id"] = $user_id;
 
 /* -------- get the assessment id from url (if not found, set to one) -------- */

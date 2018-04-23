@@ -138,6 +138,9 @@ admin_can_view_stats TINYINT(1) NOT NULL,
 PRIMARY KEY(admin_id)
 );
 
+INSERT INTO admin_users(admin_id, admin_user_id, admin_can_view_stats) VALUES
+(1, 'admin', 1);
+
 
 
 
