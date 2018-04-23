@@ -113,15 +113,15 @@ user_assessment_id INT(11) NOT NULL,
 assessment_id INT(11) NOT NULL,
 question_id INT(11) NOT NULL,
 question_choice_id INT(11) NOT NULL,
-PRIMARY KEY(user_answer_id),
-CONSTRAINT FK_user_answers_user_assessmentID FOREIGN KEY (user_assessment_id)
-REFERENCES user_assessments(user_assessment_id),
-CONSTRAINT FK_user_answers_assessmentID FOREIGN KEY (assessment_id)
-REFERENCES assessments(assessment_id),
-CONSTRAINT FK_user_answers_questionID FOREIGN KEY (question_id)
-REFERENCES questions(question_id),
-CONSTRAINT FK_user_answers_choiceID FOREIGN KEY (question_choice_id)
-REFERENCES question_choices(question_choice_id)
+PRIMARY KEY(user_answer_id)
+-- CONSTRAINT FK_user_answers_user_assessmentID FOREIGN KEY (user_assessment_id)
+-- REFERENCES user_assessments(user_assessment_id),
+-- CONSTRAINT FK_user_answers_assessmentID FOREIGN KEY (assessment_id)
+-- REFERENCES assessments(assessment_id),
+-- CONSTRAINT FK_user_answers_questionID FOREIGN KEY (question_id)
+-- REFERENCES questions(question_id),
+-- CONSTRAINT FK_user_answers_choiceID FOREIGN KEY (question_choice_id)
+-- REFERENCES question_choices(question_choice_id)
 );
 
 
