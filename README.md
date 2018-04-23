@@ -16,7 +16,7 @@ The main user dashboard serves as the main page for the user. It allows the user
 
 
 
-![MAIN DASHBOARD SAMPLE](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/main_dashboard.png)
+![MAIN DASHBOARD SAMPLE](./readme_images/main_dashboard.png)
 
 
 
@@ -24,7 +24,7 @@ The user may look at a full history of completed quizzes and statistics through 
 
 
 
-![user_stats_2](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/user_stats_2.png)
+![user_stats_2](./readme_images/user_stats_2.png)
 
 
 
@@ -34,7 +34,7 @@ Once a user selects a quiz from the list of available or in-progress assessments
 
 
 
-![question_sample](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/question_sample.png)
+![question_sample](./readme_images/question_sample.png)
 
 
 
@@ -42,7 +42,7 @@ Once a user selects a quiz from the list of available or in-progress assessments
 
 
 
-![answer_submit](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/answer_submit.png)
+![answer_submit](./readme_images/answer_submit.png)
 
 
 
@@ -52,7 +52,7 @@ The user is, however, able to take the quiz again *(as mentioned in a prior note
 
 
 
-![quizz_stats](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/quizz_stats.png)
+![quizz_stats](./readme_images/quizz_stats.png)
 
 
 
@@ -70,7 +70,7 @@ The main admin dashboard **allows instructors to manage the assessments content*
 
 
 
-![admin_dashboard](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/admin_dashboard.png)
+![admin_dashboard](./readme_images/admin_dashboard.png)
 
 
 
@@ -80,7 +80,7 @@ Admin users may create new quizzes by clicking on the 'CREATE NEW QUIZ' button o
 
 
 
-![new_quiz_submit](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/new_quiz_submit.png)
+![new_quiz_submit](./readme_images/new_quiz_submit.png)
 
 
 
@@ -90,7 +90,7 @@ Admin users may edit an existing quiz by clicking on the 'EDIT EXISTING QUIZ' bu
 
 
 
-![main_edit_dash](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/main_edit_dash.png)
+![main_edit_dash](./readme_images/main_edit_dash.png)
 
 This page allows the user to add (questions, and question choices), edit, or delete items, as well as configuring advanced settings and deploying the quiz (show it active to users) once it is ready.
 
@@ -153,7 +153,7 @@ Once MAMP is installed and properly configured (as described in the documentatio
 
 
 
-![AMP_preference](/Users/erichachuel/Google Drive/All/School/USC/HPC Internship/2_assessment_site/assessment_site/readme_images/MAMP_preferences.png)
+![AMP_preference](./readme_images/MAMP_preferences.png)
 
 
 
