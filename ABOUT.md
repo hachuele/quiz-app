@@ -1,6 +1,6 @@
-# About: HPC Quiz Maker
+# HPC Quiz Maker
 
-The **HPC Quiz Maker** is a modular web application built with PHP, MySQL, and responsive web design frameworks with the ultimate goal of enabling instructors to easily build and deploy user assessments as needed. 
+The **HPC Quiz Maker** is a fully-functional, modular web application built with PHP, MySQL, and responsive web design frameworks with the ultimate goal of enabling instructors to easily build and deploy user assessments as needed. 
 
 The tool was built  for the Center for [High-Performance Computing](http://hpcc.usc.edu/) (HPC) at the [University of Southern California](https://www.usc.edu/), a global leader in research computing.
 
@@ -16,7 +16,7 @@ The main user dashboard serves as the main page for the user. It allows the user
 
 
 
-![MAIN DASHBOARD SAMPLE](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/main_dashboard.png)
+![MAIN DASHBOARD SAMPLE](./readme_images/main_dashboard.png)
 
 
 
@@ -24,7 +24,7 @@ The user may look at a full history of completed quizzes and statistics through 
 
 
 
-![user_stats_2](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/user_stats_2.png)
+![user_stats_2](./readme_images/user_stats_2.png)
 
 
 
@@ -34,7 +34,7 @@ Once a user selects a quiz from the list of available or in-progress assessments
 
 
 
-![question_sample](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/question_sample.png)
+![question_sample](./readme_images/question_sample.png)
 
 
 
@@ -42,7 +42,7 @@ Once a user selects a quiz from the list of available or in-progress assessments
 
 
 
-![answer_submit](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/answer_submit.png)
+![answer_submit](./readme_images/answer_submit.png)
 
 
 
@@ -52,23 +52,25 @@ The user is, however, able to take the quiz again *(as mentioned in a prior note
 
 
 
-![quizz_stats](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/quizz_stats.png)
+![quizz_stats](./readme_images/quizz_stats.png)
 
 
 
-### 3) Main Admin Dashboard
+### 3) Main Admin Dashboard 
 
 The main admin dashboard **allows instructors to manage the assessments content**. That includes:
 
-- **a) creating** new quizzes
+* **a) creating** new quizzes
 
-- **b) editing** existing quizzes
+* **b) editing** existing quizzes
 
-- **c) viewing statistics** from completed and in-progress user assessments (only certain admin users may click on this link)
+* **c) viewing statistics** from completed and in-progress user assessments (only certain admin users may click on this link)
 
   ​
 
-![admin_dashboard](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/admin_dashboard.png)
+
+
+![admin_dashboard](./readme_images/admin_dashboard.png)
 
 
 
@@ -78,7 +80,7 @@ Admin users may create new quizzes by clicking on the 'CREATE NEW QUIZ' button o
 
 
 
-![new_quiz_submit](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/new_quiz_submit.png)
+![new_quiz_submit](./readme_images/new_quiz_submit.png)
 
 
 
@@ -88,7 +90,7 @@ Admin users may edit an existing quiz by clicking on the 'EDIT EXISTING QUIZ' bu
 
 
 
-![main_edit_dash](/Applications/MAMP/htdocs/assessment_site_hpc/readme_images/main_edit_dash.png)
+![main_edit_dash](./readme_images/main_edit_dash.png)
 
 This page allows the user to add (questions, and question choices), edit, or delete items, as well as configuring advanced settings and deploying the quiz (show it active to users) once it is ready.
 
@@ -97,5 +99,3 @@ This page allows the user to add (questions, and question choices), edit, or del
 #### C) Statistics Dashboard
 
 *(in development)*
-
-
