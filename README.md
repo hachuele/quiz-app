@@ -1,78 +1,51 @@
 
+# QuizzingDB Beta Version 0.1
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-
-### Prerequisites: Local Server Environment
-
-The project was developed locally using [**MAMP (My Apache - MySQL, PHP)**](https://www.mamp.info/en/) for macOS. MAMP is also supported for windows. **Please ensure you are using MAMP 4.2 or higher.**
-
-**MAMP installs a free, local server environment on your local machine.** It also allows you to install Apache, PHP, and MySQL (the main components of the assessments site) without having to mess with any configuration files!
-
-Please carefully follow the steps described on the following MAMP documentation link to successfully set up your local environment:
-
-* https://documentation-3.mamp.info/en/documentation/mamp/
-* Download MAMP: https://www.mamp.info/en/
+This software is currently being tested for a pre-release.
 
 
 
-### MySQL Database: Setup
+<u>Please visit the following links for additional information:</u>
 
-The '**quiz_site_createDB.sql**' script has been provided to ensure to proper setup of the database. The version of the script included in this repository includes a set of sample/dummy quizzes and questions developed for testing purposes. 
-
-You may replace all given fields with relevant questions for your given target audience. 
-
-**NOTE:** *the administration site, which allows admin users to create and edit quizzes through a UI is currently in development. Therefore, in order to deploy a working database, quizzes, questions, and question choices must be entered into the database through manual SQL 'INSERT' statements (see .sql script for sample queries).*
-
-#### Connecting to the MAMP SQL Database
-
-To connect to the MAMP MySQL database instance through the terminal, run the following command:
-
-```bash
-/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot
-```
-
-####Running the MySQL Script to Instantiate the Database
-
-Once connected, run the given  '**quiz_site_createDB.sql**' through the 'source' command:
-
-```bash
-mysql> source /path/to/sql/script/quiz_site_createDB.sql
-```
-
-If successful, the database should be up and running with the given sample data (if any was provided in the script).
+* A copy of the License: [LICENSE.txt](LICENSE.txt) 
+* Local and Public Server Installation Instructions: [INSTALL.md](INSTALL.md) 
+* Details on how it works: [ABOUT.md](ABOUT.md) 
 
 
 
-### Local Site 'Deployment'
 
-Once MAMP is installed and properly configured (as described in the documentation link above), the directory set up to serve the files will be set to the **'htdocs'** folder. You may confirm the document root by launching MAMP, and checking your '**Preferences**':
+## License
+
+The Software is made available for academic or non-commercial purposes only. The license is for a copy of the program for an unlimited term. Individuals requesting a license for commercial use must pay for a commercial license.
+
+USC Stevens Institute for Innovation
+University of Southern California
+1150 S. Olive Street, Suite 2300
+Los Angeles, CA 90115, USA
+ATTN: Accounting
+
+**DISCLAIMER.**  
+
+USC MAKES NO EXPRESS OR IMPLIED WARRANTIES, EITHER IN FACT OR BY OPERATION OF LAW, BY STATUTE OR OTHERWISE,  AND USC SPECIFICALLY AND EXPRESSLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR  PURPOSE, VALIDITY OF THE SOFTWARE OR ANY OTHER INTELLECTUAL PROPERTY RIGHTS OR NON-INFRINGEMENT OF THE INTELLECTUAL PROPERTY  OR OTHER RIGHTS OF ANY THIRD PARTY. SOFTWARE IS MADE AVAILABLE AS-IS.
+
+**LIMITATION OF LIABILITY.**  
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL USC BE LIABLE TO ANY USER OF THIS CODE FOR ANY INCIDENTAL, CONSEQUENTIAL, EXEMPLARY OR PUNITIVE DAMAGES OF ANY KIND, LOST GOODWILL, LOST PROFITS, LOST BUSINESS AND/OR ANY INDIRECT ECONOMIC DAMAGES WHATSOEVER, REGARDLESS OF WHETHER SUCH DAMAGES ARISE FROM CLAIMS BASED UPON CONTRACT, NEGLIGENCE, TORT (INCLUDING STRICT LIABILITY OR OTHER LEGAL THEORY), A BREACH OF ANY WARRANTY OR TERM OF THIS AGREEMENT, AND REGARDLESS OF WHETHER USC WAS ADVISED OR HAD REASON TO KNOW OF THE POSSIBILITY OF INCURRING SUCH DAMAGES IN ADVANCE.
 
 
+For commercial license pricing and annual commercial update and support pricing, please contact:
 
-![AMP_preference](./readme_images/MAMP_preferences.png)
+Rakesh Pandit
+USC Stevens Institute for Innovation
+University of Southern California
+1150 S. Olive Street, Suite 2300
+Los Angeles, CA 90115, USA
+Tel: +1 213-821-3552
+Fax: +1 213-821-5001
 
+Email: rakeshvp@usc.edu and ccto: accounting@stevens.usc.edu
 
-
-You may clone this repository into a local folder on your machine and add the '**assessment_site**' project folder with its public and private sub-folders into htdocs.
-
-You are now ready to run the site locally by launching your favorite web browser with your configured localhost site and appropriate port information. Example below:
-
-```
-http://localhost:8888/assessment_site_hpc/public/
-```
-
-**NOTE:** For the database connection to properly work, take a look at the `db_credentials.php` file within the project, and **modify parameters as needed:**
-
-```php+HTML
-<?php
-define("DB_USERNAME", "root");
-define("DB_PASSWORD", "root");
-define("DB_HOST", "localhost");
-define("DB_DATABASE", "quizing_db");
-?>
-```
+Please view the [LICENSE.txt](LICENSE.txt) file for a copy of the above license.
 
 
 
@@ -91,12 +64,6 @@ define("DB_DATABASE", "quizing_db");
 * **Eric Hachuel**  - [personal website](https://www.erichachuel.com)
 
   ​
-
-## License
-
-The Software is made available for academic or non-commercial purposes only. The license is for a copy of the program for an unlimited term. Individuals requesting a license for commercial use must pay for a commercial license.
-
-Please view the [LICENSE.txt](LICENSE.txt) file for more details.
 
 
 
