@@ -164,7 +164,7 @@ user_assessment_id INT(11) NOT NULL,
 assessment_id INT(11) NOT NULL,
 question_id INT(11) NOT NULL,
 question_choice_id INT(11) NOT NULL,
-PRIMARY KEY(user_answer_id),
+PRIMARY KEY(user_answer_id)
 );
 
 
