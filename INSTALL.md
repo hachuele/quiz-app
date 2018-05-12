@@ -38,7 +38,7 @@ To connect to the MAMP MySQL database instance through the terminal, run the fol
 /Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot
 ```
 
-####Running the MySQL Script to Instantiate the Database
+#### Running the MySQL Script to Instantiate the Database
 
 Once connected, run the given  '**quiz_site_createDB.sql**' through the 'source' command:
 
@@ -84,3 +84,16 @@ define("DB_DATABASE", "quizing_db");
 ## Getting Started: Public Server Install
 
 These instructions will get you a copy of the project up and running on a public server. 
+
+On the machine that hosts the web server, CD into the web server’s Document Root and clone this application, e.g.:
+
+```bash
+cd /var/www/html 
+git clone https://github.com/hachuele/quiz-app.git
+```
+
+Assuming the MariaDB/MysqlDB server is on the same machine, run mysql and create the database using the given scripts
+
+```bash
+mysql> source /var/www/html/quiz-app/sql_scripts/quiz_site_createDB.sql
+```
