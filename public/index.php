@@ -30,8 +30,14 @@ $help_modal_txt = '...';
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
-// TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
-$user_id = 'admin';
+/* instantiate user ID variable */
+$user_id = "";
+
+// TODO: TO DEPLY, REPLACE STATIC 'ADMIN' ASSIGNMENT TO USER ID WITH AUTHENTIC ID
+$user_id = "admin";
+//$user_id = get_shib_ID();
+
+/* set the user ID session variable */
 $_SESSION["user_id"] = $user_id;
 
 /* ----------------------------------------------------------------------------------------- */

@@ -31,9 +31,12 @@ $help_modal_txt = 'Please complete the selected quiz...';
 /* -------------------------------------- Get User ID -------------------------------------- */
 /* ----------------------------------------------------------------------------------------- */
 
-// TODO: REPLACE STATIC USER ID WITH DATABASE CALL TO RETRIEVE USER ID
-$user_id = 'admin';
-$_SESSION["user_id"] = $user_id;
+/* instantiate user ID variable */
+$user_id = "";
+
+// TODO: TO DEPLY, REPLACE STATIC 'ADMIN' ASSIGNMENT TO USER ID WITH AUTHENTIC ID
+$user_id = "admin";
+//$user_id = get_shib_ID();
 
 /* -------- get the assessment id from url (if not found, set to one) -------- */
 $assessment_id = $_GET['assessment_id'];

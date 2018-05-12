@@ -34,6 +34,27 @@ function u($string=""){
     return urlencode($string);
 }
 
+/* retrieve User ID */
+function get_shib_ID(){
+    $user_shib_id = "";
+    /* USC Authentic ID Verification*/
+    if($_SERVER["ShibuscNetID"]){
+        /* retrieve the user ID */
+        $user_shib_id = $_SERVER["ShibuscNetID"];
+        /* error check to ensure user ID is found */
+        if($user_shib_id == ""){
+            echo "User not found. Please send an e-mail to hpc@usc.edu for further assistance.";
+            exit();
+        }
+    }
+    /* error checking: user ID environment variable */
+    else{
+        echo "Error has occured when retrieving User ID. Please send an e-mail to hpc@usc.edu for further assistance.";
+        exit();
+    }
+    return $user_shib_id;
+}
+
 function error_404(){
     header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
     exit();
