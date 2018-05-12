@@ -92,8 +92,23 @@ cd /var/www/html
 git clone https://github.com/hachuele/quiz-app.git
 ```
 
-Assuming the MariaDB/MysqlDB server is on the same machine, run mysql and create the database using the given scripts
+Assuming the **MariaDB/MysqlDB** server is on the same machine, run mysql and create the database using the given scripts
 
 ```bash
 mysql> source /var/www/html/quiz-app/sql_scripts/quiz_site_createDB.sql
 ```
+
+
+
+## System Configuration Notes
+
+### Adding Administrators
+
+The database, if properly deployed, contains a table (`admin_users`) that stores the user ID of those responsible for managing the quiz app. In order to add **valid user IDs** to this table, it must be done manually through **SQL INSERT statements**. Below is an example:
+
+```sql
+INSERT INTO admin_users(admin_user_id) VALUES
+('john_doe');
+```
+
+This will ensure added users are able to create, edit, and manage the quiz site as needed. It is important that the user IDs added to this database are in a valid format that works with the rest of the system.
