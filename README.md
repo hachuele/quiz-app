@@ -1,9 +1,5 @@
 
-# QuizzingDB Beta Version 0.1
-
-This software is currently being tested for a pre-release.
-
-
+# Quizz App
 
 <u>Please visit the following links for additional information:</u>
 
